@@ -2,7 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import userService from "../services/user.service";
 import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
-// import getRandomInt from "../utils/getRandomInt";
+import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
 
@@ -28,18 +28,30 @@ const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {
-        usersRequested: (state) => {
+        userRequested: (state) => {
             state.isLoading = true;
         },
-        usersReceived: (state, action) => {
+        userReceived: (state, action) => {
             state.entities = action.payload;
             state.dataLoaded = true;
             state.isLoading = false;
         },
-        usersRequestFailed: (state, action) => {
+        userRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },
+        // usersRequested: (state) => {
+        //     state.isLoading = true;
+        // },
+        // usersReceived: (state, action) => {
+        //     state.entities = action.payload;
+        //     state.dataLoaded = true;
+        //     state.isLoading = false;
+        // },
+        // usersRequestFailed: (state, action) => {
+        //     state.error = action.payload;
+        //     state.isLoading = false;
+        // },
         authRequestSuccess: (state, action) => {
             state.auth = action.payload;
             state.isLoggedIn = true;
@@ -72,19 +84,22 @@ const usersSlice = createSlice({
 
 const { reducer: usersReducer, actions } = usersSlice;
 const {
+    userRequested,
+    userReceived,
+    userRequestFailed,
     // usersRequested,
     // usersReceived,
     // usersRequestFailed,
     authRequestSuccess,
     authRequestFailed,
-    // userCreated,
+    userCreated,
     userLoggedOut,
     userUpdateSuccessed
 } = actions;
 
 const authRequested = createAction("users/authRequested");
-// const userCreateRequested = createAction("users/userCreateRequested");
-// const createUserFailed = createAction("users/createUserFailed");
+const userCreateRequested = createAction("users/userCreateRequested");
+const createUserFailed = createAction("users/createUserFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 const userUpdateFailed = createAction("users/userUpdateFailed");
 
@@ -117,18 +132,19 @@ export const signUp =
                 const data = await authService.register({ email, password });
                 localStorageService.setTokens(data);
                 dispatch(authRequestSuccess({ userId: data.localId }));
-                // dispatch(
-                //     createUser({
-                //         _id: data.localId,
-                //         email,
-                //         image: `https://avatars.dicebear.com/api/avataaars/${(
-                //             Math.random() + 1
-                //         )
-                //             .toString(36)
-                //             .substring(7)}.svg`,
-                //         ...rest
-                //     })
-                // );
+                dispatch(
+                    createUser({
+                        _id: data.localId,
+                        email,
+                        cash: getRandomInt(100, 1000),
+                        image: `https://avatars.dicebear.com/api/avataaars/${(
+                            Math.random() + 1
+                        )
+                            .toString(36)
+                            .substring(7)}.svg`,
+                        ...rest
+                    })
+                );
             } catch (error) {
                 dispatch(authRequestFailed(error.message));
             }
@@ -138,20 +154,20 @@ export const logOut = () => (dispatch) => {
     dispatch(userLoggedOut());
     history.push("/");
 };
-// function createUser(payload) {
-//     return async function (dispatch) {
-//         dispatch(userCreateRequested());
-//         try {
-//             const { content } = await userService.create(payload);
-//             dispatch(userCreated(content));
-//             history.push("/users");
-//         } catch (error) {
-//             dispatch(createUserFailed(error.message));
-//         }
-//     };
-// }
+function createUser(payload) {
+    return async function (dispatch) {
+        dispatch(userCreateRequested());
+        try {
+            const { content } = await userService.create(payload);
+            dispatch(userCreated(content));
+            history.push("/products");
+        } catch (error) {
+            dispatch(createUserFailed(error.message));
+        }
+    };
+}
 
-// export const loadUsersList = () => async (dispatch, getState) => {
+// export const loadUsersList = () => async (dispatch) => {
 //     dispatch(usersRequested());
 //     try {
 //         const { content } = await userService.get();
@@ -160,32 +176,41 @@ export const logOut = () => (dispatch) => {
 //         dispatch(usersRequestFailed(error.message));
 //     }
 // };
+export const loadUserData = () => async (dispatch) => {
+    dispatch(userRequested());
+    try {
+        const { content } = await userService.getCurrentUser();
+        console.log(content);
+        dispatch(userReceived(content));
+    } catch (error) {
+        dispatch(userRequestFailed(error.message));
+    }
+};
+//
 export const updateUser = (payload) => async (dispatch) => {
     dispatch(userUpdateRequested());
     try {
         const { content } = await userService.update(payload);
         dispatch(userUpdateSuccessed(content));
-        history.push(`/users/${content._id}`);
+        // history.push(`/users/${content._id}`);
     } catch (error) {
         dispatch(userUpdateFailed(error.message));
     }
 };
 
-export const getUsersList = () => (state) => state.users.entities;
+// export const getUsersList = () => (state) => state.users.entities;
 export const getCurrentUserData = () => (state) => {
-    return state.users.entities
-        ? state.users.entities.find((u) => u._id === state.users.auth.userId)
-        : null;
+    return state.users.entities;
 };
-export const getUserById = (userId) => (state) => {
-    if (state.users.entities) {
-        return state.users.entities.find((u) => u._id === userId);
-    }
-};
+// export const getUserById = (userId) => (state) => {
+//     if (state.users.entities) {
+//         return state.users.entities.find((u) => u._id === userId);
+//     }
+// };
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getDataStatus = () => (state) => state.users.dataLoaded;
-export const getUsersLoadingStatus = () => (state) => state.users.isLoading;
+export const getUserLoadingStatus = () => (state) => state.users.isLoading;
 export const getCurrentUserId = () => (state) => state.users.auth.userId;
 export const getAuthErrors = () => (state) => state.users.error;
 

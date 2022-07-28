@@ -1,21 +1,36 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Home from "./layouts/home";
-import Edit from "./layouts/edit";
+import { Redirect, Route, Switch } from "react-router-dom";
+import NavBar from "./components/ui/navBar";
+import Products from "./layouts/products";
 import Login from "./layouts/login";
-import Header from "./components/ui/header";
+import LogOut from "./layouts/logOut";
+import Main from "./layouts/main";
+import Cart from "./layouts/cart";
+import AppLoader from "./components/ui/hoc/appLoader";
+import UserCabinet from "./layouts/userCabinet";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-    console.log(process.env);
     return (
-        <>
-            <Header />
-            <Switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/login/:type?" component={Login} />
-                <Route path="/edit" component={Edit} />
-            </Switch>
-        </>
+        <div className="">
+            <AppLoader>
+                <NavBar />
+                <Switch>
+                    {/* <Route path="/products" exact
+                        component={Products} /> */}
+                    <Route path="/products/:product?" exact
+                        component={Products} />
+                    <Route path="/login/:type?" exact component={Login} />
+                    <Route path="/logout" exact component={LogOut} />
+                    <Route path="/cabinet/:edit?" exact component={UserCabinet} />
+                    <Route path="/cart" exact component={Cart} />
+                    <Route path="/" exact component={Main} />
+                    <Redirect to="/" />
+                </Switch>
+            </AppLoader>
+            <ToastContainer />
+        </div>
     );
 }
+
 export default App;

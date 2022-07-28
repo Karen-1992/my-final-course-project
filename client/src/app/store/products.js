@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import productsService from "../services/products.service";
+import productService from "../services/product.service";
 
+const initialState = {
+    entities: null,
+    isLoading: true,
+    error: null,
+    dataLoaded: false
+};
 const productsSlice = createSlice({
     name: "products",
-    initialState: {
-        entities: null,
-        isLoading: true,
-        error: null,
-        dataLoaded: false
-    },
+    initialState,
     reducers: {
         productsRequested: (state) => {
             state.isLoading = true;
@@ -25,28 +26,32 @@ const productsSlice = createSlice({
     }
 });
 
-const { reducer: productsReducer, actions } = productsSlice;
-const { productsRequested, productsReceived, productsRequestFailed } =
-    actions;
+const { reducer: ProductsReducer, actions } = productsSlice;
+const {
+    productsRequested,
+    productsReceived,
+    productsRequestFailed
+} = actions;
 
 export const loadProductsList = () => async (dispatch) => {
     dispatch(productsRequested());
     try {
-        const { content } = await productsService.get();
+        const { content } = await productService.get();
         dispatch(productsReceived(content));
     } catch (error) {
         dispatch(productsRequestFailed(error.message));
     }
 };
 
-export const getProducts = () => (state) => state.products.entities;
-export const getDataStatus = () => (state) => state.products.dataLoaded;
-export const getProductsLoadingStatus = () => (state) =>
-    state.products.isLoading;
-// export const getProductsById = (id) => (state) => {
-//     if (state.products.entities) {
-//         return state.products.entities.find((p) => p._id === id);
-//     }
-// };
+export const getProductsList = () => (state) => state.products.entities;
 
-export default productsReducer;
+export const getProductById = (productId) => (state) => {
+    if (state.products.entities) {
+        return state.products.entities.find((u) => u._id === productId);
+    }
+};
+
+export const getDataStatus = () => (state) => state.products.dataLoaded;
+export const getProductsLoadingStatus = () => (state) => state.products.isLoading;
+
+export default ProductsReducer;

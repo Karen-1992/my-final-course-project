@@ -1,11 +1,22 @@
 [
-    {
-        "name": "all"
-    },
-    {
-        "name": "clothes"
-    },
-    {
-        "name": "tech"
-    }
+    { "_id": "67rdca3eeb7f6fgeed471818", "name": "smartphones"},
+    { "_id": "67rdca3eeb7f6fgeed471819", "name": "laptops"},
+    { "_id": "67rdca3eeb7f6fgeed471820", "name": "fragrances"},
+    { "_id": "67rdca3eeb7f6fgeed471821", "name": "skincare"},
+    { "_id": "67rdca3eeb7f6fgeed471822", "name": "groceries"},
+    { "_id": "67rdca3eeb7f6fgeed471823", "name": "home-decoration"},
+    { "_id": "67rdca3eeb7f6fgeed471824", "name": "furniture"},
+    { "_id": "67rdca3eeb7f6fgeed471825", "name": "tops"},
+    { "_id": "67rdca3eeb7f6fgeed471826", "name": "womens-dresses"},
+    { "_id": "67rdca3eeb7f6fgeed471827", "name": "womens-shoes"},
+    { "_id": "67rdca3eeb7f6fgeed471828", "name": "mens-shirts"},
+    { "_id": "67rdca3eeb7f6fgeed471829", "name": "mens-shoes"},
+    { "_id": "67rdca3eeb7f6fgeed471830", "name": "mens-watches"},
+    { "_id": "67rdca3eeb7f6fgeed471831", "name": "womens-watches"},
+    { "_id": "67rdca3eeb7f6fgeed471832", "name": "womens-bags"},
+    { "_id": "67rdca3eeb7f6fgeed471833", "name": "womens-jewellery"},
+    { "_id": "67rdca3eeb7f6fgeed471834", "name": "sunglasses"},
+    { "_id": "67rdca3eeb7f6fgeed471835", "name": "automotive"},
+    { "_id": "67rdca3eeb7f6fgeed471836", "name": "motorcycle"},
+    { "_id": "67rdca3eeb7f6fgeed471837", "name": "lighting"}
 ]

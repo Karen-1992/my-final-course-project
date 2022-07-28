@@ -12,6 +12,7 @@ app.use("/api", routes);
 
 const PORT = config.get("port") ?? 8080;
 
+console.log(process.env)
 
 async function start() {
     try {

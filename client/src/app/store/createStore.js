@@ -1,10 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import productsReducer from "./products";
 import usersReducer from "./users";
+import categoriesReducer from "./categories";
+import productsReducer from "./products";
+import galleryReducer from "./gallery";
 
 const rootReducer = combineReducers({
-    products: productsReducer,
-    users: usersReducer
+    users: usersReducer,
+    categories: categoriesReducer,
+    gallery: galleryReducer,
+    products: productsReducer
 });
 
 export function createStore() {
