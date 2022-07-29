@@ -180,7 +180,6 @@ export const loadUserData = () => async (dispatch) => {
     dispatch(userRequested());
     try {
         const { content } = await userService.getCurrentUser();
-        console.log(content);
         dispatch(userReceived(content));
     } catch (error) {
         dispatch(userRequestFailed(error.message));
