@@ -9,7 +9,7 @@ import {
 } from "../../../store/users";
 import { loadCategoriesList } from "../../../store/categories";
 
-const ProductsLoader = ({ children }) => {
+const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
     // const userStatusLoading = useSelector(getUserLoadingStatus());
@@ -33,11 +33,11 @@ const ProductsLoader = ({ children }) => {
     return children;
 };
 
-ProductsLoader.propTypes = {
+AppLoader.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ])
 };
 
-export default ProductsLoader;
+export default AppLoader;

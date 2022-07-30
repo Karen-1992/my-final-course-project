@@ -1,5 +1,4 @@
 import httpService from "./http.service";
-import localStorageService from "./localStorage.service";
 
 const productEndpoint = "product/";
 
@@ -15,15 +14,15 @@ const productService = {
         );
         return data;
     },
-    getCurrentProduct: async () => {
-        const { data } = await httpService.get(
-            productEndpoint + localStorageService.getProductId()
-        );
-        return data;
-    },
+    // getCurrentProduct: async () => {
+    //     const { data } = await httpService.get(
+    //         productEndpoint + localStorageService.getProductId()
+    //     );
+    //     return data;
+    // },
     update: async (payload) => {
         const { data } = await httpService.patch(
-            productEndpoint + localStorageService.getProductId(),
+            productEndpoint + payload.productId,
             payload
         );
         return data;

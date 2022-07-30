@@ -26,10 +26,10 @@ function NavProfile() {
                     to={"/cabinet"}
                     className="dropdown-item"
                 >
-                    Profile
+                    Личный кабинет
                 </Link>
                 <Link to="/logout" className="dropdown-item">
-                    Log Out
+                    Выйти
                 </Link>
             </div>
         </div>

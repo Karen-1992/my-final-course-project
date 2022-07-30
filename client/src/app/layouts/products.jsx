@@ -9,8 +9,6 @@ import ProductsListPage from "../components/page/productListPage";
 const Products = () => {
     const params = useParams();
     const { productId } = params;
-    // const products = useSelector(getProductsList());
-    // console.log(products);
     return (
         <>
             {/* <ProductsLoader> */}

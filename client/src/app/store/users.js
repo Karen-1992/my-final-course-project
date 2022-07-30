@@ -5,6 +5,7 @@ import localStorageService from "../services/localStorage.service";
 import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
+import cartService from "../services/cart.service";
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -12,6 +13,8 @@ const initialState = localStorageService.getAccessToken()
         isLoading: true,
         error: null,
         auth: { userId: localStorageService.getUserId() },
+        favorites: null,
+        cart: null,
         isLoggedIn: true,
         dataLoaded: false
     }
@@ -20,6 +23,8 @@ const initialState = localStorageService.getAccessToken()
         isLoading: false,
         error: null,
         auth: null,
+        favorites: null,
+        cart: null,
         isLoggedIn: false,
         dataLoaded: false
     };
@@ -40,18 +45,6 @@ const usersSlice = createSlice({
             state.error = action.payload;
             state.isLoading = false;
         },
-        // usersRequested: (state) => {
-        //     state.isLoading = true;
-        // },
-        // usersReceived: (state, action) => {
-        //     state.entities = action.payload;
-        //     state.dataLoaded = true;
-        //     state.isLoading = false;
-        // },
-        // usersRequestFailed: (state, action) => {
-        //     state.error = action.payload;
-        //     state.isLoading = false;
-        // },
         authRequestSuccess: (state, action) => {
             state.auth = action.payload;
             state.isLoggedIn = true;
@@ -87,9 +80,6 @@ const {
     userRequested,
     userReceived,
     userRequestFailed,
-    // usersRequested,
-    // usersReceived,
-    // usersRequestFailed,
     authRequestSuccess,
     authRequestFailed,
     userCreated,
@@ -145,6 +135,10 @@ export const signUp =
                         ...rest
                     })
                 );
+                cartService.create({
+                    _id: data.localId,
+                    products: []
+                });
             } catch (error) {
                 dispatch(authRequestFailed(error.message));
             }
@@ -167,15 +161,6 @@ function createUser(payload) {
     };
 }
 
-// export const loadUsersList = () => async (dispatch) => {
-//     dispatch(usersRequested());
-//     try {
-//         const { content } = await userService.get();
-//         dispatch(usersReceived(content));
-//     } catch (error) {
-//         dispatch(usersRequestFailed(error.message));
-//     }
-// };
 export const loadUserData = () => async (dispatch) => {
     dispatch(userRequested());
     try {
@@ -185,7 +170,6 @@ export const loadUserData = () => async (dispatch) => {
         dispatch(userRequestFailed(error.message));
     }
 };
-//
 export const updateUser = (payload) => async (dispatch) => {
     dispatch(userUpdateRequested());
     try {
@@ -197,15 +181,9 @@ export const updateUser = (payload) => async (dispatch) => {
     }
 };
 
-// export const getUsersList = () => (state) => state.users.entities;
 export const getCurrentUserData = () => (state) => {
     return state.users.entities;
 };
-// export const getUserById = (userId) => (state) => {
-//     if (state.users.entities) {
-//         return state.users.entities.find((u) => u._id === userId);
-//     }
-// };
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getDataStatus = () => (state) => state.users.dataLoaded;

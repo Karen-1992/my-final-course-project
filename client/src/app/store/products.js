@@ -47,7 +47,7 @@ export const getProductsList = () => (state) => state.products.entities;
 
 export const getProductById = (productId) => (state) => {
     if (state.products.entities) {
-        return state.products.entities.find((u) => u._id === productId);
+        return state.products.entities.find((p) => p._id === productId);
     }
 };
 
