@@ -32,19 +32,13 @@ const NavBar = () => {
                         </Link>
                     </li>
                 </ul>
-                {/* <div className="d-flex gap-3 px-3">
-                    <h4>
-                        <i className="bi bi-shop"></i>
-                    </h4>
-                    <h4>E-STORE</h4>
-                </div> */}
                 {isLoggedIn && (
                     <ul className="nav">
                         <li className="nav-item">
                             <Link
                                 className="nav-link"
                                 aria-current="page"
-                                to="/favorites"
+                                to="/cabinet/favorites"
                             >
                                 <div className="text-center">
                                     <h4>

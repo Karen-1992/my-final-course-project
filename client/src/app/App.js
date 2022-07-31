@@ -10,6 +10,10 @@ import AppLoader from "./components/ui/hoc/appLoader";
 import UserCabinet from "./layouts/userCabinet";
 import { ToastContainer } from "react-toastify";
 import CartLoader from "./components/ui/hoc/cartLoader";
+import PersonalPage from "./components/page/personalPage";
+import Orders from "./components/page/ordersPage/orders";
+import Reviews from "./components/page/reviewsPage";
+import Favorites from "./components/page/favoritesPage/favorites";
 
 function App() {
     return (
@@ -18,13 +22,15 @@ function App() {
                 <CartLoader>
                     <NavBar />
                     <Switch>
-                        {/* <Route path="/products" exact
-                            component={Products} /> */}
-                        <Route path="/products/:product?" exact
+                        <Route path="/products/:productId?" exact
                             component={Products} />
                         <Route path="/login/:type?" exact component={Login} />
                         <Route path="/logout" exact component={LogOut} />
-                        <Route path="/cabinet/:edit?" exact component={UserCabinet} />
+                        <Route path="/cabinet" exact component={UserCabinet} />
+                        <Route path="/cabinet/personal" exact component={PersonalPage} />
+                        <Route path="/cabinet/orders" exact component={Orders} />
+                        <Route path="/cabinet/favorites" exact component={Favorites} />
+                        <Route path="/cabinet/reviews" exact component={Reviews} />
                         <Route path="/cart" exact component={Cart} />
                         <Route path="/" exact component={Main} />
                         <Redirect to="/" />

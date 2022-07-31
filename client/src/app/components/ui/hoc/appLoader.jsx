@@ -4,7 +4,6 @@ import { getDataStatus, loadProductsList } from "../../../store/products";
 import PropTypes from "prop-types";
 import {
     getIsLoggedIn,
-    // getUserLoadingStatus,
     loadUserData
 } from "../../../store/users";
 import { loadCategoriesList } from "../../../store/categories";
@@ -12,7 +11,6 @@ import { loadCategoriesList } from "../../../store/categories";
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
-    // const userStatusLoading = useSelector(getUserLoadingStatus());
     const dataStatus = useSelector(getDataStatus());
     useEffect(() => {
         if (!dataStatus) {
@@ -21,14 +19,6 @@ const AppLoader = ({ children }) => {
         }
         if (isLoggedIn) dispatch(loadUserData());
     }, [isLoggedIn]);
-
-    // useEffect(() => {
-    //     if (!dataStatus) {
-    //         dispatch(loadProductsList());
-    //         dispatch(loadCategoriesList());
-    //         dispatch(loadUserInfo());
-    //     }
-    // }, []);
     if (!dataStatus) return "Loading";
     return children;
 };

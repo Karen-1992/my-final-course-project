@@ -48,7 +48,8 @@ export const getGalleryLoadingStatus = () => (state) =>
     state.gallery.isLoading;
 export const getGalleryById = (id) => (state) => {
     if (state.gallery.entities) {
-        return state.gallery.entities.find((p) => p._id === id);
+        const { images } = state.gallery.entities.find((p) => p.productId === id);
+        return images;
     }
 };
 

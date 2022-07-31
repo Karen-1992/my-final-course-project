@@ -1,7 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import cartService from "../services/cart.service";
-// import productService from "../services/product.service";
-// import { getUserId } from "../services/localStorage.service";
+import { nanoid } from "nanoid";
 
 const cartSlice = createSlice({
     name: "cart",
@@ -28,19 +27,13 @@ const cartSlice = createSlice({
         },
         productAdded: (state, action) => {
             state.entities.push(action.payload);
-            // const index = state.entities.findIndex((c) => c.productId === action.payload.productId);
-            // if (index === -1) {
-            //     state.entities.push(action.payload);
-            // } else {
-            //     state.entities[index].quantity += 1;
-            // }
         },
         productQuantityIncremented: (state, action) => {
-            const index = state.entities.findIndex((c) => c.productId === action.payload.productId);
+            const index = state.entities.findIndex((c) => c.productId === action.payload);
             state.entities[index].quantity += 1;
         },
         productQuantityDecremented: (state, action) => {
-            const index = state.entities.findIndex((c) => c.productId === action.payload.productId);
+            const index = state.entities.findIndex((c) => c.productId === action.payload);
             const prevQuantity = state.entities[index].quantity;
             if (prevQuantity > 1) {
                 state.entities[index].quantity -= 1;
@@ -63,12 +56,15 @@ const {
     productAdded,
     productRemoved,
     cartCleared,
-    productQuantityIncremented
+    productQuantityIncremented,
+    productQuantityDecremented
 } = actions;
 
 const addProductRequested = createAction("cart/addProductRequested");
 const removeProductRequested = createAction("cart/removeProductRequested");
 const clearCartRequested = createAction("cart/clearCartRequested");
+const decrementQuantityRequested = createAction("cart/decrementQuantityRequested");
+const incrementQuantityRequested = createAction("cart/incrementQuantityRequested");
 
 export const loadCartList = () => async (dispatch) => {
     dispatch(cartRequested());
@@ -80,24 +76,19 @@ export const loadCartList = () => async (dispatch) => {
     }
 };
 
-export const addProductToCart = (payload) => async (dispatch, getState) => {
+export const addProductToCart = ({ _id, stock }) => async (dispatch, getState) => {
     dispatch(addProductRequested());
+    const data = {
+        _id: nanoid(),
+        productId: _id,
+        quantity: 1
+    };
     try {
         const { entities } = getState().cart;
-        const productIndex = entities.findIndex(e => e.productId === payload.productId);
-        // const { content2 } = await productService.update({
-        //     stock: "dgfnthrg"
-        // });
-        if (productIndex === -1) {
-            const { content } = await cartService.add(payload);
+        const productIndex = entities.findIndex(e => e.productId === data.productId);
+        if (productIndex === -1 && stock > 0) {
+            const { content } = await cartService.add(data);
             dispatch(productAdded(content));
-        } else {
-            const newPayload = {
-                ...payload,
-                quantity: entities[productIndex].quantity + 1
-            };
-            const { content } = await cartService.add(newPayload);
-            dispatch(productQuantityIncremented(content));
         }
     } catch (error) {
         dispatch(cartRequestFailed(error.message));
@@ -116,6 +107,34 @@ export const removeProductFromCart = (payload) => async (dispatch) => {
         dispatch(cartRequestFailed(error.message));
     }
 };
+export const decrementQuantity = ({ productId, quantity }) => async (dispatch) => {
+    dispatch(decrementQuantityRequested());
+    try {
+        if (quantity > 1) {
+            await cartService.update({
+                productId,
+                quantity: quantity - 1
+            });
+            dispatch(productQuantityDecremented(productId));
+        }
+    } catch (error) {
+        dispatch(cartRequestFailed(error.message));
+    }
+};
+export const incrementQuantity = ({ productId, quantity, stock }) => async (dispatch) => {
+    dispatch(incrementQuantityRequested());
+    try {
+        if (stock > quantity) {
+            await cartService.update({
+                productId,
+                quantity: quantity + 1
+            });
+            dispatch(productQuantityIncremented(productId));
+        }
+    } catch (error) {
+        dispatch(cartRequestFailed(error.message));
+    }
+};
 export const clearCart = () => async (dispatch) => {
     dispatch(clearCartRequested());
     try {
@@ -129,9 +148,9 @@ export const getCartQuantity = () => (state) => state.cart.entities.length;
 export const getCartList = () => (state) => state.cart.entities;
 export const getCartLoadingStatus = () => (state) =>
     state.cart.isLoading;
-export const getCartById = (id) => (state) => {
-    if (state.cart.entities) {
-        return state.cart.entities.find((p) => p._id === id);
+export const getCartProductById = (id) => (state) => {
+    if (state.cart.entities.length) {
+        return state.cart.entities.find((p) => p.productId === id);
     }
 };
 

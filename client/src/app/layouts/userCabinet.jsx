@@ -2,7 +2,9 @@ import React from "react";
 
 const UserCabinet = () => {
     return (
-        <h1>My Cabinet</h1>
+        <>
+            <h1>My Cabinet</h1>
+        </>
     );
 };
 

@@ -2,30 +2,30 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart } from "../../../store/cart";
 import { getProductsList } from "../../../store/products";
+import history from "../../../utils/history";
 import ProductItem from "../../ui/productItem";
-import { nanoid } from "nanoid";
+// import { nanoid } from "nanoid";
 
 const ProductsListPage = () => {
     const dispatch = useDispatch();
     const products = useSelector(getProductsList());
     const cropProducts = products.slice(0, 16);
-    const handleAddToCart = (id) => {
-        const data = {
-            _id: nanoid(),
-            productId: id,
-            quantity: 1
-        };
+    const handleAddToCart = (data) => {
         dispatch(addProductToCart(data));
     };
+    const handleOpenProductPage = (productId) => {
+        history.push(`products/${productId}`);
+    };
     return (
-        <div className="container">
+        <div>
             <h1>ProductsListPage</h1>
             <div className="d-flex flex-wrap justify-content-evenly p-2">
                 {cropProducts.map(product => (
                     <ProductItem
                         {...product}
-                        onAddToCart={() => handleAddToCart(product._id)}
+                        onAddToCart={() => handleAddToCart(product)}
                         key={product._id}
+                        onOpenProductPage={() => handleOpenProductPage(product._id)}
                     />
                 ))}
             </div>

@@ -22,7 +22,7 @@ const productService = {
     // },
     update: async (payload) => {
         const { data } = await httpService.patch(
-            productEndpoint + payload.productId,
+            productEndpoint + payload._id,
             payload
         );
         return data;
