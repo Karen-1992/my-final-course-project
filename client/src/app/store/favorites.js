@@ -11,10 +11,10 @@ const favoriteSlice = createSlice({
         error: null
     },
     reducers: {
-        favoriteRequested: (state) => {
+        favoritesRequested: (state) => {
             state.isLoading = true;
         },
-        favoriteReceived: (state, action) => {
+        favoritesReceived: (state, action) => {
             if (action.payload) {
                 state.entities = action.payload;
             } else {
@@ -22,17 +22,17 @@ const favoriteSlice = createSlice({
             }
             state.isLoading = false;
         },
-        favoriteRequestFailed: (state, action) => {
+        favoritesRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },
-        productAdded: (state, action) => {
+        favoriteAdded: (state, action) => {
             state.entities.push(action.payload);
         },
-        productRemoved: (state, action) => {
+        favoriteRemoved: (state, action) => {
             state.entities = state.entities.filter(c => c.productId !== action.payload);
         },
-        favoriteCleared: (state) => {
+        favoritesCleared: (state) => {
             state.entities = [];
         }
     }
@@ -40,25 +40,25 @@ const favoriteSlice = createSlice({
 
 const { reducer: favoriteReducer, actions } = favoriteSlice;
 const {
-    favoriteRequested,
-    favoriteReceived,
-    favoriteRequestFailed,
-    productAdded,
-    productRemoved,
-    favoriteCleared
+    favoritesRequested,
+    favoritesReceived,
+    favoritesRequestFailed,
+    favoriteAdded,
+    favoriteRemoved,
+    favoritesCleared
 } = actions;
 
-const addProductRequested = createAction("favorite/addProductRequested");
-const removeProductRequested = createAction("favorite/removeProductRequested");
+const addFavoriteRequested = createAction("favorite/addFavoriteRequested");
+const removeFavoriteRequested = createAction("favorite/removeFavoriteRequested");
 const clearFavoriteRequested = createAction("favorite/clearfavoriteRequested");
 
 export const loadFavoritetList = () => async (dispatch) => {
-    dispatch(favoriteRequested());
+    dispatch(favoritesRequested());
     try {
         const { content } = await favoriteService.get();
-        dispatch(favoriteReceived(content));
+        dispatch(favoritesReceived(content));
     } catch (error) {
-        dispatch(favoriteRequestFailed(error.message));
+        dispatch(favoritesRequestFailed(error.message));
     }
 };
 
@@ -66,7 +66,7 @@ export const addProductToFavorite = ({ _id }) => async (dispatch, getState) => {
     if (localStorageService.getUserId() === null) {
         return history.push("/login");
     }
-    dispatch(addProductRequested());
+    dispatch(addFavoriteRequested());
     const data = {
         productId: _id
     };
@@ -75,23 +75,23 @@ export const addProductToFavorite = ({ _id }) => async (dispatch, getState) => {
         const productIndex = entities.findIndex(e => e.productId === data.productId);
         if (productIndex === -1) {
             const { content } = await favoriteService.add(data);
-            dispatch(productAdded(content));
+            dispatch(favoriteAdded(content));
         }
     } catch (error) {
-        dispatch(favoriteRequestFailed(error.message));
+        dispatch(favoritesRequestFailed(error.message));
     }
 };
 
 export const removeProductFromFavorite = (payload) => async (dispatch) => {
-    dispatch(removeProductRequested());
+    dispatch(removeFavoriteRequested());
     try {
         const { content } = await favoriteService.remove(payload);
         if (content === null) {
-            return dispatch(productRemoved(payload));
+            return dispatch(favoriteRemoved(payload));
         }
-        dispatch(productRemoved({ content, payload }));
+        dispatch(favoriteRemoved({ content, payload }));
     } catch (error) {
-        dispatch(favoriteRequestFailed(error.message));
+        dispatch(favoritesRequestFailed(error.message));
     }
 };
 
@@ -99,9 +99,9 @@ export const clearFavorite = () => async (dispatch) => {
     dispatch(clearFavoriteRequested());
     try {
         await favoriteService.clear();
-        dispatch(favoriteCleared());
+        dispatch(favoritesCleared());
     } catch (error) {
-        dispatch(favoriteRequestFailed(error.message));
+        dispatch(favoritesRequestFailed(error.message));
     }
 };
 export const getFavoriteQuantity = () => (state) => {

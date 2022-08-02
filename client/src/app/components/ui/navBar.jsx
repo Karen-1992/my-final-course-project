@@ -4,9 +4,12 @@ import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../../store/users";
 import NavProfile from "./navProfile";
 import { getCartQuantity } from "../../store/cart";
+import { getFavoriteQuantity } from "../../store/favorites";
+import NavItemWithCount from "../common/navItemWithCount";
 
 const NavBar = () => {
     const cartQuantity = useSelector(getCartQuantity());
+    const favoritesQuantity = useSelector(getFavoriteQuantity());
     const isLoggedIn = useSelector(getIsLoggedIn());
     return (
         <nav className="navbar bg-light mb-3">
@@ -28,24 +31,34 @@ const NavBar = () => {
                             aria-current="page"
                             to="/products"
                         >
-                            Продукты
+                            Товары
                         </Link>
                     </li>
+                    {isLoggedIn && (
+                        <li className="nav-item">
+                            <Link
+                                className="nav-link "
+                                aria-current="page"
+                                to="/dashboard"
+                            >
+                                Admin
+                            </Link>
+                        </li>
+                    )}
                 </ul>
                 {isLoggedIn && (
                     <ul className="nav">
                         <li className="nav-item">
                             <Link
-                                className="nav-link"
+                                className="nav-link position-relative"
                                 aria-current="page"
                                 to="/cabinet/favorites"
                             >
-                                <div className="text-center">
-                                    <h4>
-                                        <i className="bi bi-heart"></i>
-                                    </h4>
-                                    <p>Избранное</p>
-                                </div>
+                                <NavItemWithCount
+                                    quantity={favoritesQuantity}
+                                    title="Избранное"
+                                    iconClasses="bi bi-heart"
+                                />
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -54,21 +67,11 @@ const NavBar = () => {
                                 aria-current="page"
                                 to="/cart"
                             >
-                                <div className="text-center">
-                                    <h4>
-                                        <i className="bi bi-cart3">
-                                        </i>
-                                    </h4>
-                                    <p>Корзина</p>
-                                </div>
-                                {cartQuantity > 0 && (
-                                    <span
-                                        className="position-absolute top-0 start-100 translate-middle
-                                            badge rounded-pill bg-dark"
-                                    >
-                                        {cartQuantity}
-                                    </span>
-                                )}
+                                <NavItemWithCount
+                                    quantity={cartQuantity}
+                                    title="Корзина"
+                                    iconClasses="bi bi-cart3"
+                                />
                             </Link>
                         </li>
                     </ul>

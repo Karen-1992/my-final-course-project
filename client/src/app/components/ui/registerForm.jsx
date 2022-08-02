@@ -10,9 +10,11 @@ const RegisterForm = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState({
         name: "",
+        lastName: "",
         email: "",
         password: "",
         sex: "male",
+        adress: "",
         licence: false
     });
     const [errors, setErrors] = useState({});
@@ -25,11 +27,29 @@ const RegisterForm = () => {
     const validatorConfig = {
         name: {
             isRequired: {
-                message: "Имя и фамилия обязательны"
+                message: "Имя обязательно"
             },
             min: {
-                message: "Поле должно состоять минимум из 5 символов",
-                value: 5
+                message: "Имя должно состоять минимум из 3 символов",
+                value: 3
+            }
+        },
+        lastName: {
+            isRequired: {
+                message: "Фамилия обязательна"
+            },
+            min: {
+                message: "Фамилия должно состоять минимум из 3 символов",
+                value: 3
+            }
+        },
+        adress: {
+            isRequired: {
+                message: "Адресс обязателен"
+            },
+            min: {
+                message: "Адресс должен состоять минимум из 10 символов",
+                value: 10
             }
         },
         email: {
@@ -77,20 +97,22 @@ const RegisterForm = () => {
         const isValid = validate();
         if (!isValid) return;
         dispatch(signUp(data));
-        // console.log({
-        //     ...data,
-        //     profession: getProfessionById(profession),
-        //     qualities: getQualities(qualities)
-        // });
     };
     return (
         <form onSubmit={handleSubmit}>
             <TextField
-                label="Имя и фамилия"
+                label="Имя"
                 name="name"
                 value={data.name}
                 onChange={handleChange}
                 error={errors.name}
+            />
+            <TextField
+                label="Фамилия"
+                name="lastName"
+                value={data.lastName}
+                onChange={handleChange}
+                error={errors.lastName}
             />
             <TextField
                 label="Электронная почта"
@@ -117,6 +139,13 @@ const RegisterForm = () => {
                 name="sex"
                 onChange={handleChange}
                 label="Выберите ваш пол"
+            />
+            <TextField
+                label="Адресс"
+                name="adress"
+                value={data.adress}
+                onChange={handleChange}
+                error={errors.adress}
             />
             <CheckBoxField
                 value={data.licence}

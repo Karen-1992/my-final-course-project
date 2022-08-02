@@ -2,6 +2,7 @@ const TOKEN_KEY = "jwt-token";
 const REFRESH_KEY = "jwt-refresh-token";
 const EXPIRES_KEY = "jwt-expires";
 const USERID_KEY = "user-local-id";
+const FAVORITES = "favorites";
 
 export function setTokens({
     refreshToken,
@@ -35,12 +36,32 @@ export function getUserId() {
     return localStorage.getItem(USERID_KEY);
 }
 
+export function setFavorites() {
+    localStorage.setItem(FAVORITES, JSON.stringify([]));
+}
+export function getFavorites() {
+    return JSON.parse(localStorage.getItem(FAVORITES));
+}
+export function addFavorites(favoriteId) {
+    const favorites = JSON.parse(localStorage.getItem(FAVORITES));
+    const index = favorites.findIndex(f => f === favoriteId);
+    if (index === -1) {
+        favorites.push(favoriteId);
+    } else {
+        favorites.filter(f => f !== favoriteId);
+    }
+    localStorage.setItem(FAVORITES, JSON.stringify(favorites));
+}
+
 const localStorageService = {
     setTokens,
     getAccessToken,
     getRefreshToken,
     getTokenExpiresDate,
     getUserId,
-    removeAuthData
+    removeAuthData,
+    setFavorites,
+    getFavorites,
+    addFavorites
 };
 export default localStorageService;

@@ -9,11 +9,8 @@ import Cart from "./layouts/cart";
 import AppLoader from "./components/ui/hoc/appLoader";
 import UserCabinet from "./layouts/userCabinet";
 import { ToastContainer } from "react-toastify";
-// import PersonalPage from "./components/page/personalPage";
-// import Orders from "./components/page/ordersPage/orders";
-// import Reviews from "./components/page/reviewsPage";
-// import Favorites from "./components/page/favoritesPage/favorites";
 import ProtectedRoute from "./components/common/protectedRoute";
+import Dashboard from "./layouts/dashboard";
 
 function App() {
     return (
@@ -25,29 +22,13 @@ function App() {
                         component={Products} />
                     <Route path="/login/:type?" exact component={Login} />
                     <Route path="/logout" exact component={LogOut} />
-                    {/* <ProtectedRoute
-                        path="/cabinet/personal"
-                        component={PersonalPage}
-                    />
                     <ProtectedRoute
-                        path="/cabinet/orders"
-                        component={Orders}
-                    />
-                    <ProtectedRoute
-                        path="/cabinet/favorites"
-                        component={Favorites}
-                    />
-                    <ProtectedRoute
-                        path="/cabinet/reviews"
-                        component={Reviews}
-                    /> */}
-                    {/* <ProtectedRoute
-                        path="/cabinet"
+                        path="/cabinet/:type?/:edit?"
                         component={UserCabinet}
-                    /> */}
+                    />
                     <ProtectedRoute
-                        path="/cabinet/:type?"
-                        component={UserCabinet}
+                        path="/dashboard/:productId?"
+                        component={Dashboard}
                     />
                     <ProtectedRoute
                         path="/cart"

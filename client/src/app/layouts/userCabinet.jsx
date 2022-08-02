@@ -1,61 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Redirect, useParams } from "react-router-dom";
+import ProfileContentProxy from "../routes/ProfileContentProxy";
 import history from "../utils/history";
-import PersonalPage from "../components/page/personalPage";
-import Favorites from "../components/page/favoritesPage";
-import Orders from "../components/page/ordersPage";
-import Reviews from "../components/page/reviewsPage";
-import LogOut from "./logOut";
 
 const UserCabinet = () => {
-    const pages = [
-        {
-            name: "Personal",
-            path: "personal",
-            component: <PersonalPage />
-        },
-        {
-            name: "Favorites",
-            path: "favorites",
-            component: <Favorites />
-        },
-        {
-            name: "Reviews",
-            path: "reviews",
-            component: <Reviews />
-        },
-        {
-            name: "Orders",
-            path: "orders",
-            component: <Orders />
-        },
-        {
-            name: "LogOut",
-            path: "logout",
-            component: <LogOut />
-        }
-    ];
-    const [selectedPage, setSelectedPage] = useState(0);
-    const handleChangePage = (index) => {
-        setSelectedPage(index);
-        history.push(`/cabinet/${pages[index].path}`);
+    const { type, edit } = useParams();
+    const isEdit = edit === "edit";
+    const routes = ["personal", "favorites", "reviews", "orders", "logout"];
+    const [selectedRoute, setSelectedRoute] = useState("");
+    const handleChangeRoute = (route) => {
+        setSelectedRoute(route);
+        history.push(`/cabinet/${route}`);
     };
+    const isExistingRoute = routes.some(route => route === type);
+    useEffect(() => {
+        if (isExistingRoute) {
+            setSelectedRoute(type);
+        }
+    }, [type]);
     return (
-        <div className="d-flex flex-wrap justify-content-between">
+        <div className="d-flex justify-content-between">
             <div>
                 <ul className="list-group">
-                    {pages.map((page, index) => (
+                    {routes.map((route) => (
                         <li
-                            key={page.path}
-                            onClick={() => handleChangePage(index)}
-                            className={"list-group-item " + (selectedPage === index ? "active" : "")}
+                            key={route}
+                            onClick={() => handleChangeRoute(route)}
+                            className={"list-group-item " + (selectedRoute === route ? "active" : "")}
                             role="button"
                         >
-                            {page.name}
+                            {route}
                         </li>
                     ))}
                 </ul>
             </div>
-            {pages[selectedPage].component}
+            {!isExistingRoute ? (
+                <Redirect to={"/cabinet"} />
+            ) : (
+                <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
+            )}
         </div>
     );
 };

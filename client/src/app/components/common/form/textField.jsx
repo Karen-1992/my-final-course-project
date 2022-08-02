@@ -5,7 +5,11 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = ({ target }) => {
-        onChange({ name: target.name, value: target.value });
+        if (target.type === "number") {
+            onChange({ name: target.name, value: +target.value });
+        } else {
+            onChange({ name: target.name, value: target.value });
+        }
     };
     const getInputClasses = () => {
         return "form-control" + (error ? " is-invalid" : "");
@@ -50,7 +54,7 @@ TextField.propTypes = {
     label: PropTypes.string,
     type: PropTypes.string,
     name: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
     error: PropTypes.string
 };

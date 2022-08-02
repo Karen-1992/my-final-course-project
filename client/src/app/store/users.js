@@ -12,8 +12,6 @@ const initialState = localStorageService.getAccessToken()
         isLoading: true,
         error: null,
         auth: { userId: localStorageService.getUserId() },
-        favorites: null,
-        cart: null,
         isLoggedIn: true,
         dataLoaded: false
     }
@@ -23,7 +21,6 @@ const initialState = localStorageService.getAccessToken()
         error: null,
         auth: null,
         favorites: null,
-        cart: null,
         isLoggedIn: false,
         dataLoaded: false
     };
@@ -64,9 +61,10 @@ const usersSlice = createSlice({
             state.dataLoaded = false;
         },
         userUpdateSuccessed: (state, action) => {
-            state.entities[
-                state.entities.findIndex((u) => u._id === action.payload._id)
-            ] = action.payload;
+            state.entities = {
+                ...state.entities,
+                ...action.payload
+            };
         },
         authRequested: (state) => {
             state.error = null;
@@ -128,11 +126,6 @@ export const signUp =
                         cash: getRandomInt(1000, 5000),
                         role: "user",
                         // role: email === "administrator" ? "admin" : "user",
-                        // image: `https://avatars.dicebear.com/api/avataaars/${(
-                        //     Math.random() + 1
-                        // )
-                        //     .toString(36)
-                        //     .substring(7)}.svg`,
                         ...rest
                     })
                 );
@@ -152,6 +145,7 @@ function createUser(payload) {
             const { content } = await userService.create(payload);
             dispatch(userCreated(content));
             history.push("/products");
+            localStorageService.setFavorites();
         } catch (error) {
             dispatch(createUserFailed(error.message));
         }
@@ -172,7 +166,7 @@ export const updateUser = (payload) => async (dispatch) => {
     try {
         const { content } = await userService.update(payload);
         dispatch(userUpdateSuccessed(content));
-        // history.push(`/users/${content._id}`);
+        history.push("/cabinet/personal");
     } catch (error) {
         dispatch(userUpdateFailed(error.message));
     }

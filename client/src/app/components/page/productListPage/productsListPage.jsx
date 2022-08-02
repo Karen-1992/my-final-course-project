@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import localStorageService from "../../../services/localStorage.service";
 import { addProductToCart } from "../../../store/cart";
-import { addProductToFavorite } from "../../../store/favorites";
+// import { addProductToFavorite } from "../../../store/favorites";
 import { getProductsList } from "../../../store/products";
 import history from "../../../utils/history";
 import ProductItem from "../../ui/productItem";
@@ -13,8 +14,9 @@ const ProductsListPage = () => {
     const handleAddToCart = (data) => {
         dispatch(addProductToCart(data));
     };
-    const handleAddToFavorites = (data) => {
-        dispatch(addProductToFavorite(data));
+    const handleAddToFavorites = (id) => {
+        localStorageService.addFavorites(id);
+        // dispatch(addProductToFavorite(data));
     };
     const handleOpenProductPage = (productId) => {
         history.push(`products/${productId}`);
@@ -27,7 +29,7 @@ const ProductsListPage = () => {
                     <ProductItem
                         {...product}
                         onAddToCart={() => handleAddToCart(product)}
-                        onAddToFavorites={() => handleAddToFavorites(product)}
+                        onAddToFavorites={() => handleAddToFavorites(product._id)}
                         key={product._id}
                         onOpenProductPage={() => handleOpenProductPage(product._id)}
                     />

@@ -33,7 +33,11 @@ const ProductItem = ({
             }}
         >
             <div className="p-1">
-                <span className="bg bg-danger text-white p-1 rounded">-{discountPercentage}%</span>
+                {discountPercentage > 0 && (
+                    <span className="bg bg-danger text-white p-1 rounded">
+                        {`-${discountPercentage}%`}
+                    </span>
+                )}
             </div>
             <div onClick={onOpenProductPage} role="button">
                 <img
@@ -51,7 +55,7 @@ const ProductItem = ({
                     <span>Артикул: {getArtFromId(_id)}</span>
                 </div>
                 <p className="fw-bold" onClick={onOpenProductPage} role="button">{title}</p>
-                <h3>{price}</h3>
+                <h3>{`${price}$`}</h3>
                 <div className="d-flex justify-content-between">
                     <button
                         onClick={onAddToCart}
@@ -78,8 +82,8 @@ ProductItem.propTypes = {
     rating: PropTypes.number,
     _id: PropTypes.string,
     title: PropTypes.string,
-    discountPercentage: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
+    discountPercentage: PropTypes.number,
+    price: PropTypes.number,
     onAddToCart: PropTypes.func,
     onOpenProductPage: PropTypes.func,
     onAddToFavorites: PropTypes.func

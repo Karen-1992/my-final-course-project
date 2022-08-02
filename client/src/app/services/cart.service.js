@@ -10,13 +10,6 @@ const cartService = {
         );
         return data;
     },
-    create: async (payload) => {
-        const { data } = await httpService.put(
-            cartEndpoint + payload._id,
-            payload
-        );
-        return data;
-    },
     remove: async (payload) => {
         const { data } = await httpService.delete(
             cartEndpoint + localStorageService.getUserId() + `/${payload}`

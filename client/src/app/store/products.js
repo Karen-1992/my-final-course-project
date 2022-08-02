@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import productService from "../services/product.service";
+import history from "../utils/history";
 
 const initialState = {
     entities: null,
@@ -22,6 +23,17 @@ const productsSlice = createSlice({
         productsRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
+        },
+        productCreated: (state, action) => {
+            state.entities.push(action.payload);
+        },
+        productRemoved: (state, action) => {
+            state.entities = state.entities.filter(c => c.productId !== action.payload);
+        },
+        productUpdateSuccessed: (state, action) => {
+            state.entities[
+                state.entities.findIndex((p) => p._id === action.payload._id)
+            ] = action.payload;
         }
     }
 });
@@ -30,8 +42,17 @@ const { reducer: ProductsReducer, actions } = productsSlice;
 const {
     productsRequested,
     productsReceived,
-    productsRequestFailed
+    productsRequestFailed,
+    productRemoved,
+    productUpdateSuccessed
+    // productCreated,
 } = actions;
+
+const productRemoveRequested = createAction("products/productRemoveRequested");
+const removeProductFailed = createAction("products/removeProductFailed");
+// const productCreateRequested = createAction("products/productCreateRequested");
+const productUpdateRequested = createAction("products/productUpdateRequested");
+const productUpdateFailed = createAction("products/productUpdateFailed");
 
 export const loadProductsList = () => async (dispatch) => {
     dispatch(productsRequested());
@@ -40,6 +61,30 @@ export const loadProductsList = () => async (dispatch) => {
         dispatch(productsReceived(content));
     } catch (error) {
         dispatch(productsRequestFailed(error.message));
+    }
+};
+
+export const removeProduct = (payload) => async (dispatch) => {
+    dispatch(productRemoveRequested());
+    try {
+        const { content } = await productService.remove(payload);
+        if (content === null) {
+            return dispatch(productRemoved(payload));
+        }
+        dispatch(productRemoved({ content, payload }));
+    } catch (error) {
+        dispatch(removeProductFailed(error.message));
+    }
+};
+
+export const updateProduct = (payload) => async (dispatch) => {
+    dispatch(productUpdateRequested());
+    try {
+        const { content } = await productService.update(payload);
+        dispatch(productUpdateSuccessed(content));
+        history.push("/dashboard");
+    } catch (error) {
+        dispatch(productUpdateFailed(error.message));
     }
 };
 
