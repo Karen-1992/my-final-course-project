@@ -9,33 +9,53 @@ import Cart from "./layouts/cart";
 import AppLoader from "./components/ui/hoc/appLoader";
 import UserCabinet from "./layouts/userCabinet";
 import { ToastContainer } from "react-toastify";
-import CartLoader from "./components/ui/hoc/cartLoader";
-import PersonalPage from "./components/page/personalPage";
-import Orders from "./components/page/ordersPage/orders";
-import Reviews from "./components/page/reviewsPage";
-import Favorites from "./components/page/favoritesPage/favorites";
+// import PersonalPage from "./components/page/personalPage";
+// import Orders from "./components/page/ordersPage/orders";
+// import Reviews from "./components/page/reviewsPage";
+// import Favorites from "./components/page/favoritesPage/favorites";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 function App() {
     return (
-        <div className="">
+        <div className="container">
             <AppLoader>
-                <CartLoader>
-                    <NavBar />
-                    <Switch>
-                        <Route path="/products/:productId?" exact
-                            component={Products} />
-                        <Route path="/login/:type?" exact component={Login} />
-                        <Route path="/logout" exact component={LogOut} />
-                        <Route path="/cabinet" exact component={UserCabinet} />
-                        <Route path="/cabinet/personal" exact component={PersonalPage} />
-                        <Route path="/cabinet/orders" exact component={Orders} />
-                        <Route path="/cabinet/favorites" exact component={Favorites} />
-                        <Route path="/cabinet/reviews" exact component={Reviews} />
-                        <Route path="/cart" exact component={Cart} />
-                        <Route path="/" exact component={Main} />
-                        <Redirect to="/" />
-                    </Switch>
-                </CartLoader>
+                <NavBar />
+                <Switch>
+                    <Route path="/products/:productId?" exact
+                        component={Products} />
+                    <Route path="/login/:type?" exact component={Login} />
+                    <Route path="/logout" exact component={LogOut} />
+                    {/* <ProtectedRoute
+                        path="/cabinet/personal"
+                        component={PersonalPage}
+                    />
+                    <ProtectedRoute
+                        path="/cabinet/orders"
+                        component={Orders}
+                    />
+                    <ProtectedRoute
+                        path="/cabinet/favorites"
+                        component={Favorites}
+                    />
+                    <ProtectedRoute
+                        path="/cabinet/reviews"
+                        component={Reviews}
+                    /> */}
+                    {/* <ProtectedRoute
+                        path="/cabinet"
+                        component={UserCabinet}
+                    /> */}
+                    <ProtectedRoute
+                        path="/cabinet/:type?"
+                        component={UserCabinet}
+                    />
+                    <ProtectedRoute
+                        path="/cart"
+                        component={Cart}
+                    />
+                    <Route path="/" exact component={Main} />
+                    <Redirect to="/" />
+                </Switch>
             </AppLoader>
             <ToastContainer />
         </div>

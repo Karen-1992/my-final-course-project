@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import getArtFromId from "../../utils/getArtFromId";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getCartProductById } from "../../store/cart";
+import { getFavoriteProductById, removeProductFromFavorite } from "../../store/favorites";
 
 const ProductItem = ({
     thumbnail, rating,
@@ -11,9 +12,19 @@ const ProductItem = ({
     price,
     discountPercentage,
     onAddToCart,
-    onOpenProductPage
+    onOpenProductPage,
+    onAddToFavorites
 }) => {
+    const dispatch = useDispatch();
     const inCart = useSelector(getCartProductById(_id));
+    const isFavorite = useSelector(getFavoriteProductById(_id));
+    const toggleFavorite = () => {
+        if (!isFavorite) {
+            onAddToFavorites();
+        } else {
+            dispatch(removeProductFromFavorite(_id));
+        }
+    };
     return (
         <div
             className="d-flex flex-column justify-content-between mb-3 shadow"
@@ -53,8 +64,8 @@ const ProductItem = ({
                             "В корзине"
                         )}
                     </button>
-                    <h3>
-                        <i className="bi bi-heart" role="button"></i>
+                    <h3 onClick={toggleFavorite}>
+                        <i className={"bi bi-heart" + (isFavorite ? "-fill" : "")} role="button"></i>
                     </h3>
                 </div>
             </div>
@@ -63,14 +74,15 @@ const ProductItem = ({
 };
 
 ProductItem.propTypes = {
-    thumbnail: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    _id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string,
+    rating: PropTypes.number,
+    _id: PropTypes.string,
+    title: PropTypes.string,
     discountPercentage: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
-    onAddToCart: PropTypes.func.isRequired,
-    onOpenProductPage: PropTypes.func.isRequired
+    onAddToCart: PropTypes.func,
+    onOpenProductPage: PropTypes.func,
+    onAddToFavorites: PropTypes.func
 };
 
 export default ProductItem;

@@ -7,6 +7,8 @@ import {
     loadUserData
 } from "../../../store/users";
 import { loadCategoriesList } from "../../../store/categories";
+import { loadCartList } from "../../../store/cart";
+import { loadFavoritetList } from "../../../store/favorites";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const AppLoader = ({ children }) => {
         if (!dataStatus) {
             dispatch(loadProductsList());
             dispatch(loadCategoriesList());
+            dispatch(loadCartList());
+            dispatch(loadFavoritetList());
         }
         if (isLoggedIn) dispatch(loadUserData());
     }, [isLoggedIn]);

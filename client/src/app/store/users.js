@@ -5,7 +5,6 @@ import localStorageService from "../services/localStorage.service";
 import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
-import cartService from "../services/cart.service";
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -126,19 +125,17 @@ export const signUp =
                     createUser({
                         _id: data.localId,
                         email,
-                        cash: getRandomInt(100, 1000),
-                        image: `https://avatars.dicebear.com/api/avataaars/${(
-                            Math.random() + 1
-                        )
-                            .toString(36)
-                            .substring(7)}.svg`,
+                        cash: getRandomInt(1000, 5000),
+                        role: "user",
+                        // role: email === "administrator" ? "admin" : "user",
+                        // image: `https://avatars.dicebear.com/api/avataaars/${(
+                        //     Math.random() + 1
+                        // )
+                        //     .toString(36)
+                        //     .substring(7)}.svg`,
                         ...rest
                     })
                 );
-                cartService.create({
-                    _id: data.localId,
-                    products: []
-                });
             } catch (error) {
                 dispatch(authRequestFailed(error.message));
             }

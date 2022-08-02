@@ -1,6 +1,8 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import cartService from "../services/cart.service";
 import { nanoid } from "nanoid";
+import history from "../utils/history";
+import localStorageService from "../services/localStorage.service";
 
 const cartSlice = createSlice({
     name: "cart",
@@ -77,6 +79,9 @@ export const loadCartList = () => async (dispatch) => {
 };
 
 export const addProductToCart = ({ _id, stock }) => async (dispatch, getState) => {
+    if (localStorageService.getUserId() === null) {
+        return history.push("/login");
+    }
     dispatch(addProductRequested());
     const data = {
         _id: nanoid(),
@@ -144,12 +149,17 @@ export const clearCart = () => async (dispatch) => {
         dispatch(cartRequestFailed(error.message));
     }
 };
-export const getCartQuantity = () => (state) => state.cart.entities.length;
+export const getCartQuantity = () => (state) => {
+    if (state.cart.entities) {
+        return state.cart.entities.length;
+    }
+    return 0;
+};
 export const getCartList = () => (state) => state.cart.entities;
 export const getCartLoadingStatus = () => (state) =>
     state.cart.isLoading;
 export const getCartProductById = (id) => (state) => {
-    if (state.cart.entities.length) {
+    if (state.cart.entities) {
         return state.cart.entities.find((p) => p.productId === id);
     }
 };
