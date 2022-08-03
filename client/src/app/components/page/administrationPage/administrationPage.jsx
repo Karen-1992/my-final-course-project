@@ -7,11 +7,9 @@ const administrationPage = () => {
     const dispatch = useDispatch();
     const productsList = useSelector(getProductsList());
     const handleEdit = (id) => {
-        console.log("edit");
         history.push(`/dashboard/${id}`);
     };
     const handleRemove = (id) => {
-        console.log("remove");
         dispatch(removeProduct(id));
     };
     return (
@@ -22,7 +20,7 @@ const administrationPage = () => {
                 </div>
                 <div className="col-9">
                     <h3>AdministrationPage</h3>
-                    {productsList.map(p => (
+                    {productsList.map((p) => (
                         <div
                             key={p._id}
                             className="d-flex justify-content-between border-bottom mb-2"

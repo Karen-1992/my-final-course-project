@@ -24,7 +24,9 @@ const favoriteService = {
     },
     add: async (payload) => {
         const { data } = await httpService.put(
-            favoriteEndpoint + localStorageService.getUserId() + `/${payload.productId}`,
+            favoriteEndpoint +
+                localStorageService.getUserId() +
+                `/${payload.productId}`,
             payload
         );
         return data;

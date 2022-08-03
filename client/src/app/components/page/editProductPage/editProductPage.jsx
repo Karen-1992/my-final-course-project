@@ -17,12 +17,14 @@ const EditProductPage = ({ productId }) => {
         const isValid = validate();
         if (!isValid) return;
         const { price, discountPercentage, stock } = data;
-        dispatch(updateProduct({
-            ...data,
-            price,
-            discountPercentage,
-            stock
-        }));
+        dispatch(
+            updateProduct({
+                ...data,
+                price,
+                discountPercentage,
+                stock
+            })
+        );
     };
     useEffect(() => {
         if (currentProduct && !data) {

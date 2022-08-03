@@ -15,9 +15,7 @@ const productService = {
         return data;
     },
     remove: async (payload) => {
-        const { data } = await httpService.delete(
-            productEndpoint + payload
-        );
+        const { data } = await httpService.delete(productEndpoint + payload);
         return data;
     },
     update: async (payload) => {

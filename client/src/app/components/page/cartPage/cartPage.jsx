@@ -1,7 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../../ui/cartItem";
-import { clearCart, decrementQuantity, getCartList, incrementQuantity, removeProductFromCart } from "../../../store/cart";
+import {
+    clearCart,
+    decrementQuantity,
+    getCartList,
+    incrementQuantity,
+    removeProductFromCart
+} from "../../../store/cart";
 
 const CartPage = () => {
     const dispatch = useDispatch();
@@ -32,7 +38,7 @@ const CartPage = () => {
                         </button>
                     </div>
                     <div className="d-flex flex-column">
-                        {cartList.map(p => (
+                        {cartList.map((p) => (
                             <CartItem
                                 key={p._id}
                                 productId={p.productId}

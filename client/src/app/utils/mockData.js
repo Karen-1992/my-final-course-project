@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import products from "../mockData/products.json";
 import categories from "../mockData/categories.json";
-import gallery from "../mockData/gallery.json";
 import httpService from "../services/http.service";
 
 const useMockData = () => {
@@ -15,7 +14,7 @@ const useMockData = () => {
     const [status, setStatus] = useState(statusConsts.idle);
     const [progress, setProgress] = useState(0);
     const [count, setCount] = useState(0);
-    const summaryCount = products.length + categories.length + gallery.length;
+    const summaryCount = products.length + categories.length;
     const incrementCount = () => {
         setCount((prevState) => prevState + 1);
     };
@@ -43,10 +42,6 @@ const useMockData = () => {
             }
             for (const category of categories) {
                 await httpService.put("category/" + category._id, category);
-                incrementCount();
-            }
-            for (const galleryItem of gallery) {
-                await httpService.put("gallery/" + galleryItem._id, galleryItem);
                 incrementCount();
             }
         } catch (error) {

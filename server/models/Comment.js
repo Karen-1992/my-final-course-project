@@ -5,16 +5,16 @@ const  schema = new Schema({
         type: String,
         required: true
     },
-    pageId: {
+    productId: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Product",
         required: true
     },
     userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true
-    },
+    }
 }, {
     timestamps: { createdAt: "created_at" }
 });

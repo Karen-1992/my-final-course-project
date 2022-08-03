@@ -11,6 +11,7 @@ import UserCabinet from "./layouts/userCabinet";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Dashboard from "./layouts/dashboard";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     return (
@@ -18,8 +19,11 @@ function App() {
             <AppLoader>
                 <NavBar />
                 <Switch>
-                    <Route path="/products/:productId?" exact
-                        component={Products} />
+                    <Route
+                        path="/products/:productId?"
+                        exact
+                        component={Products}
+                    />
                     <Route path="/login/:type?" exact component={Login} />
                     <Route path="/logout" exact component={LogOut} />
                     <ProtectedRoute
@@ -30,10 +34,7 @@ function App() {
                         path="/dashboard/:productId?"
                         component={Dashboard}
                     />
-                    <ProtectedRoute
-                        path="/cart"
-                        component={Cart}
-                    />
+                    <ProtectedRoute path="/cart" component={Cart} />
                     <Route path="/" exact component={Main} />
                     <Redirect to="/" />
                 </Switch>

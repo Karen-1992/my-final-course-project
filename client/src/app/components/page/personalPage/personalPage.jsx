@@ -7,13 +7,8 @@ const PersonalPage = () => {
     };
     return (
         <div className="">
-            <h1>
-                User info is here
-            </h1>
-            <button
-                className="btn btn-light btn-sm"
-                onClick={handleClick}
-            >
+            <h1>User info is here</h1>
+            <button className="btn btn-light btn-sm" onClick={handleClick}>
                 <i className="bi bi-gear"> Изменить</i>
             </button>
         </div>

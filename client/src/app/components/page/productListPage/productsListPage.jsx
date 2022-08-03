@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import localStorageService from "../../../services/localStorage.service";
 import { addProductToCart } from "../../../store/cart";
-// import { addProductToFavorite } from "../../../store/favorites";
+import { toggleFavorite } from "../../../store/favorites";
 import { getProductsList } from "../../../store/products";
 import history from "../../../utils/history";
 import ProductItem from "../../ui/productItem";
@@ -15,8 +14,7 @@ const ProductsListPage = () => {
         dispatch(addProductToCart(data));
     };
     const handleAddToFavorites = (id) => {
-        localStorageService.addFavorites(id);
-        // dispatch(addProductToFavorite(data));
+        dispatch(toggleFavorite(id));
     };
     const handleOpenProductPage = (productId) => {
         history.push(`products/${productId}`);
@@ -25,13 +23,17 @@ const ProductsListPage = () => {
         <div>
             <h1>ProductsListPage</h1>
             <div className="d-flex flex-wrap justify-content-evenly p-2">
-                {cropProducts.map(product => (
+                {cropProducts.map((product) => (
                     <ProductItem
                         {...product}
                         onAddToCart={() => handleAddToCart(product)}
-                        onAddToFavorites={() => handleAddToFavorites(product._id)}
+                        onAddToFavorites={() =>
+                            handleAddToFavorites(product._id)
+                        }
                         key={product._id}
-                        onOpenProductPage={() => handleOpenProductPage(product._id)}
+                        onOpenProductPage={() =>
+                            handleOpenProductPage(product._id)
+                        }
                     />
                 ))}
             </div>

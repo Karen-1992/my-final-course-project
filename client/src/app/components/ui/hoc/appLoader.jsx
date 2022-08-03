@@ -2,10 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDataStatus, loadProductsList } from "../../../store/products";
 import PropTypes from "prop-types";
-import {
-    getIsLoggedIn,
-    loadUserData
-} from "../../../store/users";
+import { getIsLoggedIn, loadUserData } from "../../../store/users";
 import { loadCategoriesList } from "../../../store/categories";
 import { loadCartList } from "../../../store/cart";
 import { loadFavoritetList } from "../../../store/favorites";
@@ -18,8 +15,10 @@ const AppLoader = ({ children }) => {
         if (!dataStatus) {
             dispatch(loadProductsList());
             dispatch(loadCategoriesList());
-            dispatch(loadCartList());
-            dispatch(loadFavoritetList());
+            if (isLoggedIn) {
+                dispatch(loadCartList());
+                dispatch(loadFavoritetList());
+            }
         }
         if (isLoggedIn) dispatch(loadUserData());
     }, [isLoggedIn]);

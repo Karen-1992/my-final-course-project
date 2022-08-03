@@ -1,25 +1,34 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import localStorageService from "../../../services/localStorage.service";
+import { useSelector, useDispatch } from "react-redux";
 import { addProductToCart } from "../../../store/cart";
+import { clearFavorite, getFavoriteList, toggleFavorite } from "../../../store/favorites";
 import { getProductById } from "../../../store/products";
+import history from "../../../utils/history";
 import ProductItem from "../../ui/productItem";
 
 const Favorites = () => {
     const dispatch = useDispatch();
-    const favoritesList = localStorageService.getFavorites();
+    const favoritesIds = useSelector(getFavoriteList());
+    function transformData(idsArray) {
+        const result = [];
+        for (const item of idsArray) {
+            const product = useSelector(getProductById(item.productId));
+            result.push(product);
+        }
+        return result;
+    }
+    const favoritesList = transformData(favoritesIds);
     const handleClear = () => {
-        localStorageService.setFavorites();
+        dispatch(clearFavorite());
     };
     const handleAddToCart = (data) => {
         dispatch(addProductToCart(data));
     };
     const handleAddToFavorites = (id) => {
-        localStorageService.addFavorites(id);
-        // dispatch(addProductToFavorite(data));
+        dispatch(toggleFavorite(id));
     };
     const handleOpenProductPage = (productId) => {
-        history.push(`products/${productId}`);
+        history.push(`/products/${productId}`);
     };
     return (
         <div className="d-flex flex-column px-3">
@@ -33,13 +42,13 @@ const Favorites = () => {
                 </button>
             </div>
             <div className="d-flex flex-wrap gap-3">
-                {favoritesList.map(f => (
+                {favoritesList.map((favProduct) => (
                     <ProductItem
-                        key={f}
-                        {...useSelector(getProductById(f))}
-                        onAddToCart={() => handleAddToCart(f)}
-                        onAddToFavorites={() => handleAddToFavorites(f)}
-                        onOpenProductPage={() => handleOpenProductPage(f)}
+                        key={favProduct._id}
+                        {...favProduct}
+                        onAddToCart={() => handleAddToCart(favProduct)}
+                        onAddToFavorites={() => handleAddToFavorites(favProduct._id)}
+                        onOpenProductPage={() => handleOpenProductPage(favProduct._id)}
                     />
                 ))}
             </div>

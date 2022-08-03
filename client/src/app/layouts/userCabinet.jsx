@@ -12,7 +12,7 @@ const UserCabinet = () => {
         setSelectedRoute(route);
         history.push(`/cabinet/${route}`);
     };
-    const isExistingRoute = routes.some(route => route === type);
+    const isExistingRoute = routes.some((route) => route === type);
     useEffect(() => {
         if (isExistingRoute) {
             setSelectedRoute(type);
@@ -26,7 +26,10 @@ const UserCabinet = () => {
                         <li
                             key={route}
                             onClick={() => handleChangeRoute(route)}
-                            className={"list-group-item " + (selectedRoute === route ? "active" : "")}
+                            className={
+                                "list-group-item " +
+                                (selectedRoute === route ? "active" : "")
+                            }
                             role="button"
                         >
                             {route}

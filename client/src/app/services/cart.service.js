@@ -24,14 +24,18 @@ const cartService = {
     },
     update: async (payload) => {
         const { data } = await httpService.patch(
-            cartEndpoint + localStorageService.getUserId() + `/${payload.productId}`,
+            cartEndpoint +
+                localStorageService.getUserId() +
+                `/${payload.productId}`,
             payload
         );
         return data;
     },
     add: async (payload) => {
         const { data } = await httpService.put(
-            cartEndpoint + localStorageService.getUserId() + `/${payload.productId}`,
+            cartEndpoint +
+                localStorageService.getUserId() +
+                `/${payload.productId}`,
             payload
         );
         return data;

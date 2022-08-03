@@ -9,18 +9,14 @@ import EditPage from "../components/page/editPage";
 
 const ProfileContentProxy = ({ route, isEdit }) => {
     const contentByType = {
-        personal: !isEdit
-            ? <PersonalPage />
-            : <EditPage />,
+        personal: !isEdit ? <PersonalPage /> : <EditPage />,
         favorites: <Favorites />,
         reviews: <Reviews />,
         orders: <Orders />,
         logout: <LogOut />
     };
     const CurrentProfileContent = () => contentByType[route];
-    return (
-        <CurrentProfileContent />
-    );
+    return <CurrentProfileContent />;
 };
 
 ProfileContentProxy.propTypes = {

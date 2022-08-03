@@ -2,7 +2,12 @@ const { Schema, model } = require("mongoose");
 
 const  schema = new Schema({
     name: {
-        type: String
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
     },
     email: {
         type: String,
@@ -10,23 +15,23 @@ const  schema = new Schema({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        required: true,
     },
-    completedMeetings: Number,
-    image: String,
-    rate: Number,
+    address: {
+        type: String,
+        required: true
+    },
+    cash: Number,
     sex: {
         type: String,
         enum: ["male", "female", "other"]
     },
-    profession: {
-        type: Schema.Types.ObjectId,
-        ref: "Profession"
+    role: {
+        type: String,
+        enum: ["user", "admin"]
     },
-    qualities: [{
-        type: Schema.Types.ObjectId,
-        ref: "Quality"
-    }]
+    phone: String
 }, {
     timestamps: true
 });

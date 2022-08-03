@@ -30,7 +30,9 @@ const favoriteSlice = createSlice({
             state.entities.push(action.payload);
         },
         favoriteRemoved: (state, action) => {
-            state.entities = state.entities.filter(c => c.productId !== action.payload);
+            state.entities = state.entities.filter(
+                (f) => f.productId !== action.payload
+            );
         },
         favoritesCleared: (state) => {
             state.entities = [];
@@ -48,9 +50,10 @@ const {
     favoritesCleared
 } = actions;
 
-const addFavoriteRequested = createAction("favorite/addFavoriteRequested");
-const removeFavoriteRequested = createAction("favorite/removeFavoriteRequested");
+const toggleFavoriteRequested = createAction("favorite/toggleFavoriteRequested");
+const toggleFavoriteFailed = createAction("favorite/toggleFavoriteFailed");
 const clearFavoriteRequested = createAction("favorite/clearfavoriteRequested");
+const clearFavoriteFailed = createAction("favorite/clearFavoriteFailed");
 
 export const loadFavoritetList = () => async (dispatch) => {
     dispatch(favoritesRequested());
@@ -62,38 +65,29 @@ export const loadFavoritetList = () => async (dispatch) => {
     }
 };
 
-export const addProductToFavorite = ({ _id }) => async (dispatch, getState) => {
-    if (localStorageService.getUserId() === null) {
-        return history.push("/login");
-    }
-    dispatch(addFavoriteRequested());
-    const data = {
-        productId: _id
-    };
-    try {
-        const { entities } = getState().favorites;
-        const productIndex = entities.findIndex(e => e.productId === data.productId);
-        if (productIndex === -1) {
-            const { content } = await favoriteService.add(data);
-            dispatch(favoriteAdded(content));
-        }
-    } catch (error) {
-        dispatch(favoritesRequestFailed(error.message));
-    }
-};
-
-export const removeProductFromFavorite = (payload) => async (dispatch) => {
-    dispatch(removeFavoriteRequested());
-    try {
-        const { content } = await favoriteService.remove(payload);
-        if (content === null) {
-            return dispatch(favoriteRemoved(payload));
-        }
-        dispatch(favoriteRemoved({ content, payload }));
-    } catch (error) {
-        dispatch(favoritesRequestFailed(error.message));
-    }
-};
+export const toggleFavorite =
+    (productId) =>
+        async (dispatch, getState) => {
+            if (localStorageService.getUserId() === null) {
+                return history.push("/login");
+            }
+            dispatch(toggleFavoriteRequested());
+            const { entities } = getState().favorites;
+            const productIndex = entities.findIndex(
+                (e) => e.productId === productId
+            );
+            try {
+                if (productIndex === -1) {
+                    await favoriteService.add({ productId });
+                    dispatch(favoriteAdded({ productId }));
+                } else {
+                    await favoriteService.remove(productId);
+                    dispatch(favoriteRemoved(productId));
+                }
+            } catch (error) {
+                dispatch(toggleFavoriteFailed(error.message));
+            }
+        };
 
 export const clearFavorite = () => async (dispatch) => {
     dispatch(clearFavoriteRequested());
@@ -101,7 +95,7 @@ export const clearFavorite = () => async (dispatch) => {
         await favoriteService.clear();
         dispatch(favoritesCleared());
     } catch (error) {
-        dispatch(favoritesRequestFailed(error.message));
+        dispatch(clearFavoriteFailed(error.message));
     }
 };
 export const getFavoriteQuantity = () => (state) => {
@@ -113,9 +107,9 @@ export const getFavoriteQuantity = () => (state) => {
 export const getFavoriteList = () => (state) => state.favorites.entities;
 export const getFavoriteLoadingStatus = () => (state) =>
     state.favorites.isLoading;
-export const getFavoriteProductById = (id) => (state) => {
+export const getIsFavorite = (id) => (state) => {
     if (state.favorites.entities) {
-        return state.favorites.entities.find((p) => p.productId === id);
+        return state.favorites.entities.find((f) => f.productId === id);
     }
 };
 

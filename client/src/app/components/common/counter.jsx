@@ -1,11 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Counter = ({
-    quantity,
-    onIncrement,
-    onDecrement
-}) => {
+const Counter = ({ quantity, onIncrement, onDecrement }) => {
     return (
         <div>
             <div className="d-flex flex-row">

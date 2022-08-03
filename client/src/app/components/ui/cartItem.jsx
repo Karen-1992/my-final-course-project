@@ -38,9 +38,7 @@ const CartItem = ({
                 />
             </div>
             <div>
-                <h4>
-                    {product.title}
-                </h4>
+                <h4>{product.title}</h4>
                 <p>В наличии</p>
                 <p>Остаток {product.stock}</p>
                 <p>Код товара: {getArtFromId(productId)}</p>
@@ -51,7 +49,9 @@ const CartItem = ({
                 onIncrement={handleIncrement}
             />
             <div>
-                <button className="btn btn-danger" onClick={onRemove}>Удалить</button>
+                <button className="btn btn-danger" onClick={onRemove}>
+                    Удалить
+                </button>
             </div>
         </div>
     );

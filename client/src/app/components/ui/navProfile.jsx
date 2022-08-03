@@ -22,10 +22,7 @@ function NavProfile() {
                 </div>
             </div>
             <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
-                <Link
-                    to={"/cabinet"}
-                    className="dropdown-item"
-                >
+                <Link to={"/cabinet"} className="dropdown-item">
                     Личный кабинет
                 </Link>
                 <Link to="/logout" className="dropdown-item">

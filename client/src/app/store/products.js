@@ -28,7 +28,9 @@ const productsSlice = createSlice({
             state.entities.push(action.payload);
         },
         productRemoved: (state, action) => {
-            state.entities = state.entities.filter(c => c.productId !== action.payload);
+            state.entities = state.entities.filter(
+                (c) => c.productId !== action.payload
+            );
         },
         productUpdateSuccessed: (state, action) => {
             state.entities[
@@ -97,6 +99,7 @@ export const getProductById = (productId) => (state) => {
 };
 
 export const getDataStatus = () => (state) => state.products.dataLoaded;
-export const getProductsLoadingStatus = () => (state) => state.products.isLoading;
+export const getProductsLoadingStatus = () => (state) =>
+    state.products.isLoading;
 
 export default ProductsReducer;
