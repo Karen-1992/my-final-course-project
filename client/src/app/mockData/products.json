@@ -475,25 +475,6 @@
         ]
     },
     {
-        "_id": "62ead7336e4076390fad849c",
-        "title": "Handcraft Chinese style",
-        "brand": "luxury palace",
-        "category": "62eac759f602ec3162ad2bbc",
-        "description": "Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate",
-        "discountPercentage": 15,
-        "price": 60,
-        "rating": 4.44,
-        "stock": 7,
-        "thumbnail": "https://dummyjson.com/image/i/products/29/thumbnail.webp",
-        "images": [
-            "https://dummyjson.com/image/i/products/29/1.jpg",
-            "https://dummyjson.com/image/i/products/29/2.jpg",
-            "https://dummyjson.com/image/i/products/29/3.webp",
-            "https://dummyjson.com/image/i/products/29/4.webp",
-            "https://dummyjson.com/image/i/products/29/thumbnail.webp"
-        ]
-    },
-    {
         "_id": "62ead7336e4076390fad849d",
         "title": "Key Holder",
         "brand": "Golden",

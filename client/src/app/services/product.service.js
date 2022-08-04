@@ -7,6 +7,11 @@ const productService = {
         const { data } = await httpService.get(productEndpoint);
         return data;
     },
+    getOneProduct: async (productId) => {
+        const { data } = await httpService.get(productEndpoint +
+            productId);
+        return data;
+    },
     create: async (payload) => {
         const { data } = await httpService.put(
             productEndpoint + payload._id,

@@ -60,6 +60,11 @@ const RegisterForm = () => {
                 message: "Email введен некорректно"
             }
         },
+        phone: {
+            isRequired: {
+                message: "Телефон обязательный для заполнения"
+            }
+        },
         password: {
             isRequired: {
                 message: "Пароль обязателен для заполнения"
@@ -128,6 +133,13 @@ const RegisterForm = () => {
                 value={data.password}
                 onChange={handleChange}
                 error={errors.password}
+            />
+            <TextField
+                label="Телефон"
+                name="phone"
+                value={data.phone}
+                onChange={handleChange}
+                error={errors.phone}
             />
             <RadioField
                 options={[

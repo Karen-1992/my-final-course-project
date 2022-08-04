@@ -70,11 +70,15 @@ const ProductItem = ({
                 >
                     {title}
                 </p>
-                <div className="d-flex gap-2 justify-content-center">
-                    <span className="fw-bold">{`${finalPrice}$`}</span>
-                    <span className="text-decoration-line-through">{`${price}$`}</span>
-                    <span className="fw-bold text-danger">{`-${discountValue}$`}</span>
-                </div>
+                {discountPercentage > 0 ? (
+                    <div className="d-flex gap-2 justify-content-center">
+                        <span className="fw-bold">{`${finalPrice}$`}</span>
+                        <span className="text-decoration-line-through">{`${price}$`}</span>
+                        <span className="fw-bold text-danger">{`-${discountValue}$`}</span>
+                    </div>
+                ) : (
+                    <span className="fw-bold">{`${price}$`}</span>
+                )}
                 <div className="d-flex justify-content-between">
                     <button
                         onClick={onAddToCart}

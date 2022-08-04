@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Dashboard from "./layouts/dashboard";
 import "react-toastify/dist/ReactToastify.css";
+import InitMockData from "./layouts/initMockData";
 
 function App() {
     return (
@@ -19,6 +20,11 @@ function App() {
             <AppLoader>
                 <NavBar />
                 <Switch>
+                    <Route
+                        path="/initdata"
+                        exact
+                        component={InitMockData}
+                    />
                     <Route
                         path="/products/:productId?"
                         exact

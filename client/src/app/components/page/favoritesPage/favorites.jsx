@@ -30,6 +30,7 @@ const Favorites = () => {
     const handleOpenProductPage = (productId) => {
         history.push(`/products/${productId}`);
     };
+    console.log(favoritesList);
     return (
         <div className="d-flex flex-column px-3">
             <div className="d-flex justify-content-between mb-5">

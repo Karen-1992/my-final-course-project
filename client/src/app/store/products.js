@@ -4,6 +4,7 @@ import history from "../utils/history";
 
 const initialState = {
     entities: null,
+    currentProduct: null,
     isLoading: true,
     error: null,
     dataLoaded: false
@@ -29,13 +30,16 @@ const productsSlice = createSlice({
         },
         productRemoved: (state, action) => {
             state.entities = state.entities.filter(
-                (c) => c.productId !== action.payload
+                (c) => c._id !== action.payload
             );
         },
         productUpdateSuccessed: (state, action) => {
             state.entities[
                 state.entities.findIndex((p) => p._id === action.payload._id)
             ] = action.payload;
+        },
+        oneProductGot: (state, action) => {
+            state.currentProduct = action.payload;
         }
     }
 });
@@ -70,6 +74,7 @@ export const removeProduct = (payload) => async (dispatch) => {
     dispatch(productRemoveRequested());
     try {
         const { content } = await productService.remove(payload);
+        console.log(payload);
         if (content === null) {
             return dispatch(productRemoved(payload));
         }
@@ -89,6 +94,18 @@ export const updateProduct = (payload) => async (dispatch) => {
         dispatch(productUpdateFailed(error.message));
     }
 };
+
+// export const getProductFromServer = (payload) => async (dispatch) => {
+//     try {
+//         dispatch(productsRequested);
+//         console.log(payload);
+//         const { content } = await productService.getOneProduct(payload);
+//         console.log(content);
+//     } catch (error) {
+//         console.log(error);
+//         dispatch(productsRequestFailed);
+//     }
+// };
 
 export const getProductsList = () => (state) => state.products.entities;
 

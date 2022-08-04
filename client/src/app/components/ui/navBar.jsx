@@ -16,6 +16,15 @@ const NavBar = () => {
             <div className="container-fluid">
                 <ul className="nav">
                     <li className="nav-item">
+                        <Link
+                            className="nav-link "
+                            aria-current="page"
+                            to="/initdata"
+                        >
+                            InitData
+                        </Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link " aria-current="page" to="/">
                             <div className="d-flex gap-3 px-3">
                                 <h4>

@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { getProductById } from "../../store/products";
 import getArtFromId from "../../utils/getArtFromId";
 import Counter from "../common/counter";
+import productService from "../../services/product.service";
+import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
 
 const CartItem = ({
     productId,
@@ -13,6 +15,11 @@ const CartItem = ({
     onIncrement
 }) => {
     const product = useSelector(getProductById(productId));
+    async function getOneProduct(id) {
+        const { content } = await productService.getOneProduct(id);
+        return content;
+    }
+    getOneProduct(productId);
     const data = {
         productId,
         quantity,
@@ -24,8 +31,9 @@ const CartItem = ({
     const handleIncrement = () => {
         onIncrement(data);
     };
+    const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
     return (
-        <div className="d-flex flex-wrap justify-content-between border-bottom">
+        <div className="d-flex justify-content-between border-bottom">
             <div
                 style={{
                     width: "150px"
@@ -43,11 +51,14 @@ const CartItem = ({
                 <p>Остаток {product.stock}</p>
                 <p>Код товара: {getArtFromId(productId)}</p>
             </div>
-            <Counter
-                quantity={quantity}
-                onDecrement={handleDecrement}
-                onIncrement={handleIncrement}
-            />
+            <div>
+                <Counter
+                    quantity={quantity}
+                    onDecrement={handleDecrement}
+                    onIncrement={handleIncrement}
+                />
+                <p>{finalPrice * quantity}$</p>
+            </div>
             <div>
                 <button className="btn btn-danger" onClick={onRemove}>
                     Удалить
