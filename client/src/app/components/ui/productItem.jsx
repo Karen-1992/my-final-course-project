@@ -32,7 +32,7 @@ const ProductItem = ({
         >
             <div className="p-1">
                 {discountPercentage > 0 && (
-                    <span className="bg bg-danger text-white p-1 rounded">
+                    <span className="bg bg-danger text-white px-2 rounded">
                         {`-${discountPercentage}%`}
                     </span>
                 )}
@@ -59,12 +59,12 @@ const ProductItem = ({
                 <div className="d-flex justify-content-between">
                     <div>
                         <i className="bi bi-star"></i>
-                        <span> {rating}</span>
+                        <span className="fw-light"> {rating}</span>
                     </div>
-                    <span>Артикул: {getArtFromId(_id)}</span>
+                    <span className="fw-light">Код: {getArtFromId(_id)}</span>
                 </div>
                 <p
-                    className="fw-bold"
+                    className="fw-semibold"
                     onClick={onOpenProductPage}
                     role="button"
                 >
@@ -72,9 +72,9 @@ const ProductItem = ({
                 </p>
                 {discountPercentage > 0 ? (
                     <div className="d-flex gap-2 justify-content-center">
-                        <span className="fw-bold">{`${finalPrice}$`}</span>
+                        <span className="fw-semibold">{`${finalPrice}$`}</span>
                         <span className="text-decoration-line-through">{`${price}$`}</span>
-                        <span className="fw-bold text-danger">{`-${discountValue}$`}</span>
+                        <span className="fw-semibold text-danger">{`-${discountValue}$`}</span>
                     </div>
                 ) : (
                     <span className="fw-bold">{`${price}$`}</span>

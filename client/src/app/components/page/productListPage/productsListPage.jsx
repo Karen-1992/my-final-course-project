@@ -6,7 +6,7 @@ import { toggleFavorite } from "../../../store/favorites";
 import { getProductsList } from "../../../store/products";
 import history from "../../../utils/history";
 import { paginate } from "../../../utils/paginate";
-import GroupList from "../../common/form/groupList";
+import GroupList from "../../common/groupList";
 import SelectField from "../../common/form/selectField";
 import Pagination from "../../common/pagination";
 import ProductItem from "../../ui/productItem";
@@ -93,7 +93,6 @@ const ProductsListPage = () => {
                     <div className="col-3">
                         {categoriesList && !categoriesLoading && (
                             <div className="d-flex flex-column flex-shrink-0 p-3">
-                                filter
                                 <GroupList
                                     selectedItem={selectedCategory}
                                     items={categoriesList}
@@ -125,7 +124,7 @@ const ProductsListPage = () => {
                                 <input
                                     type="text"
                                     name="searchQuery"
-                                    placeholder="Search..."
+                                    placeholder="Введите название..."
                                     onChange={handleSearchQuery}
                                     value={searchQuery}
                                     className="w-100 position-relative"
@@ -135,7 +134,7 @@ const ProductsListPage = () => {
                                 )}
                             </div>
                         </div>
-                        <div className="d-flex flex-wrap justify-content-evenly p-2 mt-5">
+                        <div className="d-flex flex-wrap justify-content-evenly mt-5">
                             {productsCrop.map((product) => (
                                 <ProductItem
                                     {...product}

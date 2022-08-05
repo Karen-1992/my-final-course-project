@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PersonalPage from "../components/page/personalPage";
-import Favorites from "../components/page/favoritesPage";
-import Reviews from "../components/page/reviewsPage";
-import Orders from "../components/page/ordersPage";
+import PersonalPage from "../components/page/personalPage/personalPage";
+import Favorites from "../components/page/favoritesPage/favorites";
+import Reviews from "../components/page/reviewsPage/reviews";
+import Orders from "../components/page/ordersPage/orders";
 import LogOut from "../layouts/logOut";
-import EditPage from "../components/page/editPage";
+import EditPage from "../components/page/editPage/editPage";
 
 const ProfileContentProxy = ({ route, isEdit }) => {
     const contentByType = {

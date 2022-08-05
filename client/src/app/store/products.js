@@ -1,6 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
+import { nanoid } from "nanoid";
 import productService from "../services/product.service";
-import history from "../utils/history";
+import getRandomInt from "../utils/getRandomInt";
 
 const initialState = {
     entities: null,
@@ -50,13 +51,14 @@ const {
     productsReceived,
     productsRequestFailed,
     productRemoved,
-    productUpdateSuccessed
-    // productCreated,
+    productUpdateSuccessed,
+    productCreated
 } = actions;
 
 const productRemoveRequested = createAction("products/productRemoveRequested");
 const removeProductFailed = createAction("products/removeProductFailed");
-// const productCreateRequested = createAction("products/productCreateRequested");
+const productCreateRequested = createAction("products/productCreateRequested");
+const productCreateFailed = createAction("products/productCreateFailed");
 const productUpdateRequested = createAction("products/productUpdateRequested");
 const productUpdateFailed = createAction("products/productUpdateFailed");
 
@@ -89,7 +91,21 @@ export const updateProduct = (payload) => async (dispatch) => {
     try {
         const { content } = await productService.update(payload);
         dispatch(productUpdateSuccessed(content));
-        history.push("/dashboard");
+    } catch (error) {
+        dispatch(productCreateFailed(error.message));
+    }
+};
+
+export const createProduct = (payload) => async (dispatch) => {
+    dispatch(productCreateRequested());
+    try {
+        const { content } = await productService.create({
+            ...payload,
+            _id: nanoid(),
+            raiting: getRandomInt(0, 5),
+            images: []
+        });
+        dispatch(productCreated(content));
     } catch (error) {
         dispatch(productUpdateFailed(error.message));
     }

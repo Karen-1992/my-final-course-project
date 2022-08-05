@@ -1,3 +1,3 @@
 export default function getArtFromId(id) {
-    return id.slice(-7);
+    return id.slice(-4);
 }
