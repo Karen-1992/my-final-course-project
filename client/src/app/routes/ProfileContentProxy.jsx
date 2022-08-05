@@ -5,7 +5,7 @@ import Favorites from "../components/page/favoritesPage/favorites";
 import Reviews from "../components/page/reviewsPage/reviews";
 import Orders from "../components/page/ordersPage/orders";
 import LogOut from "../layouts/logOut";
-import EditPage from "../components/page/editPage/editPage";
+import EditPage from "../components/page/editUserPage/editPage";
 
 const ProfileContentProxy = ({ route, isEdit }) => {
     const contentByType = {

@@ -10,7 +10,7 @@ import AppLoader from "./components/ui/hoc/appLoader";
 import UserCabinet from "./layouts/userCabinet";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common/protectedRoute";
-import Dashboard from "./layouts/dashboard";
+import Dashboard from "./components/page/dashboard/dashboard";
 import "react-toastify/dist/ReactToastify.css";
 import InitMockData from "./layouts/initMockData";
 

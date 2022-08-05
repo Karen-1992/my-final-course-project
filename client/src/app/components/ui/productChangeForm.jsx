@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "../common/form/textField";
 import PropTypes from "prop-types";
+import SelectField from "../common/form/selectField";
 
 const ProductChangeForm = ({
     onSubmit,
@@ -9,7 +10,8 @@ const ProductChangeForm = ({
     data,
     errors,
     isValid,
-    productId
+    productId,
+    categoriesList
 }) => {
     return (
         <form onSubmit={onSubmit}>
@@ -27,10 +29,12 @@ const ProductChangeForm = ({
                 onChange={onChange}
                 error={errors.brand}
             />
-            <TextField
-                label="Category"
+            <SelectField
                 name="category"
+                label="Category"
                 value={data.category}
+                defaultOption="Choose..."
+                options={categoriesList}
                 onChange={onChange}
                 error={errors.category}
             />
@@ -83,7 +87,7 @@ const ProductChangeForm = ({
                 {productId ? "Обновить" : "Добавить"}
             </button>
             <button
-                type="btn"
+                type="button"
                 onClick={onCancel}
                 className="btn btn-warning w-50 mx-auto"
             >
@@ -98,6 +102,7 @@ ProductChangeForm.propTypes = {
     onChange: PropTypes.func,
     onCancel: PropTypes.func,
     data: PropTypes.object,
+    categoriesList: PropTypes.array,
     errors: PropTypes.object,
     isValid: PropTypes.bool,
     productId: PropTypes.string
