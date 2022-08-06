@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Counter = ({ quantity, onIncrement, onDecrement }) => {
     return (
-        <div>
+        <div className="d-flex justify-content-center">
             <div className="d-flex flex-row">
                 <button
                     className="btn btn-outline-danger btn-sm my-2"

@@ -26,12 +26,12 @@ const LoginForm = () => {
     const validatorConfig = {
         email: {
             isRequired: {
-                message: "Электронная почта обязательна для заполнения"
+                message: "isRequired"
             }
         },
         password: {
             isRequired: {
-                message: "Пароль обязателен для заполнения"
+                message: "isRequired"
             }
         }
     };
@@ -80,6 +80,12 @@ const LoginForm = () => {
                 Оставаться в системе
             </CheckBoxField>
             {loginError && <p className="text-danger">{loginError}</p>}
+            {!isValid &&
+                <p>
+                    <span className="text-danger">*</span>
+                    Поле обязательно для заполнения
+                </p>
+            }
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"

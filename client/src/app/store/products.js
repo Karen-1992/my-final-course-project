@@ -1,6 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 import productService from "../services/product.service";
+import { getPriceWithDiscount } from "../utils/getPriceWithDiscount";
 import getRandomInt from "../utils/getRandomInt";
 
 const initialState = {
@@ -76,7 +77,6 @@ export const removeProduct = (payload) => async (dispatch) => {
     dispatch(productRemoveRequested());
     try {
         const { content } = await productService.remove(payload);
-        console.log(payload);
         if (content === null) {
             return dispatch(productRemoved(payload));
         }
@@ -132,7 +132,34 @@ export const getProductById = (productId) => (state) => {
 };
 
 export const getDataStatus = () => (state) => state.products.dataLoaded;
-export const getProductsLoadingStatus = () => (state) =>
-    state.products.isLoading;
+export const getProductsLoadingStatus = () => (state) => state.products.isLoading;
+
+export const getProductsByIds = (idsArr) => (state) => {
+    const result = [];
+    if (idsArr) {
+        for (const idsItem of idsArr) {
+            for (const product of state.products.entities) {
+                if (idsItem.productId === product._id) {
+                    result.push(product);
+                }
+            }
+        }
+    }
+    return result;
+};
+export const getTotalPrice = (idsArr) => (state) => {
+    let result = 0;
+    if (idsArr) {
+        for (const item of idsArr) {
+            for (const product of state.products.entities) {
+                if (item.productId === product._id) {
+                    const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
+                    result += finalPrice * item.quantity;
+                }
+            }
+        }
+    }
+    return result;
+};
 
 export default ProductsReducer;

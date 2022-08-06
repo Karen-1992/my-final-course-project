@@ -16,6 +16,7 @@ const AppLoader = ({ children }) => {
             dispatch(loadProductsList());
             dispatch(loadCategoriesList());
             if (isLoggedIn) {
+                // dispatch(loadUserData());
                 dispatch(loadCartList());
                 dispatch(loadFavoritetList());
             }

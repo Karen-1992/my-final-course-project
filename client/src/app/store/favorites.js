@@ -109,7 +109,7 @@ export const getFavoriteLoadingStatus = () => (state) =>
     state.favorites.isLoading;
 export const getIsFavorite = (id) => (state) => {
     if (state.favorites.entities) {
-        return state.favorites.entities.find((f) => f.productId === id);
+        return state.favorites.entities.some((f) => f.productId === id);
     }
 };
 

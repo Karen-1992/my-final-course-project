@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getIsLoggedIn } from "../../store/users";
+import { getIsAdmin, getIsLoggedIn } from "../../store/users";
 import NavProfile from "./navProfile";
 import { getCartQuantity } from "../../store/cart";
 import { getFavoriteQuantity } from "../../store/favorites";
@@ -11,6 +11,7 @@ const NavBar = () => {
     const cartQuantity = useSelector(getCartQuantity());
     const favoritesQuantity = useSelector(getFavoriteQuantity());
     const isLoggedIn = useSelector(getIsLoggedIn());
+    const isAdmin = useSelector(getIsAdmin());
     return (
         <nav className="navbar bg-light mb-3">
             <div className="container-fluid">
@@ -43,14 +44,14 @@ const NavBar = () => {
                             Товары
                         </Link>
                     </li>
-                    {isLoggedIn && (
+                    {isLoggedIn && isAdmin && (
                         <li className="nav-item">
                             <Link
                                 className="nav-link "
                                 aria-current="page"
                                 to="/dashboard"
                             >
-                                Admin
+                                AdminPage
                             </Link>
                         </li>
                     )}

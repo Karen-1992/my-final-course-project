@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const TextField = ({ label, type, name, value, onChange, error }) => {
+    const isRequired = error === "isRequired";
     const [showPassword, setShowPassword] = useState(false);
-
     const handleChange = ({ target }) => {
         if (target.type === "number") {
             onChange({ name: target.name, value: +target.value });
@@ -12,7 +12,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
         }
     };
     const getInputClasses = () => {
-        return "form-control" + (error ? " is-invalid" : "");
+        return "form-control" + (error && !isRequired ? " is-invalid" : "");
     };
     const toggleShowPassword = () => {
         setShowPassword((prevState) => !prevState);
@@ -20,6 +20,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
     return (
         <div className="mb-4">
             <label htmlFor={name}>{label}</label>
+            {isRequired && <span className="text-danger">*</span>}
             <div className="input-group has-validation">
                 <input
                     type={showPassword ? "text" : type}
@@ -42,7 +43,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                         ></i>
                     </button>
                 )}
-                {error && <div className="invalid-feedback">{error}</div>}
+                {error && !isRequired && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );

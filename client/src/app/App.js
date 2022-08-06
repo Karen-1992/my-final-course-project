@@ -5,14 +5,14 @@ import Products from "./layouts/products";
 import Login from "./layouts/login";
 import LogOut from "./layouts/logOut";
 import Main from "./layouts/main";
-import Cart from "./layouts/cart";
 import AppLoader from "./components/ui/hoc/appLoader";
 import UserCabinet from "./layouts/userCabinet";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common/protectedRoute";
-import Dashboard from "./components/page/dashboard/dashboard";
+import Dashboard from "./layouts/dashboard";
 import "react-toastify/dist/ReactToastify.css";
 import InitMockData from "./layouts/initMockData";
+import CartPage from "./components/page/cartPage/cartPage";
 
 function App() {
     return (
@@ -37,10 +37,10 @@ function App() {
                         component={UserCabinet}
                     />
                     <ProtectedRoute
-                        path="/dashboard/:productId?"
+                        path="/dashboard"
                         component={Dashboard}
                     />
-                    <ProtectedRoute path="/cart" component={Cart} />
+                    <ProtectedRoute path="/cart" component={CartPage} />
                     <Route path="/" exact component={Main} />
                     <Redirect to="/" />
                 </Switch>

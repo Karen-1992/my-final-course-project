@@ -6,15 +6,20 @@ import getArtFromId from "../../utils/getArtFromId";
 import Counter from "../common/counter";
 import productService from "../../services/product.service";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
+import { getIsFavorite } from "../../store/favorites";
+import ImageComponent from "../common/imageComponent";
 
 const CartItem = ({
     productId,
     quantity,
     onRemove,
     onDecrement,
-    onIncrement
+    onIncrement,
+    onOpen,
+    onToggleFavorite
 }) => {
     const product = useSelector(getProductById(productId));
+    const isFavorite = useSelector(getIsFavorite(productId));
     async function getOneProduct(id) {
         const { content } = await productService.getOneProduct(id);
         return content;
@@ -33,36 +38,55 @@ const CartItem = ({
     };
     const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
     return (
-        <div className="d-flex justify-content-between border-bottom">
+        <div className="row flex-nowrap border-bottom border-2 mb-4">
             <div
-                style={{
-                    width: "150px"
-                }}
+                className="col-3 d-block"
             >
-                <img
-                    className="img-fluid"
+                <ImageComponent
                     src={product.thumbnail}
-                    alt={product.thumbnail}
+                    height="200px"
+                    width="100%"
+                    onClick={onOpen}
                 />
             </div>
-            <div>
-                <h4>{product.title}</h4>
-                <p>В наличии</p>
-                <p>Остаток {product.stock}</p>
+            <div className="col-4 align-self-center">
+                <h5
+                    onClick={onOpen}
+                    role="button"
+                >
+                    {product.title}
+                </h5>
+                <p>Остаток: {product.stock}</p>
                 <p>Код товара: {getArtFromId(productId)}</p>
             </div>
-            <div>
+            <div className="col-4 align-self-center fw-light">
                 <Counter
                     quantity={quantity}
                     onDecrement={handleDecrement}
                     onIncrement={handleIncrement}
                 />
-                <p>{finalPrice * quantity}$</p>
+                <div className="d-flex justify-content-center gap-2">
+                    <span
+                        onClick={onRemove}
+                        role="button"
+                    >
+                        Удалить
+                    </span>
+                    {!isFavorite && (
+                        <>
+                            <span>|</span>
+                            <span
+                                onClick={onToggleFavorite}
+                                role="button"
+                            >
+                                В избранное
+                            </span>
+                        </>
+                    )}
+                </div>
             </div>
-            <div>
-                <button className="btn btn-danger" onClick={onRemove}>
-                    Удалить
-                </button>
+            <div className="col-1 align-self-center fw-semibold fs-5">
+                <p>{finalPrice * quantity}$</p>
             </div>
         </div>
     );
@@ -73,7 +97,9 @@ CartItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     onRemove: PropTypes.func,
     onIncrement: PropTypes.func,
-    onDecrement: PropTypes.func
+    onDecrement: PropTypes.func,
+    onToggleFavorite: PropTypes.func,
+    onOpen: PropTypes.func
 };
 
 export default CartItem;

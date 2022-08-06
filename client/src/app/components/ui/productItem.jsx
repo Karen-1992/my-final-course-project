@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import getArtFromId from "../../utils/getArtFromId";
 import { useSelector } from "react-redux";
 import { getCartProductById } from "../../store/cart";
-import {
-    getIsFavorite
-} from "../../store/favorites";
+import { getIsFavorite } from "../../store/favorites";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
+import ImageComponent from "../common/imageComponent";
 
 const ProductItem = ({
     thumbnail,
@@ -18,17 +17,14 @@ const ProductItem = ({
     discountPercentage,
     onAddToCart,
     onOpenProductPage,
-    onAddToFavorites
+    onToggleFavorite
 }) => {
-    const inCart = useSelector(getCartProductById(_id));
+    const inCart = !!useSelector(getCartProductById(_id));
     const isFavorite = useSelector(getIsFavorite(_id));
     const { discountValue, finalPrice } = getPriceWithDiscount(discountPercentage, price);
     return (
         <div
             className="d-flex flex-column justify-content-between mb-3 shadow"
-            style={{
-                width: "200px"
-            }}
         >
             <div className="p-1">
                 {discountPercentage > 0 && (
@@ -37,12 +33,13 @@ const ProductItem = ({
                     </span>
                 )}
             </div>
-            <div onClick={onOpenProductPage} role="button">
-                <img
+            <div role="button" onClick={onOpenProductPage}>
+                <ImageComponent
                     src={thumbnail}
-                    className="img-fluid"
-                    alt={thumbnail}
-                ></img>
+                    height="200px"
+                    width="100%"
+                    onClick={onOpenProductPage}
+                />
             </div>
             <div className="d-flex">
                 <div
@@ -90,7 +87,7 @@ const ProductItem = ({
                     >
                         {!inCart ? "В корзину" : "В корзине"}
                     </button>
-                    <h3 onClick={onAddToFavorites}>
+                    <h3 onClick={onToggleFavorite}>
                         <i
                             className={
                                 "bi bi-heart" + (isFavorite ? "-fill" : "")
@@ -114,7 +111,7 @@ ProductItem.propTypes = {
     price: PropTypes.number,
     onAddToCart: PropTypes.func,
     onOpenProductPage: PropTypes.func,
-    onAddToFavorites: PropTypes.func
+    onToggleFavorite: PropTypes.func
 };
 
 export default ProductItem;

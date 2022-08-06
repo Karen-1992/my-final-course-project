@@ -15,7 +15,9 @@ const RegisterForm = () => {
         password: "",
         sex: "male",
         adress: "",
-        licence: false
+        phone: "",
+        licence: false,
+        isAdmin: false
     });
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
@@ -27,7 +29,7 @@ const RegisterForm = () => {
     const validatorConfig = {
         name: {
             isRequired: {
-                message: "Имя обязательно"
+                message: "isRequired"
             },
             min: {
                 message: "Имя должно состоять минимум из 3 символов",
@@ -36,7 +38,7 @@ const RegisterForm = () => {
         },
         lastName: {
             isRequired: {
-                message: "Фамилия обязательна"
+                message: "isRequired"
             },
             min: {
                 message: "Фамилия должно состоять минимум из 3 символов",
@@ -45,7 +47,7 @@ const RegisterForm = () => {
         },
         adress: {
             isRequired: {
-                message: "Адресс обязателен"
+                message: "isRequired"
             },
             min: {
                 message: "Адресс должен состоять минимум из 10 символов",
@@ -54,7 +56,7 @@ const RegisterForm = () => {
         },
         email: {
             isRequired: {
-                message: "Электронная почта обязательна для заполнения"
+                message: "isRequired"
             },
             isEmail: {
                 message: "Email введен некорректно"
@@ -62,12 +64,16 @@ const RegisterForm = () => {
         },
         phone: {
             isRequired: {
-                message: "Телефон обязательный для заполнения"
+                message: "isRequired"
+            },
+            min: {
+                message: "Телефон должен состоять минимум из 9 символов",
+                value: 9
             }
         },
         password: {
             isRequired: {
-                message: "Пароль обязателен для заполнения"
+                message: "isRequired"
             },
             isCapitalSymbol: {
                 message: "Пароль должен содержать хотя бы одну заглавную букву"
@@ -160,6 +166,13 @@ const RegisterForm = () => {
                 error={errors.adress}
             />
             <CheckBoxField
+                value={data.isAdmin}
+                onChange={handleChange}
+                name="isAdmin"
+            >
+                Are you admin
+            </CheckBoxField>
+            <CheckBoxField
                 value={data.licence}
                 onChange={handleChange}
                 name="licence"
@@ -167,6 +180,12 @@ const RegisterForm = () => {
             >
                 Подтвердить <a>лицензионное соглашение</a>
             </CheckBoxField>
+            {!isValid &&
+                <p>
+                    <span className="text-danger">*</span>
+                    Поле обязательно для заполнения
+                </p>
+            }
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"

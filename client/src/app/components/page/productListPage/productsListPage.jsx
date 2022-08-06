@@ -46,7 +46,7 @@ const ProductsListPage = () => {
     const handleAddToCart = (data) => {
         dispatch(addProductToCart(data));
     };
-    const handleAddToFavorites = (id) => {
+    const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
     };
     const handleOpenProductPage = (productId) => {
@@ -88,11 +88,12 @@ const ProductsListPage = () => {
         }
         const pageSizeOptions = getPageSizeOptions();
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-3">
+            <div>
+                {/* <div className="row"> */}
+                <div className="row g-0">
+                    <div className="col-lg-2 col-md-3 col-sm-4">
                         {categoriesList && !categoriesLoading && (
-                            <div className="d-flex flex-column flex-shrink-0 p-3">
+                            <div className="d-flex flex-column flex-shrink">
                                 <GroupList
                                     selectedItem={selectedCategory}
                                     items={categoriesList}
@@ -108,9 +109,9 @@ const ProductsListPage = () => {
                             </div>
                         )}
                     </div>
-                    <div className="col-9">
+                    <div className="col-lg-10 col-md-9 col-sm-8 px-2">
                         <div>
-                            <div className="d-flex flex-wrap justify-content-between p-2">
+                            <div className="d-flex flex-wrap justify-content-between">
                                 <SelectField
                                     label="Показывать по"
                                     options={pageSizeOptions}
@@ -134,20 +135,23 @@ const ProductsListPage = () => {
                                 )}
                             </div>
                         </div>
-                        <div className="d-flex flex-wrap justify-content-evenly mt-5">
-                            {productsCrop.map((product) => (
-                                <ProductItem
-                                    {...product}
-                                    onAddToCart={() => handleAddToCart(product)}
-                                    onAddToFavorites={() =>
-                                        handleAddToFavorites(product._id)
-                                    }
-                                    key={product._id}
-                                    onOpenProductPage={() =>
-                                        handleOpenProductPage(product._id)
-                                    }
-                                />
-                            ))}
+                        <div className="pt-3">
+                            <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-lg-4">
+                                {productsCrop.map((product) => (
+                                    <div className="col" key={product._id}>
+                                        <ProductItem
+                                            {...product}
+                                            onAddToCart={() => handleAddToCart(product)}
+                                            onToggleFavorite={() =>
+                                                handleToggleFavorite(product._id)
+                                            }
+                                            onOpenProductPage={() =>
+                                                handleOpenProductPage(product._id)
+                                            }
+                                        />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className="d-flex justify-content-center">
                             <Pagination

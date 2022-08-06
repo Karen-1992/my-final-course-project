@@ -5,6 +5,7 @@ import localStorageService from "../services/localStorage.service";
 import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
+import { toast } from "react-toastify";
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -12,8 +13,7 @@ const initialState = localStorageService.getAccessToken()
         isLoading: true,
         error: null,
         auth: { userId: localStorageService.getUserId() },
-        isLoggedIn: true,
-        dataLoaded: false
+        isLoggedIn: true
     }
     : {
         entities: null,
@@ -21,8 +21,7 @@ const initialState = localStorageService.getAccessToken()
         error: null,
         auth: null,
         favorites: null,
-        isLoggedIn: false,
-        dataLoaded: false
+        isLoggedIn: false
     };
 
 const usersSlice = createSlice({
@@ -34,7 +33,6 @@ const usersSlice = createSlice({
         },
         userReceived: (state, action) => {
             state.entities = action.payload;
-            state.dataLoaded = true;
             state.isLoading = false;
         },
         userRequestFailed: (state, action) => {
@@ -50,15 +48,14 @@ const usersSlice = createSlice({
         },
         userCreated: (state, action) => {
             if (!Array.isArray(state.entities)) {
-                state.entities = [];
+                state.entities = {};
             }
-            state.entities.push(action.payload);
+            state.entities = action.payload;
         },
         userLoggedOut: (state) => {
             state.entities = null;
             state.isLoggedIn = false;
             state.auth = null;
-            state.dataLoaded = false;
         },
         userUpdateSuccessed: (state, action) => {
             state.entities = {
@@ -124,7 +121,7 @@ export const signUp =
                         _id: data.localId,
                         email,
                         cash: getRandomInt(1000, 5000),
-                        role: "user",
+                        // role: "user",
                         // role: email === "administrator" ? "admin" : "user",
                         ...rest
                     })
@@ -145,7 +142,6 @@ function createUser(payload) {
             const { content } = await userService.create(payload);
             dispatch(userCreated(content));
             history.push("/products");
-            localStorageService.setFavorites();
         } catch (error) {
             dispatch(createUserFailed(error.message));
         }
@@ -172,12 +168,37 @@ export const updateUser = (payload) => async (dispatch) => {
     }
 };
 
+export const updateUserCash = (totalPrice) => async (dispatch, getState) => {
+    const { entities } = getState().users;
+    const currentCash = entities.cash;
+    const newCash = currentCash - totalPrice;
+    dispatch(userUpdateRequested());
+    try {
+        if (currentCash > totalPrice) {
+            const { content } = await userService.update({
+                ...entities,
+                cash: newCash
+            });
+            dispatch(userUpdateSuccessed(content));
+        } else {
+            toast.info("Недостаточно средств, пополните денежные средства");
+        }
+    } catch (error) {
+        dispatch(userUpdateFailed(error.message));
+    }
+};
+
 export const getCurrentUserData = () => (state) => {
     return state.users.entities;
 };
 
+export const getIsAdmin = () => (state) => {
+    if (state.users.entities) {
+        if (state.users.entities.role === "admin") return true;
+    }
+    return false;
+};
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
-export const getDataStatus = () => (state) => state.users.dataLoaded;
 export const getUserLoadingStatus = () => (state) => state.users.isLoading;
 export const getCurrentUserId = () => (state) => state.users.auth.userId;
 export const getAuthErrors = () => (state) => state.users.error;
