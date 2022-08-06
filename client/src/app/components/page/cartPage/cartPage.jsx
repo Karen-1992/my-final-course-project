@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { toggleFavorite } from "../../../store/favorites";
 import history from "../../../utils/history";
+import ClearButton from "../../common/clearButton";
 
 const CartPage = () => {
     const dispatch = useDispatch();
@@ -76,14 +77,11 @@ const CartPage = () => {
                             </div>
                             <div className="col-3">
                                 <div className="d-flex justify-content-center">
-                                    <span
-                                        className="fw-light mb-2"
+                                    <ClearButton
                                         onClick={handleClear}
-                                        role="button"
-                                    >
-                                        Очистить корзину
-                                        <i className="bi bi-trash-fill px-1"></i>
-                                    </span>
+                                        classes="fw-light mb-2"
+                                        label="Очистить корзину"
+                                    />
                                 </div>
                                 <div className="shadow-sm p-3 mb-5 bg-body rounded">
                                     <h3>Ваш заказ</h3>

@@ -25,6 +25,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     return (
         <thead>
             <tr>
+                <th>№</th>
                 {Object.keys(columns).map((column) => (
                     <th
                         key={column}

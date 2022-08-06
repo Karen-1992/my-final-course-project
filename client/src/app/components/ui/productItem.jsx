@@ -6,6 +6,7 @@ import { getCartProductById } from "../../store/cart";
 import { getIsFavorite } from "../../store/favorites";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
 import ImageComponent from "../common/imageComponent";
+import ProductButtons from "../common/productButtons";
 
 const ProductItem = ({
     thumbnail,
@@ -19,12 +20,12 @@ const ProductItem = ({
     onOpenProductPage,
     onToggleFavorite
 }) => {
-    const inCart = !!useSelector(getCartProductById(_id));
+    const isInCart = !!useSelector(getCartProductById(_id));
     const isFavorite = useSelector(getIsFavorite(_id));
     const { discountValue, finalPrice } = getPriceWithDiscount(discountPercentage, price);
     return (
         <div
-            className="d-flex flex-column justify-content-between mb-3 shadow"
+            className="d-flex flex-column justify-content-between mb-3 shadow h-100"
         >
             <div className="p-1">
                 {discountPercentage > 0 && (
@@ -38,7 +39,6 @@ const ProductItem = ({
                     src={thumbnail}
                     height="200px"
                     width="100%"
-                    onClick={onOpenProductPage}
                 />
             </div>
             <div className="d-flex">
@@ -76,25 +76,13 @@ const ProductItem = ({
                 ) : (
                     <span className="fw-bold">{`${price}$`}</span>
                 )}
-                <div className="d-flex justify-content-between">
-                    <button
-                        onClick={onAddToCart}
-                        type="button"
-                        className={
-                            "w-75 btn btn-" +
-                            (inCart ? "outline-danger" : "danger")
-                        }
-                    >
-                        {!inCart ? "В корзину" : "В корзине"}
-                    </button>
-                    <h3 onClick={onToggleFavorite}>
-                        <i
-                            className={
-                                "bi bi-heart" + (isFavorite ? "-fill" : "")
-                            }
-                            role="button"
-                        ></i>
-                    </h3>
+                <div className="d-flex justify-content-between py-2">
+                    <ProductButtons
+                        isInCart={isInCart}
+                        isFavorite={isFavorite}
+                        onAddToCart={onAddToCart}
+                        onToggleFavorite={onToggleFavorite}
+                    />
                 </div>
             </div>
         </div>

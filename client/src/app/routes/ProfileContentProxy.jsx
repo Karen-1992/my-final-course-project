@@ -5,11 +5,11 @@ import FavoritesPage from "../components/page/favoritesPage/favoritesPage";
 import Reviews from "../components/page/reviewsPage/reviews";
 import Orders from "../components/page/ordersPage/orders";
 import LogOut from "../layouts/logOut";
-import EditPage from "../components/page/editUserPage/editPage";
+import EditUserPage from "../components/page/editUserPage/editUserPage";
 
 const ProfileContentProxy = ({ route, isEdit }) => {
     const contentByType = {
-        personal: !isEdit ? <PersonalPage /> : <EditPage />,
+        personal: !isEdit ? <PersonalPage /> : <EditUserPage />,
         favorites: <FavoritesPage />,
         reviews: <Reviews />,
         orders: <Orders />,

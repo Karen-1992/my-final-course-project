@@ -6,7 +6,7 @@ const Main = () => {
         history.push("/products");
     };
     return (
-        <div className="container">
+        <div>
             <div>
                 <h1>Интернет-магазин</h1>
                 <p>Здесь вы можете найти все что угодно</p>

@@ -155,22 +155,20 @@ const AdminPage = () => {
                     )}
                 </div>
                 <div className="col-9">
-                    <div className="container">
-                        <ProductsTable
-                            products={productsCrop}
-                            onSort={handleSort}
-                            selectedSort={sortBy}
-                            onEdit={handleEdit}
-                            onRemove={handleRemove}
+                    <ProductsTable
+                        products={productsCrop}
+                        onSort={handleSort}
+                        selectedSort={sortBy}
+                        onEdit={handleEdit}
+                        onRemove={handleRemove}
+                    />
+                    <div className="d-flex justify-content-center">
+                        <Pagination
+                            itemsCount={count}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
                         />
-                        <div className="d-flex justify-content-center">
-                            <Pagination
-                                itemsCount={count}
-                                pageSize={pageSize}
-                                currentPage={currentPage}
-                                onPageChange={handlePageChange}
-                            />
-                        </div>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import RadioField from "../../common/form/radioField";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserData, updateUser } from "../../../store/users";
 
-const EditPage = () => {
+const EditUserPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const currentUser = useSelector(getCurrentUserData());
@@ -34,7 +34,7 @@ const EditPage = () => {
     const validatorConfig = {
         email: {
             isRequired: {
-                message: "Электронная почта обязательна для заполнения"
+                message: "isRequired"
             },
             isEmail: {
                 message: "Email введен некорректно"
@@ -42,7 +42,38 @@ const EditPage = () => {
         },
         name: {
             isRequired: {
-                message: "Введите ваше имя"
+                message: "isRequired"
+            },
+            min: {
+                message: "Имя должно состоять минимум из 3 символов",
+                value: 3
+            }
+        },
+        lastName: {
+            isRequired: {
+                message: "isRequired"
+            },
+            min: {
+                message: "Фамилия должно состоять минимум из 3 символов",
+                value: 3
+            }
+        },
+        adress: {
+            isRequired: {
+                message: "isRequired"
+            },
+            min: {
+                message: "Адресс должен состоять минимум из 10 символов",
+                value: 10
+            }
+        },
+        phone: {
+            isRequired: {
+                message: "isRequired"
+            },
+            min: {
+                message: "Телефон должен состоять минимум из 9 символов",
+                value: 9
             }
         }
     };
@@ -99,6 +130,13 @@ const EditPage = () => {
                         error={errors.adress}
                     />
                     <TextField
+                        label="Телефон"
+                        name="phone"
+                        value={data.phone}
+                        onChange={handleChange}
+                        error={errors.phone}
+                    />
+                    <TextField
                         label="Денежные средства"
                         type="number"
                         name="cash"
@@ -106,6 +144,12 @@ const EditPage = () => {
                         onChange={handleChange}
                         error={errors.cash}
                     />
+                    {!isValid &&
+                        <p>
+                            <span className="text-danger">*</span>
+                            Поле обязательно для заполнения
+                        </p>
+                    }
                     <button
                         type="submit"
                         disabled={!isValid}
@@ -121,4 +165,4 @@ const EditPage = () => {
     );
 };
 
-export default EditPage;
+export default EditUserPage;

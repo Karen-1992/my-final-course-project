@@ -10,6 +10,8 @@ import GroupList from "../../common/groupList";
 import SelectField from "../../common/form/selectField";
 import Pagination from "../../common/pagination";
 import ProductItem from "../../ui/productItem";
+import _ from "lodash";
+import SortingMenu from "../../ui/sortingMenu";
 
 const ProductsListPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +20,12 @@ const ProductsListPage = () => {
     const [pageCount, setPageCount] = useState({
         value: 10
     });
+    const sortingParams = [
+        { path: "title", name: "По наименованию" },
+        { path: "price", name: "По цене" },
+        { path: "rating", name: "По рейтингу" }
+    ];
+    const [sortBy, setSortBy] = useState({ ...sortingParams[0], order: "asc" });
     const categoriesList = useSelector(getCategories());
     const categoriesLoading = useSelector(getCartLoadingStatus());
     const handleChangePageCount = (target) => {
@@ -55,6 +63,9 @@ const ProductsListPage = () => {
     const handleClearFilter = () => {
         setSelectedCategory();
     };
+    const handleSort = (item) => {
+        setSortBy(item);
+    };
     if (products) {
         function filterProducts(data) {
             const filteredProducts = searchQuery
@@ -72,9 +83,14 @@ const ProductsListPage = () => {
             return filteredProducts;
         }
         const filteredProducts = filterProducts(products);
+        const sortedProducts = _.orderBy(
+            filteredProducts,
+            [sortBy.path],
+            [sortBy.order]
+        );
         const totalCount = products.length;
         const filteredCount = filteredProducts.length;
-        const productsCrop = paginate(filteredProducts, currentPage, pageCount.value);
+        const productsCrop = paginate(sortedProducts, currentPage, pageCount.value);
         function getPageSizeOptions() {
             const optionsArr = [];
             const optionsQuantity = Math.ceil(totalCount / 10);
@@ -89,7 +105,6 @@ const ProductsListPage = () => {
         const pageSizeOptions = getPageSizeOptions();
         return (
             <div>
-                {/* <div className="row"> */}
                 <div className="row g-0">
                     <div className="col-lg-2 col-md-3 col-sm-4">
                         {categoriesList && !categoriesLoading && (
@@ -119,6 +134,21 @@ const ProductsListPage = () => {
                                     onChange={handleChangePageCount}
                                     value={String(pageCount.value)}
                                 />
+                                <SortingMenu
+                                    onSort={handleSort}
+                                    selectedSort={sortBy}
+                                    sortingParams={sortingParams}
+                                />
+                                {/* <div className="dropdown" onClick={handleSort}>
+                                    <button className="btn btn-secondary dropdown-toggle">
+                                        Dropdown button
+                                    </button>
+                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li className="dropdown-item">По цене</li>
+                                        <li className="dropdown-item">По наименованию</li>
+                                        <li className="dropdown-item">По рейтингу</li>
+                                    </ul>
+                                </div> */}
                                 <p>{`Показано ${productsCrop.length} из ${products.length}`}</p>
                             </div>
                             <div>

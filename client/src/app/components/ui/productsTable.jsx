@@ -15,42 +15,41 @@ const ProductsTable = ({
     const columns = {
         name: {
             path: "title",
-            name: "Title",
+            name: "Наименование",
             component: (product) => (
                 <Link to={`/products/${product._id}`}>{product.title}</Link>
             )
         },
         category: {
-            name: "category",
+            name: "Категория",
+            path: "category",
             component: (product) => <Category id={product.category} />
         },
         stock: {
             path: "stock",
-            name: "stock"
+            name: "Остаток"
         },
         price: {
             path: "price",
-            name: "price"
+            name: "Цена, $"
         },
         rating: { path: "rating", name: "rating" },
         edit: {
             component: (product) => (
-                <button
+                <i
+                    className="btn btn-secondary btn-sm bi bi-pencil"
                     onClick={() => onEdit(product._id)}
-                    className="btn btn-secondary"
                 >
-                    Edit
-                </button>
+                </i>
             )
         },
         remove: {
             component: (product) => (
-                <button
+                <i
+                    className="btn btn-danger btn-sm bi bi-x-lg"
                     onClick={() => onRemove(product._id)}
-                    className="btn btn-danger"
                 >
-                    Remove
-                </button>
+                </i>
             )
         }
     };

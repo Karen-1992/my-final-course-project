@@ -15,10 +15,11 @@ const TableBody = ({ data, columns }) => {
     };
     return (
         <tbody>
-            {data.map((item) => (
+            {data.map((item, index) => (
                 <tr key={item._id}>
+                    <th className="align-middle">{index + 1}</th>
                     {Object.keys(columns).map((column) => (
-                        <td key={column}>{renderContent(item, column)}</td>
+                        <td key={column} className="align-middle">{renderContent(item, column)}</td>
                     ))}
                 </tr>
             ))}
