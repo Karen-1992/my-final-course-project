@@ -4,8 +4,11 @@ import TextField from "../../common/form/textField";
 import RadioField from "../../common/form/radioField";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserData, updateUser } from "../../../store/users";
+import Loader from "../../common/loader";
+import { useLoading } from "../../../hooks/useLoading";
 
 const EditUserPage = () => {
+    const { clientX, clientY } = useLoading();
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const currentUser = useSelector(getCurrentUserData());
@@ -159,7 +162,10 @@ const EditUserPage = () => {
                     </button>
                 </form>
             ) : (
-                "Loading..."
+                <Loader
+                    clientX={clientX}
+                    clientY={clientY}
+                />
             )}
         </div>
     );

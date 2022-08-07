@@ -16,14 +16,14 @@ const ProductChangeForm = ({
     return (
         <form onSubmit={onSubmit}>
             <TextField
-                label="Title"
+                label="Наименование"
                 name="title"
                 value={data.title}
                 onChange={onChange}
                 error={errors.title}
             />
             <TextField
-                label="Brand"
+                label="Производитель"
                 name="brand"
                 value={data.brand}
                 onChange={onChange}
@@ -31,23 +31,22 @@ const ProductChangeForm = ({
             />
             <SelectField
                 name="category"
-                label="Category"
+                label="Категория"
                 value={data.category}
-                defaultOption="Choose..."
+                defaultOption="Выберите категорию..."
                 options={categoriesList}
                 onChange={onChange}
                 error={errors.category}
             />
             <TextField
-                label="Description"
+                label="Описание"
                 name="description"
                 value={data.description}
                 onChange={onChange}
                 error={errors.description}
             />
             <TextField
-                label="DiscountPercentage
-                "
+                label="Скидка"
                 type="number"
                 name="discountPercentage"
                 value={data.discountPercentage}
@@ -55,8 +54,7 @@ const ProductChangeForm = ({
                 error={errors.discountPercentage}
             />
             <TextField
-                label="Price
-                "
+                label="Цена"
                 type="number"
                 name="price"
                 value={data.price}
@@ -64,8 +62,7 @@ const ProductChangeForm = ({
                 error={errors.price}
             />
             <TextField
-                label="Stock
-                "
+                label="Количество"
                 type="number"
                 name="stock"
                 value={data.stock}
@@ -73,26 +70,35 @@ const ProductChangeForm = ({
                 error={errors.stock}
             />
             <TextField
-                label="Thumbnail"
+                label="Изображение"
+                placeholder="Вставьте ссылку изображение"
                 name="thumbnail"
                 value={data.thumbnail}
                 onChange={onChange}
                 error={errors.thumbnail}
             />
-            <button
-                type="submit"
-                disabled={!isValid}
-                className="btn btn-primary w-50 mx-auto"
-            >
-                {productId ? "Обновить" : "Добавить"}
-            </button>
-            <button
-                type="button"
-                onClick={onCancel}
-                className="btn btn-warning w-50 mx-auto"
-            >
-                Отмена
-            </button>
+            {!isValid &&
+                <p>
+                    <span className="text-danger">*</span>
+                    Поле обязательно для заполнения
+                </p>
+            }
+            <div className="d-flex flex-wrap gap-2">
+                <button
+                    type="submit"
+                    disabled={!isValid}
+                    className="btn btn-primary btn-sm w-100"
+                >
+                    {productId ? "Обновить" : "Добавить"}
+                </button>
+                <button
+                    type="button"
+                    onClick={onCancel}
+                    className="btn btn-danger btn-sm w-100"
+                >
+                    Отмена
+                </button>
+            </div>
         </form>
     );
 };

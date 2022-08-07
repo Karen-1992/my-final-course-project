@@ -10,11 +10,12 @@ const SelectField = ({
     error,
     name
 }) => {
+    const isRequired = error === "isRequired";
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
     };
     const getInputClasses = () => {
-        return "form-select" + (error ? " is-invalid" : "");
+        return "form-control" + (error && !isRequired ? " is-invalid" : "");
     };
 
     const optionsArray =
@@ -27,6 +28,7 @@ const SelectField = ({
             <label htmlFor={name} className="form-label">
                 {label}
             </label>
+            {isRequired && <span className="text-danger">*</span>}
             <select
                 className={getInputClasses()}
                 id={name}
@@ -44,7 +46,7 @@ const SelectField = ({
                         </option>
                     ))}
             </select>
-            {error && <div className="invalid-feedback">{error}</div>}
+            {error && !isRequired && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 };

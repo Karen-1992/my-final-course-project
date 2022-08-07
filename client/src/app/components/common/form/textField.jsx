@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({
+    label,
+    type,
+    name,
+    value,
+    onChange,
+    placeholder,
+    error
+}) => {
     const isRequired = error === "isRequired";
     const [showPassword, setShowPassword] = useState(false);
     const handleChange = ({ target }) => {
@@ -27,6 +35,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                     id={name}
                     name={name}
                     value={value}
+                    placeholder={placeholder}
                     onChange={handleChange}
                     className={getInputClasses()}
                 />
@@ -55,6 +64,7 @@ TextField.propTypes = {
     label: PropTypes.string,
     type: PropTypes.string,
     name: PropTypes.string,
+    placeholder: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
     error: PropTypes.string

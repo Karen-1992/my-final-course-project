@@ -5,13 +5,20 @@ import CheckBoxField from "../common/form/checkBoxField";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthErrors, login } from "../../store/users";
+import localStorageService from "../../services/localStorage.service";
 
 const LoginForm = () => {
-    const [data, setData] = useState({
+    const userData = localStorageService.getUserData();
+    const initialData = userData ? {
+        email: userData.email,
+        password: userData.password,
+        stayOn: userData.stayOn
+    } : {
         email: "",
         password: "",
         stayOn: false
-    });
+    };
+    const [data, setData] = useState(initialData);
     const loginError = useSelector(getAuthErrors());
     const history = useHistory();
     const dispatch = useDispatch();
@@ -49,6 +56,11 @@ const LoginForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
+        if (data.stayOn) {
+            localStorageService.setUserData(data);
+        } else {
+            localStorageService.removeUserData();
+        }
         const redirect = history.location.state
             ? history.location.state.from.pathname
             : "/";

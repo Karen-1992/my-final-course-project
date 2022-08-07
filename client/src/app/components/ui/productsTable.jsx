@@ -10,6 +10,8 @@ const ProductsTable = ({
     selectedSort,
     onEdit,
     onRemove,
+    onSelect,
+    selectedRow,
     ...rest
 }) => {
     const columns = {
@@ -59,6 +61,9 @@ const ProductsTable = ({
             selectedSort={selectedSort}
             columns={columns}
             data={products}
+            classes="table table-hover table-sm"
+            selectedRow={selectedRow}
+            onSelect={onSelect}
         />
     );
 };
@@ -68,7 +73,9 @@ ProductsTable.propTypes = {
     onSort: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
-    selectedSort: PropTypes.object.isRequired
+    onSelect: PropTypes.func,
+    selectedSort: PropTypes.object.isRequired,
+    selectedRow: PropTypes.string
 };
 
 export default ProductsTable;

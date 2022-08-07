@@ -1,16 +1,26 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Loader = () => {
+const Loader = ({ clientY, clientX }) => {
     return (
-        <button className="btn btn-primary m-3" type="button" disabled>
+        <div
+            className="spinner-border m-5 position-absolute" role="status"
+            style={{
+                top: `${clientY - 250}px`,
+                left: `${clientX - 250}px`
+            }}
+        >
             <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-            ></span>
-            <span className="m-2">Loading...</span>
-        </button>
+                className="visually-hidden">
+            </span>
+            <p>Loading</p>
+        </div>
     );
+};
+
+Loader.propTypes = {
+    clientY: PropTypes.number,
+    clientX: PropTypes.number
 };
 
 export default Loader;

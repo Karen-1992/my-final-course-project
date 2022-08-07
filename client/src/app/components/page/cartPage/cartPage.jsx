@@ -16,8 +16,11 @@ import { Link } from "react-router-dom";
 import { toggleFavorite } from "../../../store/favorites";
 import history from "../../../utils/history";
 import ClearButton from "../../common/clearButton";
+import { useLoading } from "../../../hooks/useLoading";
+import Loader from "../../common/loader";
 
 const CartPage = () => {
+    const { clientX, clientY } = useLoading();
     const dispatch = useDispatch();
     const cartList = useSelector(getCartList());
     const cartLoading = useSelector(getCartLoadingStatus());
@@ -113,7 +116,10 @@ const CartPage = () => {
                     )}
                 </div>
             ) : (
-                "Loading from cart..."
+                <Loader
+                    clientX={clientX}
+                    clientY={clientY}
+                />
             )}
         </div>
     );

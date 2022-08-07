@@ -7,6 +7,7 @@ import { createStore } from "./app/store/createStore";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
 import history from "./app/utils/history";
+import { LoadingProvider } from "./app/hooks/useLoading";
 
 const store = createStore();
 
@@ -16,7 +17,9 @@ root.render(
         <Provider store={store}>
             {/* <BrowserRouter> */}
             <Router history={history}>
-                <App />
+                <LoadingProvider>
+                    <App />
+                </LoadingProvider>
             </Router>
             {/* </BrowserRouter> */}
         </Provider>

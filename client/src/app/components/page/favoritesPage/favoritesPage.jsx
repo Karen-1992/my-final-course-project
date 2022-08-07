@@ -1,14 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useLoading } from "../../../hooks/useLoading";
 import { addProductToCart } from "../../../store/cart";
 import { clearFavorite, getFavoriteList, getFavoriteLoadingStatus, toggleFavorite } from "../../../store/favorites";
 import { getProductsByIds } from "../../../store/products";
 import history from "../../../utils/history";
 import ClearButton from "../../common/clearButton";
+import Loader from "../../common/loader";
 import ProductItem from "../../ui/productItem";
 
 const FavoritesPage = () => {
+    const { clientX, clientY } = useLoading();
     const isFavoLoading = useSelector(getFavoriteLoadingStatus());
     const dispatch = useDispatch();
     const favoritesIds = useSelector(getFavoriteList());
@@ -60,7 +63,10 @@ const FavoritesPage = () => {
                     )}
                 </>
             ) : (
-                "Loading..."
+                <Loader
+                    clientX={clientX}
+                    clientY={clientY}
+                />
             )}
         </div>
     );

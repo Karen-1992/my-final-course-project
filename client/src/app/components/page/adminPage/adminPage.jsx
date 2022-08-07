@@ -8,8 +8,11 @@ import ProductsTable from "../../ui/productsTable";
 import _ from "lodash";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
+import Loader from "../../common/loader";
+import { useLoading } from "../../../hooks/useLoading";
 
 const AdminPage = () => {
+    const { clientX, clientY } = useLoading();
     const initialData = {
         title: "",
         brand: "",
@@ -21,6 +24,7 @@ const AdminPage = () => {
         thumbnail: ""
     };
     const pageSize = 20;
+    const [editedProductId, setEditedProductId] = useState(null);
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState(initialData);
@@ -31,7 +35,7 @@ const AdminPage = () => {
     const productsList = useSelector(getProductsList());
     const categories = useSelector(getCategories());
     const categoriesLoading = useSelector(getCategoriesLoadingStatus());
-    const currentProduct = useSelector(getProductById(selectedProductId));
+    const currentProduct = useSelector(getProductById(editedProductId));
     useEffect(() => {
         setCurrentPage(1);
     }, []);
@@ -39,23 +43,23 @@ const AdminPage = () => {
         setCurrentPage(pageIndex);
     };
     const handleEdit = (id) => {
-        setSelectedProductId(id);
+        setEditedProductId(id);
     };
     const handleRemove = (id) => {
-        if (selectedProductId === id) {
+        if (editedProductId === id) {
             clearForm();
         }
         dispatch(removeProduct(id));
     };
     const clearForm = () => {
-        setSelectedProductId(null);
+        setEditedProductId(null);
         setData(initialData);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        if (selectedProductId) {
+        if (editedProductId) {
             const { price, discountPercentage, stock } = data;
             dispatch(
                 updateProduct({
@@ -78,27 +82,66 @@ const AdminPage = () => {
         }
     }, [currentProduct, data, categoriesLoading]);
     useEffect(() => {
-        if (selectedProductId) {
+        if (editedProductId) {
             setData(currentProduct);
         }
-    }, [selectedProductId]);
+    }, [editedProductId]);
     useEffect(() => {
         if (data && isLoading) {
             setIsLoading(false);
         }
     }, [data]);
     const validatorConfig = {
-        email: {
+        title: {
             isRequired: {
-                message: "Электронная почта обязательна для заполнения"
-            },
-            isEmail: {
-                message: "Email введен некорректно"
+                message: "isRequired"
             }
         },
-        name: {
+        brand: {
             isRequired: {
-                message: "Введите ваше имя"
+                message: "isRequired"
+            }
+        },
+        category: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        description: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        price: {
+            isRequired: {
+                message: "isRequired"
+            },
+            minValue: {
+                message: "Цена не может быть меньше 0",
+                value: 0
+            }
+        },
+        discountPercentage: {
+            isRequired: {
+                message: "isRequired"
+            },
+            minValue: {
+                message: "Скидка не может быть меньше 0",
+                value: 0
+            }
+        },
+        stock: {
+            isRequired: {
+                message: "isRequired"
+            },
+            minValue: {
+                message: "Количество товаров не может быть меньше 0",
+                value: 0
+            }
+        },
+        thumbnail: {
+            isRequired: {
+                message: "isRequired"
             }
         }
     };
@@ -112,7 +155,7 @@ const AdminPage = () => {
         }));
     };
     const handleCancel = () => {
-        if (selectedProductId) clearForm();
+        if (editedProductId) clearForm();
         setData(initialData);
     };
     const validate = () => {
@@ -133,6 +176,9 @@ const AdminPage = () => {
     const handleSort = (item) => {
         setSortBy(item);
     };
+    const handleSelect = (id) => {
+        setSelectedProductId(id);
+    };
     const productsCrop = paginate(sortedProducts, currentPage, pageSize);
     const count = sortedProducts.length;
     return (
@@ -142,7 +188,7 @@ const AdminPage = () => {
                     {!isLoading && !categoriesLoading ? (
                         <ProductChangeForm
                             data={data}
-                            productId={selectedProductId}
+                            productId={editedProductId}
                             onChange={handleChange}
                             onSubmit={handleSubmit}
                             onCancel={handleCancel}
@@ -151,7 +197,10 @@ const AdminPage = () => {
                             categoriesList={categoriesList}
                         />
                     ) : (
-                        "Loading..."
+                        <Loader
+                            clientX={clientX}
+                            clientY={clientY}
+                        />
                     )}
                 </div>
                 <div className="col-9">
@@ -161,6 +210,8 @@ const AdminPage = () => {
                         selectedSort={sortBy}
                         onEdit={handleEdit}
                         onRemove={handleRemove}
+                        onSelect={handleSelect}
+                        selectedRow={selectedProductId}
                     />
                     <div className="d-flex justify-content-center">
                         <Pagination

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-const TableBody = ({ data, columns }) => {
+const TableBody = ({ data, columns, selectedRow, onSelect }) => {
     const renderContent = (item, column) => {
         if (columns[column].component) {
             const component = columns[column].component;
@@ -16,7 +16,7 @@ const TableBody = ({ data, columns }) => {
     return (
         <tbody>
             {data.map((item, index) => (
-                <tr key={item._id}>
+                <tr key={item._id} onClick={() => onSelect(item._id)} className={(selectedRow === item._id ? "table-active " : "") + ""}>
                     <th className="align-middle">{index + 1}</th>
                     {Object.keys(columns).map((column) => (
                         <td key={column} className="align-middle">{renderContent(item, column)}</td>
@@ -29,7 +29,9 @@ const TableBody = ({ data, columns }) => {
 
 TableBody.propTypes = {
     data: PropTypes.array.isRequired,
-    columns: PropTypes.object.isRequired
+    columns: PropTypes.object.isRequired,
+    onSelect: PropTypes.func,
+    selectedRow: PropTypes.string
 };
 
 export default TableBody;
