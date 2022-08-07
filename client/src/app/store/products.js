@@ -1,8 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "nanoid";
 import productService from "../services/product.service";
 import { getPriceWithDiscount } from "../utils/getPriceWithDiscount";
-import getRandomInt from "../utils/getRandomInt";
 
 const initialState = {
     entities: null,
@@ -77,7 +75,7 @@ export const removeProduct = (payload) => async (dispatch) => {
     dispatch(productRemoveRequested());
     try {
         const { content } = await productService.remove(payload);
-        if (content === null) {
+        if (!content) {
             return dispatch(productRemoved(payload));
         }
         dispatch(productRemoved({ content, payload }));
@@ -99,12 +97,7 @@ export const updateProduct = (payload) => async (dispatch) => {
 export const createProduct = (payload) => async (dispatch) => {
     dispatch(productCreateRequested());
     try {
-        const { content } = await productService.create({
-            ...payload,
-            _id: nanoid(),
-            raiting: getRandomInt(0, 5),
-            images: []
-        });
+        const { content } = await productService.create(payload);
         dispatch(productCreated(content));
     } catch (error) {
         dispatch(productUpdateFailed(error.message));

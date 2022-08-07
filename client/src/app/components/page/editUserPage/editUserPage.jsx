@@ -61,7 +61,7 @@ const EditUserPage = () => {
                 value: 3
             }
         },
-        adress: {
+        address: {
             isRequired: {
                 message: "isRequired"
             },
@@ -127,10 +127,10 @@ const EditUserPage = () => {
                     />
                     <TextField
                         label="Адресс"
-                        name="adress"
-                        value={data.adress}
+                        name="address"
+                        value={data.address}
                         onChange={handleChange}
-                        error={errors.adress}
+                        error={errors.address}
                     />
                     <TextField
                         label="Телефон"

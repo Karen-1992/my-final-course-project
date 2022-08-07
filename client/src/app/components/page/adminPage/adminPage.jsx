@@ -66,7 +66,8 @@ const AdminPage = () => {
                     ...data,
                     price,
                     discountPercentage,
-                    stock
+                    stock,
+                    productId: selectedProductId
                 })
             );
         } else {

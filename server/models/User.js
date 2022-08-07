@@ -27,10 +27,7 @@ const  schema = new Schema({
         type: String,
         enum: ["male", "female", "other"]
     },
-    role: {
-        type: String,
-        enum: ["user", "admin"]
-    },
+    isAdmin: Boolean,
     phone: String
 }, {
     timestamps: true

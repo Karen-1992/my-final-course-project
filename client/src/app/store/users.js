@@ -2,7 +2,6 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import userService from "../services/user.service";
 import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
-import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
 import { toast } from "react-toastify";
@@ -76,14 +75,11 @@ const {
     userRequestFailed,
     authRequestSuccess,
     authRequestFailed,
-    userCreated,
     userLoggedOut,
     userUpdateSuccessed
 } = actions;
 
 const authRequested = createAction("users/authRequested");
-const userCreateRequested = createAction("users/userCreateRequested");
-const createUserFailed = createAction("users/createUserFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 const userUpdateFailed = createAction("users/userUpdateFailed");
 
@@ -108,45 +104,22 @@ export const login =
             }
         };
 
-export const signUp =
-    ({ email, password, ...rest }) =>
-        async (dispatch) => {
-            dispatch(authRequested());
-            try {
-                const data = await authService.register({ email, password });
-                localStorageService.setTokens(data);
-                dispatch(authRequestSuccess({ userId: data.localId }));
-                dispatch(
-                    createUser({
-                        _id: data.localId,
-                        email,
-                        cash: getRandomInt(1000, 5000),
-                        // role: "user",
-                        // role: email === "administrator" ? "admin" : "user",
-                        ...rest
-                    })
-                );
-            } catch (error) {
-                dispatch(authRequestFailed(error.message));
-            }
-        };
+export const signUp = (payload) => async (dispatch) => {
+    dispatch(authRequested());
+    try {
+        const data = await authService.register(payload);
+        localStorageService.setTokens(data);
+        dispatch(authRequestSuccess({ userId: data.userId }));
+        history.push("/");
+    } catch (error) {
+        dispatch(authRequestFailed(error.message));
+    }
+};
 export const logOut = () => (dispatch) => {
     localStorageService.removeAuthData();
     dispatch(userLoggedOut());
     history.push("/");
 };
-function createUser(payload) {
-    return async function (dispatch) {
-        dispatch(userCreateRequested());
-        try {
-            const { content } = await userService.create(payload);
-            dispatch(userCreated(content));
-            history.push("/products");
-        } catch (error) {
-            dispatch(createUserFailed(error.message));
-        }
-    };
-}
 
 export const loadUserData = () => async (dispatch) => {
     dispatch(userRequested());
@@ -194,7 +167,7 @@ export const getCurrentUserData = () => (state) => {
 
 export const getIsAdmin = () => (state) => {
     if (state.users.entities) {
-        if (state.users.entities.role === "admin") return true;
+        return state.users.entities.isAdmin;
     }
     return false;
 };

@@ -14,7 +14,7 @@ const RegisterForm = () => {
         email: "",
         password: "",
         sex: "male",
-        adress: "",
+        address: "",
         phone: "",
         licence: false,
         isAdmin: false
@@ -45,7 +45,7 @@ const RegisterForm = () => {
                 value: 3
             }
         },
-        adress: {
+        address: {
             isRequired: {
                 message: "isRequired"
             },
@@ -160,10 +160,10 @@ const RegisterForm = () => {
             />
             <TextField
                 label="Адресс"
-                name="adress"
-                value={data.adress}
+                name="address"
+                value={data.address}
                 onChange={handleChange}
-                error={errors.adress}
+                error={errors.address}
             />
             <CheckBoxField
                 value={data.isAdmin}

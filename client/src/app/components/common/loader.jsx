@@ -13,7 +13,6 @@ const Loader = ({ clientY, clientX }) => {
             <span
                 className="visually-hidden">
             </span>
-            <p>Loading</p>
         </div>
     );
 };

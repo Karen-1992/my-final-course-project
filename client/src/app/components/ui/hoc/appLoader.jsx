@@ -4,8 +4,8 @@ import { getDataStatus, loadProductsList } from "../../../store/products";
 import PropTypes from "prop-types";
 import { getIsLoggedIn, loadUserData } from "../../../store/users";
 import { loadCategoriesList } from "../../../store/categories";
-import { loadCartList } from "../../../store/cart";
-import { loadFavoritetList } from "../../../store/favorites";
+// import { loadCartList } from "../../../store/cart";
+// import { loadFavoritetList } from "../../../store/favorites";
 import { useLoading } from "../../../hooks/useLoading";
 import Loader from "../../common/loader";
 
@@ -18,10 +18,10 @@ const AppLoader = ({ children }) => {
         if (!dataStatus) {
             dispatch(loadProductsList());
             dispatch(loadCategoriesList());
-            if (isLoggedIn) {
-                dispatch(loadCartList());
-                dispatch(loadFavoritetList());
-            }
+            // if (isLoggedIn) {
+            //     dispatch(loadCartList());
+            //     dispatch(loadFavoritetList());
+            // }
         }
         if (isLoggedIn) dispatch(loadUserData());
     }, [isLoggedIn]);

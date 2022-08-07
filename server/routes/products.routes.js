@@ -63,6 +63,7 @@ router.patch("/:productId", async (req, res) => {
         const { productId } = req.params;
         const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, {new: true});
         res.send(updatedProduct);
+        console.log("edited")
     } catch (e) {
         res.status(500).json({
             message: 'На сервере произошла ошибка. Попробуйте позже'
