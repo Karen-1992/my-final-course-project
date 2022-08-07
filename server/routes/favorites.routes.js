@@ -1,52 +1,58 @@
 const express = require("express");
-const auth = require("../middleware/auth.middleware");
 const Favorite = require("../models/Favorite");
+const auth = require("../middleware/auth.middleware");
 const router = express.Router({ mergeParams: true });
 
-router
-    .route("/")
-    .get(auth, async (req, res) => {
-        try {
-            const { orderBy, equalTo } = req.query;
-            const list = await Favorite.find({ [orderBy]: equalTo });
-            res.send(list);
-        } catch (e) {
-            res.status(500).json({
-                message: 'На сервере произошла ошибка. Попробуйте позже'
-            });
-        }
-    })
-    .post(auth, async (req, res) => {
-        try {
-            const newFavorite = await Favorite.create({
-                ...req.body,
-                userId: req.user._id
-            });
-            res.status(201).send(newFavorite);
-        } catch (e) {
-            res.status(500).json({
-                message: 'На сервере произошла ошибка. Попробуйте позже'
-            });
-        }
-    });
+// all
+router.get("/:userId", auth, async (req, res) => {
+    try {
+        const list = await Favorite.find();
+        res.status(200).send(list);
+    } catch (e) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+});
 
-router.delete('/:productId', auth, async (req, res) => {
+// add
+router.post("/:userId", auth, async (req, res) => {
+    try {
+        const newFavorite = await Favorite.create(req.body);
+        res.status(201).send(newFavorite);
+    } catch (e) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+});
+
+// delete one
+router.delete("/:userId/:productId", auth, async (req, res) => {
     try {
         const { productId } = req.params;
-        const removedProduct = await Favorite.findById(productId);
-
-        if (removedProduct.userId.toString() === req.user._id) {
-            await removedProduct.remove();
-            return res.send(null);
-        } else {
-            res.status(401).json({message: 'Unauthorized'});
-        }
+        const removedFavorite = await Favorite.findById(productId);
+        await removedFavorite.remove();
+        res.send(null);
     } catch (e) {
         res.status(500).json({
             message: 'На сервере произошла ошибка. Попробуйте позже'
         });
     }
-})
+});
 
+// delete all
+router.delete("/:userId", auth, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const removedFavorites = await Favorite.findById(userId);
+        await removedFavorites.remove();
+        res.send(null);
+    } catch (e) {
+        res.status(500).json({
+            message: 'На сервере произошла ошибка. Попробуйте позже'
+        });
+    }
+});
 
 module.exports = router;
