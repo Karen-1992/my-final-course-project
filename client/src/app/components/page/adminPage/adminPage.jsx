@@ -8,11 +8,8 @@ import ProductsTable from "../../ui/productsTable";
 import _ from "lodash";
 import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
-import Loader from "../../common/loader";
-import { useLoading } from "../../../hooks/useLoading";
 
 const AdminPage = () => {
-    const { clientX, clientY } = useLoading();
     const initialData = {
         title: "",
         brand: "",
@@ -186,23 +183,16 @@ const AdminPage = () => {
         <div className="container">
             <div className="row">
                 <div className="col-3">
-                    {!isLoading && !categoriesLoading ? (
-                        <ProductChangeForm
-                            data={data}
-                            productId={editedProductId}
-                            onChange={handleChange}
-                            onSubmit={handleSubmit}
-                            onCancel={handleCancel}
-                            errors={errors}
-                            isValid={isValid}
-                            categoriesList={categoriesList}
-                        />
-                    ) : (
-                        <Loader
-                            clientX={clientX}
-                            clientY={clientY}
-                        />
-                    )}
+                    <ProductChangeForm
+                        data={data}
+                        productId={editedProductId}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
+                        onCancel={handleCancel}
+                        errors={errors}
+                        isValid={isValid}
+                        categoriesList={categoriesList}
+                    />
                 </div>
                 <div className="col-9">
                     <ProductsTable

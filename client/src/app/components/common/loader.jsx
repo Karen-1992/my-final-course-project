@@ -1,14 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Loader = ({ clientY, clientX }) => {
+const Loader = () => {
     return (
         <div
-            className="spinner-border m-5 position-absolute" role="status"
-            style={{
-                top: `${clientY - 250}px`,
-                left: `${clientX - 250}px`
-            }}
+            className="spinner-border position-absolute top-50 start-50" role="status"
         >
             <span
                 className="visually-hidden">

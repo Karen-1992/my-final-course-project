@@ -3,10 +3,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getCurrentUserData } from "../../store/users";
 import Loader from "../common/loader";
-import { useLoading } from "../../hooks/useLoading";
 
 function NavProfile() {
-    const { clientX, clientY } = useLoading();
     const currentUser = useSelector(getCurrentUserData());
     const [isOpen, setOpen] = useState(false);
     const toggleMenu = () => {
@@ -14,10 +12,7 @@ function NavProfile() {
     };
     if (!currentUser) {
         return (
-            <Loader
-                clientX={clientX}
-                clientY={clientY}
-            />
+            <Loader/>
         );
     }
     return (

@@ -25,6 +25,7 @@ const productService = {
         return data;
     },
     update: async (payload) => {
+        console.log(payload);
         const { data } = await httpService.patch(
             productEndpoint + payload._id,
             payload

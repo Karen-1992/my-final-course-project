@@ -26,13 +26,13 @@ const favoriteSlice = createSlice({
             state.error = action.payload;
             state.isLoading = false;
         },
-        favoriteAdded: (state, action) => {
-            state.entities.push(action.payload);
-        },
-        favoriteRemoved: (state, action) => {
-            state.entities = state.entities.filter(
-                (f) => f.productId !== action.payload
-            );
+        favoriteToggled: (state, action) => {
+            const item = state.entities.find(f => f.productId === action.payload.productId);
+            if (item) {
+                state.entities = state.entities.filter(f => f.productId !== action.payload.productId);
+            } else {
+                state.entities.push(action.payload);
+            }
         },
         favoritesCleared: (state) => {
             state.entities = [];
@@ -45,8 +45,7 @@ const {
     favoritesRequested,
     favoritesReceived,
     favoritesRequestFailed,
-    favoriteAdded,
-    favoriteRemoved,
+    favoriteToggled,
     favoritesCleared
 } = actions;
 
@@ -59,7 +58,7 @@ export const loadFavoritetList = () => async (dispatch) => {
     dispatch(favoritesRequested());
     try {
         const { content } = await favoriteService.get();
-        dispatch(favoritesReceived(content));
+        dispatch(favoritesReceived(content.products));
     } catch (error) {
         dispatch(favoritesRequestFailed(error.message));
     }
@@ -67,23 +66,16 @@ export const loadFavoritetList = () => async (dispatch) => {
 
 export const toggleFavorite =
     (productId) =>
-        async (dispatch, getState) => {
-            if (localStorageService.getUserId() === null) {
+        async (dispatch) => {
+            const userId = localStorageService.getUserId();
+            if (userId === null) {
                 return history.push("/login");
             }
             dispatch(toggleFavoriteRequested());
-            const { entities } = getState().favorites;
-            const productIndex = entities.findIndex(
-                (e) => e.productId === productId
-            );
+            // );
             try {
-                if (productIndex === -1) {
-                    await favoriteService.add({ productId });
-                    dispatch(favoriteAdded({ productId }));
-                } else {
-                    await favoriteService.remove(productId);
-                    dispatch(favoriteRemoved(productId));
-                }
+                await favoriteService.toggle({ productId, userId });
+                dispatch(favoriteToggled({ productId, userId }));
             } catch (error) {
                 dispatch(toggleFavoriteFailed(error.message));
             }

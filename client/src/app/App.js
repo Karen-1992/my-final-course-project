@@ -13,12 +13,10 @@ import Dashboard from "./layouts/dashboard";
 import "react-toastify/dist/ReactToastify.css";
 import InitMockData from "./layouts/initMockData";
 import CartPage from "./components/page/cartPage/cartPage";
-import { useLoading } from "./hooks/useLoading";
 
 function App() {
-    const { handleMouseMove } = useLoading();
     return (
-        <div className="container min-vh-100 position-relative" onMouseMove={(e) => handleMouseMove(e)}>
+        <div className="container min-vh-100 position-relative">
             <AppLoader>
                 <NavBar />
                 <Switch>

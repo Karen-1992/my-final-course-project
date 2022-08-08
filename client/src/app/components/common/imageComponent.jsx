@@ -24,7 +24,7 @@ const ImageComponent = ({ src, onClick, height, width }) => {
 };
 
 ImageComponent.propTypes = {
-    src: PropTypes.string.isRequired,
+    src: PropTypes.string,
     onClick: PropTypes.func,
     height: PropTypes.string,
     width: PropTypes.string

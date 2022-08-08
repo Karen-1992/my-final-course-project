@@ -1,9 +1,14 @@
 const { Schema, model } = require("mongoose");
 
 const  schema = new Schema({
-    userId: [
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    products: [
         {
-            productId:{
+            productId: {
                 type: Schema.Types.ObjectId,
                 ref: "Product",
                 required: true

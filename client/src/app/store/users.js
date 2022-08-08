@@ -90,8 +90,8 @@ export const login =
             dispatch(authRequested());
             try {
                 const data = await authService.login({ email, password });
-                dispatch(authRequestSuccess({ userId: data.localId }));
                 localStorageService.setTokens(data);
+                dispatch(authRequestSuccess({ userId: data.userId }));
                 history.push(redirect);
             } catch (error) {
                 const { code, message } = error.response.data.error;
@@ -117,6 +117,7 @@ export const signUp = (payload) => async (dispatch) => {
 };
 export const logOut = () => (dispatch) => {
     localStorageService.removeAuthData();
+    localStorageService.removeUserData();
     dispatch(userLoggedOut());
     history.push("/");
 };

@@ -127,28 +127,37 @@ export const getProductById = (productId) => (state) => {
 export const getDataStatus = () => (state) => state.products.dataLoaded;
 export const getProductsLoadingStatus = () => (state) => state.products.isLoading;
 
-export const getProductsByIds = (idsArr) => (state) => {
+export const getProductsByIds = (idsArr) => async (state) => {
     const result = [];
-    if (idsArr) {
+    if (!state.products.entities) {
         for (const idsItem of idsArr) {
-            for (const product of state.products.entities) {
-                if (idsItem.productId === product._id) {
-                    result.push(product);
-                }
-            }
+            const { productId } = idsItem;
+            const { content } = await productService.getOneProduct(productId);
+            result.push(content);
+            // for (const product of state.products.entities) {
+            //     if (productId === product._id) {
+            //     }
+            // }
         }
     }
+    // if (idsArr) {
+    //     for (const idsItem of idsArr) {
+    //         for (const product of state.products.entities) {
+    //             if (idsItem.productId === product._id) {
+    //                 result.push(product);
+    //             }
+    //         }
+    //     }
+    // }
     return result;
 };
 export const getTotalPrice = (idsArr) => (state) => {
     let result = 0;
-    if (idsArr) {
-        for (const item of idsArr) {
-            for (const product of state.products.entities) {
-                if (item.productId === product._id) {
-                    const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
-                    result += finalPrice * item.quantity;
-                }
+    for (const item of idsArr) {
+        for (const product of state.products.entities) {
+            if (item.productId === product._id) {
+                const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
+                result += finalPrice * item.quantity;
             }
         }
     }

@@ -10,24 +10,30 @@ const favoriteService = {
         );
         return data;
     },
-    remove: async (payload) => {
-        const { data } = await httpService.delete(
-            favoriteEndpoint + localStorageService.getUserId() + `/${payload}`
+    // remove: async (payload) => {
+    //     const { data } = await httpService.delete(
+    //         favoriteEndpoint + localStorageService.getUserId() + `/${payload}`
+    //     );
+    //     return data;
+    // },
+    toggle: async (payload) => {
+        const { data } = await httpService.post(
+            favoriteEndpoint + localStorageService.getUserId(),
+            payload
         );
         return data;
     },
+    // create: async (payload) => {
+    //     const { data } = await httpService.post(
+    //         favoriteEndpoint +
+    //             localStorageService.getUserId(),
+    //         payload
+    //     );
+    //     return data;
+    // },
     clear: async () => {
         const { data } = await httpService.delete(
             favoriteEndpoint + localStorageService.getUserId()
-        );
-        return data;
-    },
-    add: async (payload) => {
-        const { data } = await httpService.put(
-            favoriteEndpoint +
-                localStorageService.getUserId() +
-                `/${payload.productId}`,
-            payload
         );
         return data;
     }
