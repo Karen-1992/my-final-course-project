@@ -5,10 +5,10 @@ const NavItemWithCount = ({ quantity, title, iconClasses }) => {
     return (
         <>
             <div className="text-center">
-                <h4>
-                    <i className={iconClasses}></i>
-                </h4>
-                <p>{title}</p>
+                {/* <h3> */}
+                <i className={iconClasses}></i>
+                {/* </h3> */}
+                {/* <p>{title}</p> */}
             </div>
             {quantity > 0 && (
                 <span

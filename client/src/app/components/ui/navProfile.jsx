@@ -18,16 +18,14 @@ function NavProfile() {
     return (
         <div className="dropdown" onClick={toggleMenu}>
             <div className="btn dropdown-toggle d-flex align-items-center">
-                <div className="me-2">
-                    <h5>
-                        <i className="bi bi-person px-1"></i>
-                        {currentUser.name}
-                    </h5>
-                    {currentUser.cash}$
+                <div className="d-flex gap-1">
+                    <i className="bi bi-person"></i>
+                    <span>{currentUser.firstName}</span>
+                    <span className="fw-bold">{currentUser.cash}$</span>
                 </div>
             </div>
             <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
-                <Link to={"/cabinet"} className="dropdown-item">
+                <Link to={"/cabinet/personal"} className="dropdown-item">
                     Личный кабинет
                 </Link>
                 <Link to="/logout" className="dropdown-item">

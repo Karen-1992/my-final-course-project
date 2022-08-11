@@ -9,15 +9,17 @@ import { signUp } from "../../store/users";
 const RegisterForm = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState({
-        name: "",
+        firstName: "",
         lastName: "",
         email: "",
         password: "",
         sex: "male",
-        address: "",
+        // locality: "",
+        // street: "",
+        // homeNumber: "",
+        // flatNumber: "",
         phone: "",
-        licence: false,
-        isAdmin: false
+        licence: false
     });
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
@@ -27,7 +29,7 @@ const RegisterForm = () => {
         }));
     };
     const validatorConfig = {
-        name: {
+        firstName: {
             isRequired: {
                 message: "isRequired"
             },
@@ -45,15 +47,15 @@ const RegisterForm = () => {
                 value: 3
             }
         },
-        address: {
-            isRequired: {
-                message: "isRequired"
-            },
-            min: {
-                message: "Адресс должен состоять минимум из 10 символов",
-                value: 10
-            }
-        },
+        // address: {
+        //     isRequired: {
+        //         message: "isRequired"
+        //     },
+        //     min: {
+        //         message: "Адресс должен состоять минимум из 10 символов",
+        //         value: 10
+        //     }
+        // },
         email: {
             isRequired: {
                 message: "isRequired"
@@ -113,10 +115,10 @@ const RegisterForm = () => {
         <form onSubmit={handleSubmit}>
             <TextField
                 label="Имя"
-                name="name"
-                value={data.name}
+                name="firstName"
+                value={data.firstName}
                 onChange={handleChange}
-                error={errors.name}
+                error={errors.firstName}
             />
             <TextField
                 label="Фамилия"
@@ -158,20 +160,34 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 label="Выберите ваш пол"
             />
-            <TextField
-                label="Адресс"
-                name="address"
-                value={data.address}
+            {/* <TextField
+                label="Населенный пункт"
+                name="locality"
+                value={data.locality}
                 onChange={handleChange}
-                error={errors.address}
+                error={errors.locality}
             />
-            <CheckBoxField
-                value={data.isAdmin}
+            <TextField
+                label="Улица"
+                name="street"
+                value={data.street}
                 onChange={handleChange}
-                name="isAdmin"
-            >
-                Are you admin
-            </CheckBoxField>
+                error={errors.street}
+            />
+            <TextField
+                label="Дом"
+                name="homeNumber"
+                value={data.homeNumber}
+                onChange={handleChange}
+                error={errors.homeNumber}
+            />
+            <TextField
+                label="Квартира"
+                name="flatNumber"
+                value={data.flatNumber}
+                onChange={handleChange}
+                error={errors.flatNumber}
+            /> */}
             <CheckBoxField
                 value={data.licence}
                 onChange={handleChange}

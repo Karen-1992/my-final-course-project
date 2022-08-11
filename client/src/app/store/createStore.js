@@ -4,13 +4,15 @@ import categoriesReducer from "./categories";
 import productsReducer from "./products";
 import cartReducer from "./cart";
 import favoriteReducer from "./favorites";
+import commentsReducer from "./comments";
 
 const rootReducer = combineReducers({
     users: usersReducer,
     categories: categoriesReducer,
     products: productsReducer,
     cart: cartReducer,
-    favorites: favoriteReducer
+    favorites: favoriteReducer,
+    comments: commentsReducer
 });
 
 export function createStore() {

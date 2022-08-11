@@ -22,7 +22,7 @@ router.post("/signUp", [
                 })
             }
 
-            const { email, password } = req.body;
+            const { email, password, role } = req.body;
             const existingUser = await User.findOne({ email });
             if (existingUser) {
                 return res.status(400).json({
@@ -40,7 +40,7 @@ router.post("/signUp", [
                 password: hashedPassword
             });
 
-            const tokens = tokenService.generate({ _id: newUser._id });
+            const tokens = tokenService.generate({ _id: newUser._id, role: newUser.role });
             await tokenService.save(newUser._id, tokens.refreshToken);
 
             res.status(201).send({
@@ -68,14 +68,13 @@ router.post("/signInWithPassword", [
                     }
                 });
             }
-
             const {email, password} = req.body;
             const existingUser = await User.findOne({ email });
             if (!existingUser) {
                 return res.status(400).send({
                     error: {
                         message: 'EMAIL_NOT_FOUND',
-                        code: 400
+                        code: 400,
                     }
                 });
             }

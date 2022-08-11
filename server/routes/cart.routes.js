@@ -1,44 +1,8 @@
 const express = require("express");
 const Cart = require("../models/Cart");
 const auth = require("../middleware/auth.middleware");
-const Product = require("../models/Product");
 const router = express.Router({ mergeParams: true });
 
-//////////////////////
-// toggle
-// router.post("/:userId", auth, async (req, res) => {
-//     try {
-//         const { productId, userId } = req.body;
-//         const userFavorites = await Favorite.findOne({ userId });
-//         if (userFavorites) {
-//             const { products } = userFavorites;
-//             const item = products.find(p => p.productId.toString() === productId);
-//             if (item) {
-//                 await item.remove();
-//             } else {
-//                 products.push(req.body);
-//             }
-//             await userFavorites.save();
-//             res.status(200).send(userFavorites);
-//         } else {
-//             const newFavorite = await Favorite.create({
-//                 userId,
-//                 products: [req.body]
-//             });
-//             await newFavorite.save();
-//             res.status(200).send(newFavorite);
-//         }
-//
-//     } catch (e) {
-//         res.status(500).json({
-//             message: "На сервере произошла ошибка. Попробуйте позже"
-//         });
-//     }
-// });
-////////////////////////
-
-
-//////////////////////////
 // get user cart
 router.get("/:userId", auth, async (req, res) => {
     try {
@@ -52,48 +16,36 @@ router.get("/:userId", auth, async (req, res) => {
     }
 });
 
-
-//         const userFavorites = await Favorite.findOne({ userId });
-//         if (userFavorites) {
-//             const { products } = userFavorites;
-//             const item = products.find(p => p.productId.toString() === productId);
-//             if (item) {
-//                 await item.remove();
-//             } else {
-//                 products.push(req.body);
-//             }
-//             await userFavorites.save();
-//             res.status(200).send(userFavorites);
-//         } else {
-//             const newFavorite = await Favorite.create({
-//                 userId,
-//                 products: [req.body]
-//             });
-//             await newFavorite.save();
-//             res.status(200).send(newFavorite);
-//         }
 // add
-router.patch("/:userId", auth, async (req, res) => {
+router.post("/:userId", auth, async (req, res) => {
     try {
-        const { productId, userId } = req.body;
+        const { productId } = req.body;
+        const { userId } = req.params;
+
         const userCart = await Cart.findOne({ userId });
         if (userCart) {
             const { products } = userCart;
-            const item = products.find(p => p.productId.toString() === productId);
-            if (item) {
-                await item.remove();
-            } else {
-                products.push(req.body);
+            const itemIndex = products.findIndex(p => p.productId.toString() === productId);
+            if (itemIndex === -1) {
+                const newItem = {
+                    ...req.body,
+                    quantity: 1
+                }
+                products.push(newItem);
+                await userCart.save();
+                res.status(200).send(newItem);
             }
-            await userCart.save();
-            res.status(200).send(userCart);
         } else {
+            const newItem = {
+                ...req.body,
+                quantity: 1
+            };
             const newCart = await Cart.create({
                 userId,
-                products: [req.body]
+                products: [newItem]
             });
             await newCart.save();
-            res.status(200).send(newCart);
+            res.status(200).send(newItem);
         }
 
     } catch (e) {
@@ -103,27 +55,28 @@ router.patch("/:userId", auth, async (req, res) => {
     }
 });
 
-// update cart
+// update quantity
 router.patch("/:userId", auth, async (req, res) => {
     try {
-        const { userId, productId } = req.params;
-        // const userCart = await Product.findById(userId);
-        // const productIndex = userCart.findIndex(p => p._id === productId);
-        // userCart[productIndex] = req.body;
-        const updatedCartProduct = await Product.findByIdAndUpdate(userId, req.body, {new: true});
-        res.send(updatedCartProduct);
+        const { productId } = req.body;
+        const { userId } = req.params;
+        const userCart = await Cart.findOne({ userId });
+        const { products } = userCart;
+        const itemIndex = products.findIndex(p => p.productId.toString() === productId);
+        products[itemIndex] = req.body;
+        await userCart.save();
+        res.status(200).send(userCart);
     } catch (e) {
         res.status(500).json({
-            message: 'На сервере произошла ошибка. Попробуйте позже'
+            message: "На сервере произошла ошибка. Попробуйте позже"
         });
     }
 });
 
-
 // delete one item
-router.delete("/:userId", auth, async (req, res) => {
+router.delete("/:userId/:productId", auth, async (req, res) => {
     try {
-        const { productId } = req.params;
+        const { userId, productId } = req.params;
         const userCart = await Cart.findOne({ userId });
         const { products } = userCart;
         const item = products.find(p => p.productId.toString() === productId);

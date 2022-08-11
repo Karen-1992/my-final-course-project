@@ -19,7 +19,8 @@ router.get("/:userId", auth, async (req, res) => {
 // toggle
 router.post("/:userId", auth, async (req, res) => {
     try {
-        const { productId, userId } = req.body;
+        const { productId } = req.body;
+        const { userId } = req.params;
         const userFavorites = await Favorite.findOne({ userId });
         if (userFavorites) {
             const { products } = userFavorites;
@@ -30,16 +31,15 @@ router.post("/:userId", auth, async (req, res) => {
                 products.push(req.body);
             }
             await userFavorites.save();
-            res.status(200).send(userFavorites);
+            res.status(200).send(item);
         } else {
             const newFavorite = await Favorite.create({
                 userId,
                 products: [req.body]
             });
             await newFavorite.save();
-            res.status(200).send(newFavorite);
+            res.status(200).send(newFavorite.products);
         }
-
     } catch (e) {
         res.status(500).json({
             message: "На сервере произошла ошибка. Попробуйте позже"

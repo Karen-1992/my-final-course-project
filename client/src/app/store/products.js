@@ -1,11 +1,14 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import productService from "../services/product.service";
-import { getPriceWithDiscount } from "../utils/getPriceWithDiscount";
+// import { getPriceWithDiscount } from "../utils/getPriceWithDiscount";
 
 const initialState = {
     entities: null,
-    currentProduct: null,
+    length: null,
+    currentPage: 1,
+    category: null,
     isLoading: true,
+    sort: null,
     error: null,
     dataLoaded: false
 };
@@ -15,18 +18,25 @@ const productsSlice = createSlice({
     reducers: {
         productsRequested: (state) => {
             state.isLoading = true;
+            state.dataLoaded = false;
         },
         productsReceived: (state, action) => {
-            state.entities = action.payload;
+            const { list, length, page, category, order } = action.payload;
+            state.entities = list;
+            state.length = length;
+            state.currentPage = +page;
+            state.category = category;
+            state.sort = order;
             state.dataLoaded = true;
             state.isLoading = false;
+            console.log(state.sort);
         },
         productsRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },
         productCreated: (state, action) => {
-            state.entities.push(action.payload);
+            state.entities.unshift(action.payload);
         },
         productRemoved: (state, action) => {
             state.entities = state.entities.filter(
@@ -37,9 +47,6 @@ const productsSlice = createSlice({
             state.entities[
                 state.entities.findIndex((p) => p._id === action.payload._id)
             ] = action.payload;
-        },
-        oneProductGot: (state, action) => {
-            state.currentProduct = action.payload;
         }
     }
 });
@@ -61,10 +68,11 @@ const productCreateFailed = createAction("products/productCreateFailed");
 const productUpdateRequested = createAction("products/productUpdateRequested");
 const productUpdateFailed = createAction("products/productUpdateFailed");
 
-export const loadProductsList = () => async (dispatch) => {
+export const loadProductsList = (params) => async (dispatch) => {
     dispatch(productsRequested());
     try {
-        const { content } = await productService.get();
+        const { content } = await productService.get(params);
+        console.log(content);
         dispatch(productsReceived(content));
     } catch (error) {
         dispatch(productsRequestFailed(error.message));
@@ -104,19 +112,11 @@ export const createProduct = (payload) => async (dispatch) => {
     }
 };
 
-// export const getProductFromServer = (payload) => async (dispatch) => {
-//     try {
-//         dispatch(productsRequested);
-//         console.log(payload);
-//         const { content } = await productService.getOneProduct(payload);
-//         console.log(content);
-//     } catch (error) {
-//         console.log(error);
-//         dispatch(productsRequestFailed);
-//     }
-// };
-
 export const getProductsList = () => (state) => state.products.entities;
+export const getProductsListLength = () => (state) => state.products.length;
+export const getCurrentPage = () => (state) => state.products.currentPage;
+export const getCurrentCategory = () => (state) => state.products.category;
+export const getCurrentSort = () => (state) => state.products.sort;
 
 export const getProductById = (productId) => (state) => {
     if (state.products.entities) {
@@ -126,42 +126,5 @@ export const getProductById = (productId) => (state) => {
 
 export const getDataStatus = () => (state) => state.products.dataLoaded;
 export const getProductsLoadingStatus = () => (state) => state.products.isLoading;
-
-export const getProductsByIds = (idsArr) => async (state) => {
-    const result = [];
-    if (!state.products.entities) {
-        for (const idsItem of idsArr) {
-            const { productId } = idsItem;
-            const { content } = await productService.getOneProduct(productId);
-            result.push(content);
-            // for (const product of state.products.entities) {
-            //     if (productId === product._id) {
-            //     }
-            // }
-        }
-    }
-    // if (idsArr) {
-    //     for (const idsItem of idsArr) {
-    //         for (const product of state.products.entities) {
-    //             if (idsItem.productId === product._id) {
-    //                 result.push(product);
-    //             }
-    //         }
-    //     }
-    // }
-    return result;
-};
-export const getTotalPrice = (idsArr) => (state) => {
-    let result = 0;
-    for (const item of idsArr) {
-        for (const product of state.products.entities) {
-            if (item.productId === product._id) {
-                const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
-                result += finalPrice * item.quantity;
-            }
-        }
-    }
-    return result;
-};
 
 export default ProductsReducer;

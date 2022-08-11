@@ -19,6 +19,7 @@ const EditUserPage = () => {
         if (!isValid) return;
         dispatch(updateUser(data));
     };
+    console.log(data);
     useEffect(() => {
         if (currentUser && !data) {
             setData({
@@ -33,15 +34,7 @@ const EditUserPage = () => {
     }, [data]);
 
     const validatorConfig = {
-        email: {
-            isRequired: {
-                message: "isRequired"
-            },
-            isEmail: {
-                message: "Email введен некорректно"
-            }
-        },
-        name: {
+        firstName: {
             isRequired: {
                 message: "isRequired"
             },
@@ -59,15 +52,15 @@ const EditUserPage = () => {
                 value: 3
             }
         },
-        address: {
-            isRequired: {
-                message: "isRequired"
-            },
-            min: {
-                message: "Адресс должен состоять минимум из 10 символов",
-                value: 10
-            }
-        },
+        // address: {
+        //     isRequired: {
+        //         message: "isRequired"
+        //     },
+        //     min: {
+        //         message: "Адресс должен состоять минимум из 10 символов",
+        //         value: 10
+        //     }
+        // },
         phone: {
             isRequired: {
                 message: "isRequired"
@@ -75,6 +68,16 @@ const EditUserPage = () => {
             min: {
                 message: "Телефон должен состоять минимум из 9 символов",
                 value: 9
+            }
+        },
+        cash: {
+            maxValue: {
+                message: "У вас нет таких денег",
+                value: 10000
+            },
+            minValue: {
+                message: "Не может быть меньше 0",
+                value: 0
             }
         }
     };
@@ -95,15 +98,14 @@ const EditUserPage = () => {
     const isValid = Object.keys(errors).length === 0;
     return (
         <div className="w-75">
-            <h1>EDIT</h1>
             {!isLoading && currentUser ? (
                 <form onSubmit={handleSubmit}>
                     <TextField
                         label="Имя"
-                        name="name"
-                        value={data.name}
+                        name="firstName"
+                        value={data.firstName}
                         onChange={handleChange}
-                        error={errors.name}
+                        error={errors.firstName}
                     />
                     <TextField
                         label="Фамилия"
@@ -123,13 +125,13 @@ const EditUserPage = () => {
                         onChange={handleChange}
                         label="Выберите ваш пол"
                     />
-                    <TextField
+                    {/* <TextField
                         label="Адресс"
                         name="address"
                         value={data.address}
                         onChange={handleChange}
                         error={errors.address}
-                    />
+                    /> */}
                     <TextField
                         label="Телефон"
                         name="phone"

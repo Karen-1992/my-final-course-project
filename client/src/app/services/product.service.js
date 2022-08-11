@@ -3,8 +3,10 @@ import httpService from "./http.service";
 const productEndpoint = "products/";
 
 const productService = {
-    get: async () => {
-        const { data } = await httpService.get(productEndpoint);
+    get: async (params) => {
+        const { data } = await httpService.get(productEndpoint, {
+            params
+        });
         return data;
     },
     getOneProduct: async (productId) => {

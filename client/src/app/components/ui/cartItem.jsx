@@ -1,16 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { getProductById } from "../../store/products";
 import getArtFromId from "../../utils/getArtFromId";
 import Counter from "../common/counter";
-import productService from "../../services/product.service";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
 import { getIsFavorite } from "../../store/favorites";
 import ImageComponent from "../common/imageComponent";
 
 const CartItem = ({
-    productId,
+    product,
     quantity,
     onRemove,
     onDecrement,
@@ -18,15 +16,9 @@ const CartItem = ({
     onOpen,
     onToggleFavorite
 }) => {
-    const product = useSelector(getProductById(productId));
-    const isFavorite = useSelector(getIsFavorite(productId));
-    async function getOneProduct(id) {
-        const { content } = await productService.getOneProduct(id);
-        return content;
-    }
-    getOneProduct(productId);
+    const isFavorite = useSelector(getIsFavorite(product._id));
     const data = {
-        productId,
+        productId: product._id,
         quantity,
         ...product
     };
@@ -45,7 +37,6 @@ const CartItem = ({
                 <ImageComponent
                     src={product.thumbnail}
                     height="200px"
-                    width="100%"
                     onClick={onOpen}
                 />
             </div>
@@ -57,7 +48,7 @@ const CartItem = ({
                     {product.title}
                 </h5>
                 <p>Остаток: {product.stock}</p>
-                <p>Код товара: {getArtFromId(productId)}</p>
+                <p>Код товара: {getArtFromId(product._id)}</p>
             </div>
             <div className="col-4 align-self-center fw-light">
                 <Counter
@@ -93,7 +84,7 @@ const CartItem = ({
 };
 
 CartItem.propTypes = {
-    productId: PropTypes.string.isRequired,
+    product: PropTypes.object.isRequired,
     quantity: PropTypes.number.isRequired,
     onRemove: PropTypes.func,
     onIncrement: PropTypes.func,

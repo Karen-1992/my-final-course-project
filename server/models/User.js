@@ -1,13 +1,13 @@
 const { Schema, model } = require("mongoose");
 
 const  schema = new Schema({
-    name: {
+    firstName: {
         type: String,
-        required: true,
+        required: true
     },
     lastName: {
         type: String,
-        required: true,
+        required: true
     },
     email: {
         type: String,
@@ -16,21 +16,61 @@ const  schema = new Schema({
     },
     password: {
         type: String,
-        required: true,
-    },
-    address: {
-        type: String,
         required: true
     },
+    // address: {
+    //     locality: String,
+    //     street: String,
+    //     homeNumber: String,
+    //     flatNumber: String
+    // },
     cash: Number,
     sex: {
         type: String,
         enum: ["male", "female", "other"]
     },
-    isAdmin: Boolean,
+    role: {
+        type: String,
+        default: "user"
+    },
     phone: String
 }, {
     timestamps: true
 });
+// const  schema = new Schema({
+//     name: {
+//         type: String,
+//         required: true
+//     },
+//     lastName: {
+//         type: String,
+//         required: true
+//     },
+//     email: {
+//         type: String,
+//         required: true,
+//         unique: true
+//     },
+//     password: {
+//         type: String,
+//         required: true
+//     },
+//     address: {
+//         type: String,
+//         required: true
+//     },
+//     cash: Number,
+//     sex: {
+//         type: String,
+//         enum: ["male", "female", "other"]
+//     },
+//     role: {
+//         type: Boolean,
+//         default: "user"
+//     },
+//     phone: String
+// }, {
+//     timestamps: true
+// });
 
 module.exports = model("User", schema);

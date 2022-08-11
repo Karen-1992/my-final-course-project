@@ -2,12 +2,34 @@ const express = require("express");
 const Product = require("../models/Product");
 const { generateProductData } = require("../utils/helpers");
 const router = express.Router({ mergeParams: true });
+const checkRole = require("../middleware/admin.middleware");
 
 // all products
 router.get("/", async (req, res) => {
     try {
-        const list = await Product.find();
-        res.status(200).send(list);
+        let { limit, page, category, order, path } = req.query;
+        path = path || "price";
+        order = order === "asc" ? "desc" : "asc";
+        page = page || 1;
+        limit = limit || 20;
+        let skip = page * limit - limit;
+        let list;
+        const allList = await Product.find();
+        if (category) {
+            list = await Product.find({ category })
+                .sort({ price: "asc" })
+                .limit(limit)
+                .skip(skip)
+        }
+        if (page && limit && !category) {
+            list = await Product.find()
+                .limit(limit)
+                .sort({ price: order })
+                .skip(skip)
+        }
+        const length = allList.length;
+
+        res.status(200).send({ list, length, page, category, order, path });
     } catch (e) {
         res.status(500).json({
             message: "На сервере произошла ошибка. Попробуйте позже"
@@ -43,11 +65,12 @@ router.get("/categories/:categoryId", async (req, res) => {
 });
 
 // add product
-router.post("/", async (req, res) => {
+router.post("/", checkRole("admin"), async (req, res) => {
     try {
         const newProduct = await Product.create({
             ...generateProductData(),
-            ...req.body
+            ...req.body,
+            images: [req.body.thumbnail]
         });
         res.status(201).send(newProduct);
     } catch (e) {
@@ -58,7 +81,7 @@ router.post("/", async (req, res) => {
 });
 
 // update product
-router.patch("/:productId", async (req, res) => {
+router.patch("/:productId", checkRole("admin"), async (req, res) => {
     try {
         const { productId } = req.params;
         const updatedProduct = await Product.findByIdAndUpdate(productId, req.body, {new: true});
@@ -71,7 +94,7 @@ router.patch("/:productId", async (req, res) => {
 });
 
 // delete product
-router.delete("/:productId", async (req, res) => {
+router.delete("/:productId", checkRole("admin"), async (req, res) => {
     try {
         const { productId } = req.params;
         const removedProduct = await Product.findById(productId);

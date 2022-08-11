@@ -4,10 +4,11 @@ const  schema = new Schema({
     title: {
         type: String,
         required: true,
+        unique: true
     },
     brand: {
         type: String,
-        required: true,
+        required: true
     },
     category: {
         type: Schema.Types.ObjectId,
@@ -16,17 +17,21 @@ const  schema = new Schema({
     },
     description: {
         type: String,
-        required: true,
+        required: true
     },
     discountPercentage: Number,
     price: {
         type: Number,
-        required: true,
+        required: true
     },
-    rating: Number,
+    rating: {
+        type: Number,
+        ref: "Category",
+        default: 0
+    },
     stock: {
         type: Number,
-        required: true,
+        required: true
     },
     thumbnail: String,
     images: [String]

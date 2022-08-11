@@ -8,6 +8,7 @@ const categoriesSlice = createSlice({
         entities: null,
         isLoading: true,
         error: null,
+        dataLoaded: false,
         lastFetch: null
     },
     reducers: {
@@ -17,6 +18,7 @@ const categoriesSlice = createSlice({
         categoriesReceived: (state, action) => {
             state.entities = action.payload;
             state.lastFetch = Date.now();
+            state.dataLoaded = true;
             state.isLoading = false;
         },
         categoriesRequestFailed: (state, action) => {
@@ -51,5 +53,11 @@ export const getCategoryById = (id) => (state) => {
         return state.categories.entities.find((p) => p._id === id);
     }
 };
+export const getCategoryByName = (name) => (state) => {
+    if (state.categories.entities) {
+        return state.categories.entities.find((p) => p.name === name);
+    }
+};
+export const getDataStatus = () => (state) => state.users.dataLoaded;
 
 export default categoriesReducer;

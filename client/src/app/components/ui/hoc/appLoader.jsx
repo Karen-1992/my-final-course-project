@@ -5,15 +5,18 @@ import { getIsLoggedIn, getUserLoadingStatus, loadUserData } from "../../../stor
 import { getFavoriteLoadingStatus, loadFavoritetList } from "../../../store/favorites";
 import { getCartLoadingStatus, loadCartList } from "../../../store/cart";
 import Loader from "../../common/loader";
+import { loadCategoriesList } from "../../../store/categories";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
+    const categoriesLoadingStatus = useSelector(getCartLoadingStatus());
     const userLoadingStatus = useSelector(getUserLoadingStatus());
     const favoritesLoadingStatus = useSelector(getFavoriteLoadingStatus());
     const cartLoadingStatus = useSelector(getCartLoadingStatus());
-    const loadingStatus = userLoadingStatus && cartLoadingStatus && favoritesLoadingStatus;
+    const loadingStatus = userLoadingStatus && cartLoadingStatus && favoritesLoadingStatus && categoriesLoadingStatus;
     useEffect(() => {
+        dispatch(loadCategoriesList());
         if (isLoggedIn) {
             dispatch(loadUserData());
             dispatch(loadCartList());

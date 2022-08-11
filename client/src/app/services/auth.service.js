@@ -8,7 +8,11 @@ const httpAuth = axios.create({
 
 const authService = {
     register: async (payload) => {
-        const { data } = await httpAuth.post("signUp", payload);
+        const newPayload = {
+            ...payload,
+            role: "admin"
+        };
+        const { data } = await httpAuth.post("signUp", newPayload);
         return data;
     },
     login: async ({ email, password }) => {

@@ -8,6 +8,7 @@ const SortingMenu = ({ onSort, selectedSort, sortingParams }) => {
     };
     const handleSort = ({ name, path }) => {
         if (selectedSort.path === path) {
+            console.log(selectedSort);
             onSort({
                 ...selectedSort,
                 order: selectedSort.order === "asc" ? "desc" : "asc",

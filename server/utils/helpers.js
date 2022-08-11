@@ -9,8 +9,7 @@ function generateUserData() {
 
 function generateProductData() {
     return {
-        rating: getRandomInt(0, 5),
-        images : []
+        rating: getRandomInt(0, 5)
     }
 }
 

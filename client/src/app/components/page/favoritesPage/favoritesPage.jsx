@@ -12,16 +12,18 @@ import ProductItem from "../../ui/productItem";
 const FavoritesPage = () => {
     const dispatch = useDispatch();
     const favoritesIds = useSelector(getFavoriteList());
-    const [favoritesList, setProducts] = useState();
+    const [favoritesList, setFavoritesList] = useState();
     useEffect(() => {
-        getProducts(favoritesIds).then(res => setProducts(res));
+        getProducts(favoritesIds).then(res => setFavoritesList(res));
     }, [favoritesIds]);
     async function getProducts(ids) {
         const result = [];
-        for (const id of ids) {
-            const { productId } = id;
-            const { content } = await productService.getOneProduct(productId);
-            result.push(content);
+        if (ids) {
+            for (const id of ids) {
+                const { productId } = id;
+                const { content } = await productService.getOneProduct(productId);
+                result.push(content);
+            }
         }
         return result;
     }

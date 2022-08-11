@@ -72,10 +72,9 @@ export const toggleFavorite =
                 return history.push("/login");
             }
             dispatch(toggleFavoriteRequested());
-            // );
             try {
-                await favoriteService.toggle({ productId, userId });
-                dispatch(favoriteToggled({ productId, userId }));
+                await favoriteService.toggle({ productId });
+                dispatch(favoriteToggled({ productId }));
             } catch (error) {
                 dispatch(toggleFavoriteFailed(error.message));
             }

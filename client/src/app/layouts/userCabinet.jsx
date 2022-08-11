@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import ProfileContentProxy from "../routes/ProfileContentProxy";
-import history from "../utils/history";
+// import history from "../utils/history";
 
 const UserCabinet = () => {
     const { type, edit } = useParams();
@@ -13,10 +13,10 @@ const UserCabinet = () => {
         { name: "Мои заказы", path: "orders" },
         { name: "Выйти из системы", path: "logout" }
     ];
-    const [selectedRoute, setSelectedRoute] = useState("");
+    const [selectedRoute, setSelectedRoute] = useState("personal");
     const handleChangeRoute = (route) => {
         setSelectedRoute(route);
-        history.push(`/cabinet/${route}`);
+        // history.push(`/cabinet/${route}`);
     };
     const isExistingRoute = routes.some((route) => route.path === type);
     useEffect(() => {
@@ -26,30 +26,42 @@ const UserCabinet = () => {
     }, [type]);
     return (
         <div className="row">
-            <div className="col-lg-2 col-sm-3">
-                <ul className="list-group">
-                    {routes.map((route) => (
-                        <li
-                            key={route.path}
-                            onClick={() => handleChangeRoute(route.path)}
-                            className={
-                                "list-group-item " +
-                                (selectedRoute === route.path ? "active" : "")
-                            }
-                            role="button"
-                        >
-                            {route.name}
-                        </li>
-                    ))}
-                </ul>
+            <div className="card text-center">
+                <div className="card-header">
+                    <ul className="nav nav-tabs card-header-tabs">
+                        {routes.map((route) => (
+                            <Link
+                                key={route.path}
+                                onClick={() => handleChangeRoute(route.path)}
+                                className={
+                                    "nav-link " +
+                                    (selectedRoute === route.path ? "active" : "")
+                                }
+                                role="button"
+                                to={`/cabinet/${route.path}`}
+                            >
+                                {route.name}
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+                <div className="card-body">
+                    <div>
+                        {!isExistingRoute ? (
+                            <Redirect to={"/cabinet"} />
+                        ) : (
+                            <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
+                        )}
+                    </div>
+                </div>
             </div>
-            <div className="col-lg-10">
+            {/* <div className="">
                 {!isExistingRoute ? (
                     <Redirect to={"/cabinet"} />
                 ) : (
                     <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
                 )}
-            </div>
+            </div> */}
         </div>
     );
 };

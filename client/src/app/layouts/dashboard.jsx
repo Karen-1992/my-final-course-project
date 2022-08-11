@@ -9,7 +9,6 @@ const Dashboard = () => {
     const isAdmin = useSelector(getIsAdmin());
     return (
         <ProductsLoader>
-            {}
             {isAdmin ? (
                 <AdminPage />
             ) : (

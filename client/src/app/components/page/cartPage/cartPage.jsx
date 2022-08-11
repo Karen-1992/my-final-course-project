@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../../ui/cartItem";
 import {
@@ -8,18 +8,43 @@ import {
     incrementQuantity,
     removeProductFromCart
 } from "../../../store/cart";
-import { getTotalPrice } from "../../../store/products";
 import { updateUserCash } from "../../../store/users";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { toggleFavorite } from "../../../store/favorites";
 import history from "../../../utils/history";
 import ClearButton from "../../common/clearButton";
+import productService from "../../../services/product.service";
+import { getPriceWithDiscount } from "../../../utils/getPriceWithDiscount";
+import Loader from "../../common/loader";
 
 const CartPage = () => {
     const dispatch = useDispatch();
-    const cartList = useSelector(getCartList());
-    const totalPrice = useSelector(getTotalPrice(cartList));
+    const cartListIds = useSelector(getCartList());
+    const [cartList, setCartList] = useState();
+    const totalPrice = getTotalPrice(cartList);
+    useEffect(() => {
+        getProducts(cartListIds).then(res => setCartList(res));
+    }, [cartListIds]);
+    async function getProducts(ids) {
+        const result = [];
+        for (const id of ids) {
+            const { productId } = id;
+            const { content } = await productService.getOneProduct(productId);
+            result.push({ ...content, quantity: id.quantity });
+        }
+        return result;
+    }
+    function getTotalPrice(list) {
+        if (list) {
+            let result = 0;
+            for (const product of cartList) {
+                const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
+                result += finalPrice * product.quantity;
+            }
+            return result;
+        }
+    };
     const handleRemove = (id) => {
         dispatch(removeProductFromCart(id));
     };
@@ -55,60 +80,64 @@ const CartPage = () => {
     };
     return (
         <div className="container pt-3">
-            <div className="row">
-                {cartList.length > 0 ? (
-                    <>
-                        <div className="col-9">
-                            {cartList.map((p) => (
-                                <CartItem
-                                    key={p._id}
-                                    productId={p.productId}
-                                    quantity={p.quantity}
-                                    onRemove={() => handleRemove(p.productId)}
-                                    onDecrement={handleDecrement}
-                                    onIncrement={handleIncrement}
-                                    onToggleFavorite={() => handleToggleFavorite(p.productId)}
-                                    onOpen={() => handleOpenProductPage(p.productId)}
-                                />
-                            ))}
-                        </div>
-                        <div className="col-3">
-                            <div className="d-flex justify-content-center">
-                                <ClearButton
-                                    onClick={handleClear}
-                                    classes="fw-light mb-2"
-                                    label="Очистить корзину"
-                                />
+            {cartList ? (
+                <>
+                    {cartList.length > 0 ? (
+                        <div className="row">
+                            <div className="col-9">
+                                {cartList.map((p) => (
+                                    <CartItem
+                                        key={p._id}
+                                        product={p}
+                                        quantity={p.quantity}
+                                        onRemove={() => handleRemove(p._id)}
+                                        onDecrement={handleDecrement}
+                                        onIncrement={handleIncrement}
+                                        onToggleFavorite={() => handleToggleFavorite(p._id)}
+                                        onOpen={() => handleOpenProductPage(p._id)}
+                                    />
+                                ))}
                             </div>
-                            <div className="shadow-sm p-3 mb-5 bg-body rounded">
-                                <h3>Ваш заказ</h3>
-                                <p>
-                                    Количество товаров:
-                                    <span className="fw-semibold fs-4"> {totalQuantity}</span>
-                                </p>
-                                <p>
-                                    Итого к оплате:
-                                    <span className="fw-semibold fs-4"> {totalPrice}$</span>
-                                </p>
-                                <button
-                                    onClick={handleFinishShopping}
-                                    className="w-100 btn btn-success"
-                                >
-                                    Купить
-                                </button>
+                            <div className="col-3">
+                                <div className="d-flex justify-content-center">
+                                    <ClearButton
+                                        onClick={handleClear}
+                                        classes="fw-light mb-2"
+                                        label="Очистить корзину"
+                                    />
+                                </div>
+                                <div className="shadow-sm p-3 mb-5 bg-body rounded">
+                                    <h3>Ваш заказ</h3>
+                                    <p>
+                                        Количество товаров:
+                                        <span className="fw-semibold fs-4"> {totalQuantity}</span>
+                                    </p>
+                                    <p>
+                                        Итого к оплате:
+                                        <span className="fw-semibold fs-4"> {totalPrice}$</span>
+                                    </p>
+                                    <button
+                                        onClick={handleFinishShopping}
+                                        className="w-100 btn btn-success"
+                                    >
+                                        Купить
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <h2>В корзине еще нет товаров</h2>
-                        <div>
-                            Выберите нужный Вам товар из
-                            <Link to="/products"> каталога интернет-магазина</Link>
-                        </div>
-                    </>
-                )}
-            </div>
+                    ) : (
+                        <>
+                            <h2>В корзине еще нет товаров</h2>
+                            <div>
+                                Выберите нужный Вам товар из
+                                <Link to="/products"> каталога интернет-магазина</Link>
+                            </div>
+                        </>
+                    )}
+                </>
+            ) : (
+                <Loader />
+            )}
         </div>
     );
 };

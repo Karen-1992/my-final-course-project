@@ -10,12 +10,6 @@ const favoriteService = {
         );
         return data;
     },
-    // remove: async (payload) => {
-    //     const { data } = await httpService.delete(
-    //         favoriteEndpoint + localStorageService.getUserId() + `/${payload}`
-    //     );
-    //     return data;
-    // },
     toggle: async (payload) => {
         const { data } = await httpService.post(
             favoriteEndpoint + localStorageService.getUserId(),
@@ -23,14 +17,6 @@ const favoriteService = {
         );
         return data;
     },
-    // create: async (payload) => {
-    //     const { data } = await httpService.post(
-    //         favoriteEndpoint +
-    //             localStorageService.getUserId(),
-    //         payload
-    //     );
-    //     return data;
-    // },
     clear: async () => {
         const { data } = await httpService.delete(
             favoriteEndpoint + localStorageService.getUserId()

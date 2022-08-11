@@ -1,6 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import cartService from "../services/cart.service";
-import { nanoid } from "nanoid";
 import history from "../utils/history";
 import localStorageService from "../services/localStorage.service";
 
@@ -28,6 +27,7 @@ const cartSlice = createSlice({
             state.isLoading = false;
         },
         productAdded: (state, action) => {
+            console.log(action.payload);
             state.entities.push(action.payload);
         },
         productQuantityIncremented: (state, action) => {
@@ -47,7 +47,7 @@ const cartSlice = createSlice({
         },
         productRemoved: (state, action) => {
             state.entities = state.entities.filter(
-                (c) => c.productId !== action.payload
+                (c) => c.productId !== action.payload.productId
             );
         },
         cartCleared: (state) => {
@@ -82,7 +82,7 @@ export const loadCartList = () => async (dispatch) => {
     dispatch(cartRequested());
     try {
         const { content } = await cartService.get();
-        dispatch(cartReceived(content));
+        dispatch(cartReceived(content.products));
     } catch (error) {
         dispatch(cartRequestFailed(error.message));
     }
@@ -90,23 +90,14 @@ export const loadCartList = () => async (dispatch) => {
 
 export const addProductToCart =
     ({ _id, stock }) =>
-        async (dispatch, getState) => {
+        async (dispatch) => {
             if (localStorageService.getUserId() === null) {
                 return history.push("/login");
             }
             dispatch(addProductRequested());
-            const data = {
-                _id: nanoid(),
-                productId: _id,
-                quantity: 1
-            };
             try {
-                const { entities } = getState().cart;
-                const productIndex = entities.findIndex(
-                    (e) => e.productId === data.productId
-                );
-                if (productIndex === -1 && stock > 0) {
-                    const { content } = await cartService.add(data);
+                if (stock > 0) {
+                    const { content } = await cartService.add({ productId: _id });
                     dispatch(productAdded(content));
                 }
             } catch (error) {
@@ -114,14 +105,16 @@ export const addProductToCart =
             }
         };
 
-export const removeProductFromCart = (payload) => async (dispatch) => {
+export const removeProductFromCart = (productId) => async (dispatch) => {
     dispatch(removeProductRequested());
     try {
-        const { content } = await cartService.remove(payload);
+        const { content } = await cartService.remove({ productId });
         if (content === null) {
-            return dispatch(productRemoved(payload));
+            console.log(productId);
+            return dispatch(productRemoved(productId));
         }
-        dispatch(productRemoved({ content, payload }));
+        console.log(productId);
+        dispatch(productRemoved({ content, productId }));
     } catch (error) {
         dispatch(cartRequestFailed(error.message));
     }

@@ -168,7 +168,8 @@ export const getCurrentUserData = () => (state) => {
 
 export const getIsAdmin = () => (state) => {
     if (state.users.entities) {
-        return state.users.entities.isAdmin;
+        const isAdmin = state.users.entities.role === "admin";
+        return isAdmin;
     }
     return false;
 };

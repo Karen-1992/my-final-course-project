@@ -38,7 +38,6 @@ const ProductItem = ({
                 <ImageComponent
                     src={thumbnail}
                     height="200px"
-                    width="100%"
                 />
             </div>
             <div className="d-flex">
