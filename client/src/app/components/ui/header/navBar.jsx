@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCartQuantity } from "../../../store/cart";
@@ -8,13 +8,30 @@ import ImageComponent from "../../common/imageComponent";
 import logo from "../../../assets/images/logo.png";
 import NavProfile from "../navProfile";
 import NavItemWithCount from "../../common/navItemWithCount";
+import useDebounce from "../../../hooks/useDebounce";
+import productService from "../../../services/product.service";
 
 const NavBar = () => {
     const [searchQuery, setSearchQuery] = useState("");
-    console.log(searchQuery);
+    const [results, setResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+    const debouncedSearchQuery = useDebounce(searchQuery, 1000);
+    useEffect(() => {
+        if (debouncedSearchQuery) {
+            setIsSearching(true);
+            productService.getQuery({ query: searchQuery }).then(res => setResults(res));
+        } else {
+            setResults([]);
+        }
+    }, [debouncedSearchQuery]);
     const handleSearchQuery = ({ target }) => {
         setSearchQuery(target.value);
     };
+    if (isSearching) {
+        console.log(results);
+    } else {
+        console.log("loading");
+    }
     const cartQuantity = useSelector(getCartQuantity());
     const favoritesQuantity = useSelector(getFavoriteQuantity());
     const isLoggedIn = useSelector(getIsLoggedIn());

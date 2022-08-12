@@ -5,6 +5,7 @@ import RadioField from "../../common/form/radioField";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserData, updateUser } from "../../../store/users";
 import Loader from "../../common/loader";
+import history from "../../../utils/history";
 
 const EditUserPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -18,8 +19,8 @@ const EditUserPage = () => {
         const isValid = validate();
         if (!isValid) return;
         dispatch(updateUser(data));
+        history.push("/cabinet/personal");
     };
-    console.log(data);
     useEffect(() => {
         if (currentUser && !data) {
             setData({

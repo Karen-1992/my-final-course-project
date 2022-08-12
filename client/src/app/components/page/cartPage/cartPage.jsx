@@ -8,19 +8,21 @@ import {
     incrementQuantity,
     removeProductFromCart
 } from "../../../store/cart";
-import { updateUserCash } from "../../../store/users";
+import { getCurrentUserData, updateUser } from "../../../store/users";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { toggleFavorite } from "../../../store/favorites";
-import history from "../../../utils/history";
 import ClearButton from "../../common/clearButton";
 import productService from "../../../services/product.service";
 import { getPriceWithDiscount } from "../../../utils/getPriceWithDiscount";
 import Loader from "../../common/loader";
+import history from "../../../utils/history";
 
 const CartPage = () => {
     const dispatch = useDispatch();
+    // const history = useHistory();
     const cartListIds = useSelector(getCartList());
+    const userData = useSelector(getCurrentUserData());
     const [cartList, setCartList] = useState();
     const totalPrice = getTotalPrice(cartList);
     useEffect(() => {
@@ -28,10 +30,12 @@ const CartPage = () => {
     }, [cartListIds]);
     async function getProducts(ids) {
         const result = [];
-        for (const id of ids) {
-            const { productId } = id;
-            const { content } = await productService.getOneProduct(productId);
-            result.push({ ...content, quantity: id.quantity });
+        if (cartListIds) {
+            for (const id of ids) {
+                const { productId } = id;
+                const { content } = await productService.getOneProduct(productId);
+                result.push({ ...content, quantity: id.quantity });
+            }
         }
         return result;
     }
@@ -68,9 +72,15 @@ const CartPage = () => {
     }
     const totalQuantity = getTotalQuantity();
     const handleFinishShopping = () => {
-        dispatch(updateUserCash(totalPrice));
-        toast.success("Поздравляем с покупкой");
-        dispatch(clearCart());
+        if (userData.cash > totalPrice) {
+            const currentCash = userData.cash;
+            const cash = currentCash - totalPrice;
+            toast.success("Поздравляем с покупкой");
+            dispatch(updateUser({ cash }));
+            dispatch(clearCart());
+        } else {
+            toast.error("Недостаточно средств, пополните денежные средства");
+        }
     };
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));

@@ -29,7 +29,6 @@ const productsSlice = createSlice({
             state.sort = order;
             state.dataLoaded = true;
             state.isLoading = false;
-            console.log(state.sort);
         },
         productsRequestFailed: (state, action) => {
             state.error = action.payload;
@@ -72,7 +71,6 @@ export const loadProductsList = (params) => async (dispatch) => {
     dispatch(productsRequested());
     try {
         const { content } = await productService.get(params);
-        console.log(content);
         dispatch(productsReceived(content));
     } catch (error) {
         dispatch(productsRequestFailed(error.message));

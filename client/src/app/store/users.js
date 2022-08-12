@@ -4,7 +4,6 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
-import { toast } from "react-toastify";
 
 const initialState = localStorageService.getAccessToken()
     ? {
@@ -19,7 +18,6 @@ const initialState = localStorageService.getAccessToken()
         isLoading: false,
         error: null,
         auth: null,
-        favorites: null,
         isLoggedIn: false
     };
 
@@ -131,32 +129,12 @@ export const loadUserData = () => async (dispatch) => {
         dispatch(userRequestFailed(error.message));
     }
 };
+
 export const updateUser = (payload) => async (dispatch) => {
     dispatch(userUpdateRequested());
     try {
         const { content } = await userService.update(payload);
         dispatch(userUpdateSuccessed(content));
-        history.push("/cabinet/personal");
-    } catch (error) {
-        dispatch(userUpdateFailed(error.message));
-    }
-};
-
-export const updateUserCash = (totalPrice) => async (dispatch, getState) => {
-    const { entities } = getState().users;
-    const currentCash = entities.cash;
-    const newCash = currentCash - totalPrice;
-    dispatch(userUpdateRequested());
-    try {
-        if (currentCash > totalPrice) {
-            const { content } = await userService.update({
-                ...entities,
-                cash: newCash
-            });
-            dispatch(userUpdateSuccessed(content));
-        } else {
-            toast.info("Недостаточно средств, пополните денежные средства");
-        }
     } catch (error) {
         dispatch(userUpdateFailed(error.message));
     }

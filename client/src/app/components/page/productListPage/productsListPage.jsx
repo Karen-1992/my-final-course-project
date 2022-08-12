@@ -14,7 +14,6 @@ const ProductsListPage = () => {
     const [selectedCategory, setSelectedCategory] = useState(currentCategory || null);
     const pageLimit = 20;
     const order = useSelector(getCurrentSort()) || "asc";
-    console.log(order);
     const categoriesList = useSelector(getCategories());
     const dispatch = useDispatch();
     const totalCount = useSelector(getProductsListLength());

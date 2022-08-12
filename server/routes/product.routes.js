@@ -4,6 +4,23 @@ const { generateProductData } = require("../utils/helpers");
 const router = express.Router({ mergeParams: true });
 const checkRole = require("../middleware/admin.middleware");
 
+// get by query
+router.get("/query", async (req, res) => {
+    try {
+        let { query } = req.query;
+        const list = await Product.find();
+        console.log(query)
+        if (query) {
+            const filteredList = list.filter(item => item.title.toLowerCase().includes(query.trim()));
+            res.status(200).send({ filteredList, query });
+        }
+    } catch (e) {
+        res.status(500).json({
+            message: "На сервере произошла ошибка. Попробуйте позже"
+        });
+    }
+});
+
 // all products
 router.get("/", async (req, res) => {
     try {
@@ -65,8 +82,18 @@ router.get("/categories/:categoryId", async (req, res) => {
 });
 
 // add product
-router.post("/", checkRole("admin"), async (req, res) => {
+router.put("/", checkRole("admin"), async (req, res) => {
     try {
+        const { title } = req.body;
+        const existingProduct = await Product.findOne({ title });
+        if (existingProduct) {
+            return res.status(400).send({
+                error: {
+                    message: 'PRODUCT_IN_DATABASE',
+                    code: 400,
+                }
+            });
+        }
         const newProduct = await Product.create({
             ...generateProductData(),
             ...req.body,

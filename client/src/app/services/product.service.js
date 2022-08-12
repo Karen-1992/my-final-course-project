@@ -9,14 +9,19 @@ const productService = {
         });
         return data;
     },
+    getQuery: async (params) => {
+        const { data } = await httpService.get(productEndpoint + "query", {
+            params
+        });
+        return data;
+    },
     getOneProduct: async (productId) => {
         const { data } = await httpService.get(productEndpoint +
             productId);
         return data;
     },
     create: async (payload) => {
-        console.log(payload);
-        const { data } = await httpService.post(
+        const { data } = await httpService.put(
             productEndpoint,
             payload
         );
