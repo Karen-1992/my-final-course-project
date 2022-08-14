@@ -1,35 +1,34 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import ProductPage from "../components/page/productPage/productPage";
 import ProductsListPage from "../components/page/productListPage/productsListPage";
-// import { getProductById } from "../store/products";
-// import { useSelector } from "react-redux";
 import ProductsLoader from "../components/ui/hoc/productsLoader";
+import { ProductProvider } from "../hooks/useProduct";
+import { useSelector } from "react-redux";
+import { getCategoryByName } from "../store/categories";
 
 const Products = () => {
     const params = useParams();
-    const { productId } = params;
-    // const product = useSelector(getProductById(productId));
-    // console.log(2, product);
+    const { productId, category } = params;
+    const isCategory = !!useSelector(getCategoryByName(category));
+    const categoryItem = useSelector(getCategoryByName(category));
     return (
-        // <>
-        //     <ProductsLoader>
-        //         {product ? (
-        //             <ProductPage {...product} />
-        //         ) : productId ? (
-        //             <Redirect to="/products" />
-        //         ) : (
-        //             <ProductsListPage category={category} />
-        //         )}
-        //     </ProductsLoader>
-        // </>
-        <ProductsLoader>
-            {productId ? (
-                <ProductPage productId={productId} />
-            ) : (
-                <ProductsListPage />
-            )}
-        </ProductsLoader>
+        <>
+            <ProductsLoader>
+                {productId ? (
+                    <ProductProvider>
+                        <ProductPage productId={productId} />
+                    </ProductProvider>
+                ) : isCategory ? (
+                    <ProductsListPage category={categoryItem}/>
+                ) : (
+                    <>
+                        <Redirect to="/products" />
+                        <ProductsListPage/>
+                    </>
+                )}
+            </ProductsLoader>
+        </>
     );
 };
 

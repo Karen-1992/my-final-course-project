@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect, useParams } from "react-router-dom";
 import ProfileContentProxy from "../routes/ProfileContentProxy";
-// import history from "../utils/history";
 
 const UserCabinet = () => {
     const { type, edit } = useParams();
@@ -46,22 +45,13 @@ const UserCabinet = () => {
                     </ul>
                 </div>
                 <div className="card-body">
-                    <div>
-                        {!isExistingRoute ? (
-                            <Redirect to={"/cabinet"} />
-                        ) : (
-                            <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
-                        )}
-                    </div>
+                    {!isExistingRoute ? (
+                        <Redirect to={"/cabinet"} />
+                    ) : (
+                        <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
+                    )}
                 </div>
             </div>
-            {/* <div className="">
-                {!isExistingRoute ? (
-                    <Redirect to={"/cabinet"} />
-                ) : (
-                    <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
-                )}
-            </div> */}
         </div>
     );
 };

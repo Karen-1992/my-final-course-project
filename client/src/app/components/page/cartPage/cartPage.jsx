@@ -85,8 +85,8 @@ const CartPage = () => {
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
     };
-    const handleOpenProductPage = (id) => {
-        history.push(`/products/${id}`);
+    const handleOpenProductPage = (productId, category) => {
+        history.push(`/products/${productId}`);
     };
     return (
         <div className="container pt-3">
@@ -104,7 +104,7 @@ const CartPage = () => {
                                         onDecrement={handleDecrement}
                                         onIncrement={handleIncrement}
                                         onToggleFavorite={() => handleToggleFavorite(p._id)}
-                                        onOpen={() => handleOpenProductPage(p._id)}
+                                        onOpen={handleOpenProductPage}
                                     />
                                 ))}
                             </div>

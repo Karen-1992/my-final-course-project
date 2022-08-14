@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { addProductToCart } from "../../store/cart";
 import { toggleFavorite } from "../../store/favorites";
 import history from "../../utils/history";
-// import { getDataStatus } from "../../store/products";
 
 const ProductsList = ({ items }) => {
     const dispatch = useDispatch();
@@ -16,9 +15,8 @@ const ProductsList = ({ items }) => {
         dispatch(toggleFavorite(id));
     };
     const handleOpenProductPage = (productId) => {
-        history.push(`products/${productId}`);
+        history.push(`/products/${productId}`);
     };
-    // const dataLoaded = useSelector(getDataStatus());
     return (
         <>
             {items.length > 0 ? (
@@ -31,9 +29,10 @@ const ProductsList = ({ items }) => {
                                 onToggleFavorite={() =>
                                     handleToggleFavorite(product._id)
                                 }
-                                onOpenProductPage={() =>
-                                    handleOpenProductPage(product._id)
-                                }
+                                // onOpenProductPage={() =>
+                                //     handleOpenProductPage(product._id, product.category)
+                                // }
+                                onOpenProductPage={handleOpenProductPage}
                             />
                         </div>
                     ))}

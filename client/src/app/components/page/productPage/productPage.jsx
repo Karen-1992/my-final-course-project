@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import productService from "../../../services/product.service";
+// import productService from "../../../services/product.service";
 import ImageComponent from "../../common/imageComponent";
 import ProductButtons from "../../common/productButtons";
 import { addProductToCart, getCartProductById } from "../../../store/cart";
 import { getIsFavorite, toggleFavorite } from "../../../store/favorites";
 import Loader from "../../common/loader";
+import Comments from "../../ui/comments";
+import { useProduct } from "../../../hooks/useProduct";
 
 const ProductPage = ({ productId }) => {
     const dispatch = useDispatch();
-    const [product, setProduct] = useState();
-    useEffect(() => {
-        productService.getOneProduct(productId).then(res => setProduct(res.content));
-    }, [productId]);
+    const { product, isLoading } = useProduct();
     const [selectedImg, setSelectedImg] = useState(0);
     const handleSelectImg = (i) => {
         setSelectedImg(i);
@@ -32,7 +31,7 @@ const ProductPage = ({ productId }) => {
     };
     return (
         <div>
-            {product ? (
+            {!isLoading ? (
                 <>
                     <h2>{product.title}</h2>
                     <div className="py-2">
@@ -93,11 +92,11 @@ const ProductPage = ({ productId }) => {
                             </div>
                         </div>
                     </div>
+                    <Comments pageId={productId} />
                 </>
             ) : (
                 <Loader />
             )}
-            {/* <Comments /> */}
         </div>
     );
 };

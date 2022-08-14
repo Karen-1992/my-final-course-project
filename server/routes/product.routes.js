@@ -5,26 +5,25 @@ const router = express.Router({ mergeParams: true });
 const checkRole = require("../middleware/admin.middleware");
 
 // get by query
-router.get("/query", async (req, res) => {
-    try {
-        let { query } = req.query;
-        const list = await Product.find();
-        console.log(query)
-        if (query) {
-            const filteredList = list.filter(item => item.title.toLowerCase().includes(query.trim()));
-            res.status(200).send({ filteredList, query });
-        }
-    } catch (e) {
-        res.status(500).json({
-            message: "На сервере произошла ошибка. Попробуйте позже"
-        });
-    }
-});
+// router.get("/query", async (req, res) => {
+//     try {
+//         let { query } = req.query;
+//         const list = await Product.find();
+//         if (query) {
+//             const filteredList = list.filter(item => item.title.toLowerCase().includes(query.trim()));
+//             res.status(200).send({ filteredList, query });
+//         }
+//     } catch (e) {
+//         res.status(500).json({
+//             message: "На сервере произошла ошибка. Попробуйте позже"
+//         });
+//     }
+// });
 
 // all products
 router.get("/", async (req, res) => {
     try {
-        let { limit, page, category, order, path } = req.query;
+        let { limit, page, category, order, path, query } = req.query;
         path = path || "price";
         order = order === "asc" ? "desc" : "asc";
         page = page || 1;
@@ -32,6 +31,10 @@ router.get("/", async (req, res) => {
         let skip = page * limit - limit;
         let list;
         const allList = await Product.find();
+        if (query) {
+            const filteredList = allList.filter(item => item.title.toLowerCase().includes(query.trim()));
+            return res.status(200).send({ filteredList, query });
+        }
         if (category) {
             list = await Product.find({ category })
                 .sort({ price: "asc" })

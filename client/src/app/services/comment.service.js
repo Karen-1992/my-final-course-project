@@ -6,12 +6,12 @@ const commentService = {
         const { data } = await httpService.post(commentEndpoint, payload);
         return data;
     },
-    getComments: async (productId) => {
-        console.log(productId);
+    getComments: async (payload) => {
+        const [key, id] = Object.entries(payload)[0];
         const { data } = await httpService.get(commentEndpoint, {
             params: {
-                orderBy: "productId",
-                equalTo: `${productId}`
+                orderBy: key,
+                equalTo: `${id}`
             }
         });
         return data;

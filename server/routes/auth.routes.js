@@ -41,7 +41,6 @@ router.post("/signUp", [
             });
 
             const tokens = tokenService.generate({ _id: newUser._id, role });
-            // await tokenService.save(newUser._id, role, tokens.refreshToken);
             await tokenService.save(newUser._id, tokens.refreshToken);
             res.status(201).send({
                 ...tokens,
@@ -71,7 +70,6 @@ router.post("/signInWithPassword", [
             }
             const {email, password } = req.body;
             const existingUser = await User.findOne({ email });
-            const { role } = existingUser;
             if (!existingUser) {
                 return res.status(400).send({
                     error: {
@@ -90,8 +88,7 @@ router.post("/signInWithPassword", [
                     }
                 });
             }
-            const tokens = tokenService.generate({ _id: existingUser._id, role });
-            // await tokenService.save(existingUser._id, role, tokens.refreshToken);
+            const tokens = tokenService.generate({ _id: existingUser._id, role: existingUser.role });
             await tokenService.save(existingUser._id, tokens.refreshToken);
             res.status(200).send({ ...tokens, userId: existingUser._id, role: existingUser.role });
         } catch (e) {
@@ -119,7 +116,6 @@ router.post("/token", async (req, res) => {
             _id: data._id,
             role: data.role
         });
-        // await tokenService.save(data._id, data.role, tokens.refreshToken);
         await tokenService.save(data._id, tokens.refreshToken);
 
         res.status(200).send({ ...tokens, role: data.role, userId: data._id});

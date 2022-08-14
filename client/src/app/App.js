@@ -13,16 +13,24 @@ import "react-toastify/dist/ReactToastify.css";
 import CartPage from "./components/page/cartPage/cartPage";
 import Header from "./components/ui/header/header";
 import Footer from "./components/ui/footer";
+// import { ProductProvider } from "./hooks/useProduct";
 
 function App() {
     return (
         <div className="container min-vh-100 position-relative p-0 pb-5">
             <AppLoader>
+                {/* <ProductProvider> */}
                 <Header />
                 <div className="my-5 p-0">
                     <Switch>
                         <Route
                             path="/products/:productId?"
+                            // path="/products/:type?"
+                            exact
+                            component={Products}
+                        />
+                        <Route
+                            path="/products/catalog/:category?"
                             exact
                             component={Products}
                         />
@@ -42,6 +50,7 @@ function App() {
                     </Switch>
                 </div>
                 <Footer />
+                {/* </ProductProvider> */}
             </AppLoader>
             <ToastContainer />
         </div>

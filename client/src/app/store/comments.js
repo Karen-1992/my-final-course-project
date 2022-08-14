@@ -11,11 +11,11 @@ const commentsSlice = createSlice({
         commentsRequested: (state) => {
             state.isLoading = true;
         },
-        commentsReceved: (state, action) => {
+        commentsReceived: (state, action) => {
             state.entities = action.payload;
             state.isLoading = false;
         },
-        commentsRequestFiled: (state, action) => {
+        commentsRequestFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },
@@ -33,8 +33,8 @@ const commentsSlice = createSlice({
 const { reducer: commentsReducer, actions } = commentsSlice;
 const {
     commentsRequested,
-    commentsReceved,
-    commentsRequestFiled,
+    commentsReceived,
+    commentsRequestFailed,
     commetnCreated,
     commentRemoved
 } = actions;
@@ -42,13 +42,13 @@ const {
 const addCommentRequested = createAction("comments/addCommentRequested");
 const removeCommentRequested = createAction("comments/removeCommentRequested");
 
-export const loadCommentsList = (productId) => async (dispatch) => {
+export const loadCommentsList = (payload) => async (dispatch) => {
     dispatch(commentsRequested());
     try {
-        const { content } = await commentService.getComments(productId);
-        dispatch(commentsReceved(content));
+        const { content } = await commentService.getComments(payload);
+        dispatch(commentsReceived(content));
     } catch (error) {
-        dispatch(commentsRequestFiled(error.message));
+        dispatch(commentsRequestFailed(error.message));
     }
 };
 export const createComment = (payload) => async (dispatch) => {
@@ -57,7 +57,7 @@ export const createComment = (payload) => async (dispatch) => {
         const { content } = await commentService.createComment(payload);
         dispatch(commetnCreated(content));
     } catch (error) {
-        dispatch(commentsRequestFiled(error.message));
+        dispatch(commentsRequestFailed(error.message));
     }
 };
 export const removeComment = (commentId) => async (dispatch) => {
@@ -68,7 +68,7 @@ export const removeComment = (commentId) => async (dispatch) => {
             dispatch(commentRemoved(commentId));
         }
     } catch (error) {
-        dispatch(commentsRequestFiled(error.message));
+        dispatch(commentsRequestFailed(error.message));
     }
 };
 

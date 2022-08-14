@@ -1,30 +1,17 @@
 import { orderBy } from "lodash";
-import React, { useEffect } from "react";
+import React from "react";
 import CommentsList, { AddCommentForm } from "../common/comments";
-import {
-    createComment,
-    getComments,
-    getCommentsLoadingStatus,
-    loadCommentsList,
-    removeComment
-} from "../../store/comments";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+import Loader from "../common/loader";
+import { useProduct } from "../../hooks/useProduct";
 
-const Comments = () => {
-    const { productId } = useParams();
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(loadCommentsList(productId));
-    }, [productId]);
-    const isLoading = useSelector(getCommentsLoadingStatus());
-
-    const comments = useSelector(getComments());
-    const handleSubmit = (data) => {
-        dispatch(createComment({ ...data, pageId: productId }));
-    };
+const Comments = ({ pageId }) => {
+    const { comments, isCommentsLoading, removeComment, createComment } = useProduct();
     const handleRemoveComment = (id) => {
-        dispatch(removeComment(id));
+        removeComment(id);
+    };
+    const handleSubmit = (data) => {
+        createComment({ ...data, pageId });
     };
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
     return (
@@ -39,19 +26,23 @@ const Comments = () => {
                     <div className="card-body ">
                         <h2>Comments</h2>
                         <hr />
-                        {!isLoading ? (
+                        {!isCommentsLoading ? (
                             <CommentsList
                                 comments={sortedComments}
                                 onRemove={handleRemoveComment}
                             />
                         ) : (
-                            "loading..."
+                            <Loader />
                         )}
                     </div>
                 </div>
             )}
         </>
     );
+};
+
+Comments.propTypes = {
+    pageId: PropTypes.string
 };
 
 export default Comments;

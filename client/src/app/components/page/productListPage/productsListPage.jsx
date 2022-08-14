@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, getCategoryById } from "../../../store/categories";
-import { getCurrentCategory, getCurrentPage, getCurrentSort, getProductsList, getProductsListLength, loadProductsList } from "../../../store/products";
+import { getCategories } from "../../../store/categories";
+import { getCurrentPage, getCurrentSort, getProductsList, getProductsListLength, loadProductsList } from "../../../store/products";
 import GroupList from "../../common/groupList";
 import Pagination from "../../common/pagination";
 // import SortingMenu from "../../ui/sortingMenu";
 import ProductsList from "../../ui/productsList";
+import PropTypes from "prop-types";
+import history from "../../../utils/history";
 
-const ProductsListPage = () => {
-    const categoryId = useSelector(getCurrentCategory());
-    const currentCategory = useSelector(getCategoryById(categoryId));
+const ProductsListPage = ({ category }) => {
+    // const categoryId = useSelector(getCurrentCategory());
+    // const currentCategory = useSelector(getCategoryById(categoryId));
+    // const categoryFormUrl = useSelector(getCategoryByName(category));
     const currentPage = useSelector(getCurrentPage());
-    const [selectedCategory, setSelectedCategory] = useState(currentCategory || null);
+    const [selectedCategory, setSelectedCategory] = useState(category);
+    // console.log(selectedCategory);
     const pageLimit = 20;
     const order = useSelector(getCurrentSort()) || "asc";
     const categoriesList = useSelector(getCategories());
@@ -26,10 +30,12 @@ const ProductsListPage = () => {
     };
     const handleCategorySelect = (item) => {
         setSelectedCategory(item);
+        history.push(`/products/catalog/${item.name}`);
         loadProducts(1, pageLimit, item._id, order);
     };
     const handleClearFilter = () => {
         setSelectedCategory();
+        history.push(`/products`);
         loadProducts(currentPage, pageLimit, null, order);
     };
     const handleSort = () => {
@@ -69,7 +75,7 @@ const ProductsListPage = () => {
                             </div>
                         </div>
                         <div className="pt-3">
-                            <ProductsList items={products} />
+                            <ProductsList items={products}/>
                         </div>
                         <div className="d-flex justify-content-center mt-3">
                             <Pagination
@@ -84,6 +90,10 @@ const ProductsListPage = () => {
             </div>
         );
     }
+};
+
+ProductsListPage.propTypes = {
+    category: PropTypes.object
 };
 
 export default ProductsListPage;

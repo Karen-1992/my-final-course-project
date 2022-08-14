@@ -59,7 +59,7 @@ const FavoritesPage = () => {
                                             {...favProduct}
                                             onAddToCart={() => handleAddToCart(favProduct)}
                                             onToggleFavorite={() => handleToggleFavorite(favProduct._id)}
-                                            onOpenProductPage={() => handleOpenProductPage(favProduct._id)}
+                                            onOpenProductPage={handleOpenProductPage}
                                         />
                                     </div>
                                 ))}

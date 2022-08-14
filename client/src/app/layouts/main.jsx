@@ -12,7 +12,7 @@ const Main = () => {
     };
     const categoriesList = useSelector(getCategories());
     const handleClick = (category) => {
-        history.push(`/products`);
+        history.push(`/products/catalog/${category}`);
     };
     return (
         <div className="container pb-5">
