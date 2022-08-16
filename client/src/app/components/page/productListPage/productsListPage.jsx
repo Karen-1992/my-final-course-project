@@ -4,42 +4,34 @@ import { getCategories } from "../../../store/categories";
 import { getCurrentPage, getCurrentSort, getProductsList, getProductsListLength, loadProductsList } from "../../../store/products";
 import GroupList from "../../common/groupList";
 import Pagination from "../../common/pagination";
-// import SortingMenu from "../../ui/sortingMenu";
 import ProductsList from "../../ui/productsList";
 import PropTypes from "prop-types";
 import history from "../../../utils/history";
 
 const ProductsListPage = ({ category }) => {
-    // const categoryId = useSelector(getCurrentCategory());
-    // const currentCategory = useSelector(getCategoryById(categoryId));
-    // const categoryFormUrl = useSelector(getCategoryByName(category));
     const currentPage = useSelector(getCurrentPage());
-    const [selectedCategory, setSelectedCategory] = useState(category);
-    // console.log(selectedCategory);
+    const [selectedCategory, setSelectedCategory] = useState(category || null);
     const pageLimit = 20;
     const order = useSelector(getCurrentSort()) || "asc";
     const categoriesList = useSelector(getCategories());
     const dispatch = useDispatch();
     const totalCount = useSelector(getProductsListLength());
     const products = useSelector(getProductsList());
-    function loadProducts(page, limit, category, order) {
-        dispatch(loadProductsList({ page, limit, category, order }));
-    }
     const handlePageChange = (pageIndex) => {
-        loadProducts(pageIndex, pageLimit, null, order);
+        dispatch(loadProductsList({ page: pageIndex, limit: pageLimit, order }));
     };
     const handleCategorySelect = (item) => {
         setSelectedCategory(item);
         history.push(`/products/catalog/${item.name}`);
-        loadProducts(1, pageLimit, item._id, order);
+        dispatch(loadProductsList({ limit: pageLimit, category: item._id, order }));
     };
     const handleClearFilter = () => {
         setSelectedCategory();
         history.push(`/products`);
-        loadProducts(currentPage, pageLimit, null, order);
+        dispatch(loadProductsList({ page: currentPage, limit: pageLimit, order }));
     };
     const handleSort = () => {
-        loadProducts(1, pageLimit, null, order);
+        dispatch(loadProductsList({ limit: pageLimit, order, path: "price" }));
     };
     if (products) {
         const filteredCount = selectedCategory ? products.length : totalCount;
@@ -64,7 +56,7 @@ const ProductsListPage = ({ category }) => {
                             </div>
                         )}
                     </div>
-                    <div className="col-lg-10 col-md-9 col-sm-8">
+                    <div className="col-lg-10 col-md-9 col-sm-8 p-3">
                         <div>
                             <div className="d-flex flex-wrap justify-content-between">
                                 <button onClick={handleSort} className="btn btn-secondary px-2">
@@ -74,9 +66,7 @@ const ProductsListPage = ({ category }) => {
                                 <p>{`Показано ${products.length} из ${selectedCategory ? filteredCount : totalCount}`}</p>
                             </div>
                         </div>
-                        <div className="pt-3">
-                            <ProductsList items={products}/>
-                        </div>
+                        <ProductsList items={products}/>
                         <div className="d-flex justify-content-center mt-3">
                             <Pagination
                                 itemsCount={filteredCount}

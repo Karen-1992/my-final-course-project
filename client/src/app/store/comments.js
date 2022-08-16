@@ -19,7 +19,7 @@ const commentsSlice = createSlice({
             state.error = action.payload;
             state.isLoading = false;
         },
-        commetnCreated: (state, action) => {
+        commentCreated: (state, action) => {
             state.entities.push(action.payload);
         },
         commentRemoved: (state, action) => {
@@ -35,7 +35,7 @@ const {
     commentsRequested,
     commentsReceived,
     commentsRequestFailed,
-    commetnCreated,
+    commentCreated,
     commentRemoved
 } = actions;
 
@@ -55,7 +55,7 @@ export const createComment = (payload) => async (dispatch) => {
     dispatch(addCommentRequested());
     try {
         const { content } = await commentService.createComment(payload);
-        dispatch(commetnCreated(content));
+        dispatch(commentCreated(content));
     } catch (error) {
         dispatch(commentsRequestFailed(error.message));
     }

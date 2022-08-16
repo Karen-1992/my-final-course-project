@@ -27,7 +27,6 @@ const cartSlice = createSlice({
             state.isLoading = false;
         },
         productAdded: (state, action) => {
-            console.log(action.payload);
             state.entities.push(action.payload);
         },
         productQuantityIncremented: (state, action) => {
@@ -110,10 +109,8 @@ export const removeProductFromCart = (productId) => async (dispatch) => {
     try {
         const { content } = await cartService.remove({ productId });
         if (content === null) {
-            console.log(productId);
             return dispatch(productRemoved(productId));
         }
-        console.log(productId);
         dispatch(productRemoved({ content, productId }));
     } catch (error) {
         dispatch(cartRequestFailed(error.message));

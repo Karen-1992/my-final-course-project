@@ -6,7 +6,6 @@ import Counter from "../common/counter";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
 import { getIsFavorite } from "../../store/favorites";
 import ImageComponent from "../common/imageComponent";
-// import { getCategoryById } from "../../store/categories";
 
 const CartItem = ({
     product,
@@ -18,7 +17,6 @@ const CartItem = ({
     onToggleFavorite
 }) => {
     const isFavorite = useSelector(getIsFavorite(product._id));
-    // const itemCategory = useSelector(getCategoryById(product.category));
     const data = {
         productId: product._id,
         quantity,

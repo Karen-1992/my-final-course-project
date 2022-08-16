@@ -3,16 +3,18 @@ import usersReducer from "./users";
 import categoriesReducer from "./categories";
 import productsReducer from "./products";
 import cartReducer from "./cart";
-import favoriteReducer from "./favorites";
+import favoritesReducer from "./favorites";
 import commentsReducer from "./comments";
+import ordersReducer from "./order";
 
 const rootReducer = combineReducers({
     users: usersReducer,
     categories: categoriesReducer,
     products: productsReducer,
     cart: cartReducer,
-    favorites: favoriteReducer,
-    comments: commentsReducer
+    favorites: favoritesReducer,
+    comments: commentsReducer,
+    orders: ordersReducer
 });
 
 export function createStore() {

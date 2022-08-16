@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUserData, updateUser } from "../../../store/users";
 import Loader from "../../common/loader";
 import history from "../../../utils/history";
+import localStorageService from "../../../services/localStorage.service";
 
 const EditUserPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +19,10 @@ const EditUserPage = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        dispatch(updateUser(data));
+        dispatch(updateUser({
+            ...data,
+            userId: localStorageService.getUserId()
+        }));
         history.push("/cabinet/personal");
     };
     useEffect(() => {
@@ -40,17 +44,8 @@ const EditUserPage = () => {
                 message: "isRequired"
             },
             min: {
-                message: "Имя должно состоять минимум из 3 символов",
-                value: 3
-            }
-        },
-        lastName: {
-            isRequired: {
-                message: "isRequired"
-            },
-            min: {
-                message: "Фамилия должно состоять минимум из 3 символов",
-                value: 3
+                message: "Имя должно состоять минимум из 2 символов",
+                value: 2
             }
         },
         // address: {

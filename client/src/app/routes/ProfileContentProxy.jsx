@@ -3,17 +3,16 @@ import PropTypes from "prop-types";
 import PersonalPage from "../components/page/personalPage/personalPage";
 import FavoritesPage from "../components/page/favoritesPage/favoritesPage";
 import Reviews from "../components/page/reviewsPage/reviews";
-import Orders from "../components/page/ordersPage/orders";
+import UserOrders from "../components/page/userOrders/userOrders";
 import LogOut from "../layouts/logOut";
 import EditUserPage from "../components/page/editUserPage/editUserPage";
-// import { ReviewsProvider } from "../hooks/useReviews";
 
 const ProfileContentProxy = ({ route, isEdit }) => {
     const contentByType = {
         personal: !isEdit ? <PersonalPage /> : <EditUserPage />,
         favorites: <FavoritesPage />,
         reviews: <Reviews />,
-        orders: <Orders />,
+        orders: <UserOrders />,
         logout: <LogOut />
     };
     const CurrentProfileContent = () => contentByType[route];

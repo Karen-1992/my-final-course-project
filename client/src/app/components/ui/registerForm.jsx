@@ -34,17 +34,8 @@ const RegisterForm = () => {
                 message: "isRequired"
             },
             min: {
-                message: "Имя должно состоять минимум из 3 символов",
-                value: 3
-            }
-        },
-        lastName: {
-            isRequired: {
-                message: "isRequired"
-            },
-            min: {
-                message: "Фамилия должно состоять минимум из 3 символов",
-                value: 3
+                message: "Имя должно состоять минимум из 2 символов",
+                value: 2
             }
         },
         // address: {

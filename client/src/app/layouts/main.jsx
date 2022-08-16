@@ -31,7 +31,7 @@ const Main = () => {
                 </div>
             </div>
             <h1 className="my-5">Категории</h1>
-            <div className="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            <div className="row row-cols-2 row-cols-lg-5 row-cols-sm-4 g-3 g-lg-5">
                 {categoriesList ? categoriesList.map(c => (
                     <div className="col" key={c._id} role="button" onClick={() => handleClick(c.name)}>
                         <div className="h-100 shadow rounded-3">

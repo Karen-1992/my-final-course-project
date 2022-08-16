@@ -7,7 +7,6 @@ export function generateAuthError(message) {
     case "EMAIL_NOT_FOUND":
         return "Email не найден";
     default:
-        // return message;
         return "Слишком много попыток входа. Попробуйте позже";
     }
 }

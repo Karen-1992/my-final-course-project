@@ -7,7 +7,6 @@ import { getIsFavorite } from "../../store/favorites";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
 import ImageComponent from "../common/imageComponent";
 import ProductButtons from "../common/productButtons";
-// import { getCategoryById } from "../../store/categories";
 
 const ProductItem = ({
     thumbnail,
@@ -16,7 +15,6 @@ const ProductItem = ({
     title,
     price,
     stock,
-    // category,
     discountPercentage,
     onAddToCart,
     onOpenProductPage,
@@ -24,7 +22,6 @@ const ProductItem = ({
 }) => {
     const isInCart = !!useSelector(getCartProductById(_id));
     const isFavorite = useSelector(getIsFavorite(_id));
-    // const itemCategory = useSelector(getCategoryById(category));
     const { discountValue, finalPrice } = getPriceWithDiscount(discountPercentage, price);
     return (
         <div
@@ -97,7 +94,6 @@ ProductItem.propTypes = {
     _id: PropTypes.string,
     title: PropTypes.string,
     stock: PropTypes.number,
-    // category: PropTypes.string,
     discountPercentage: PropTypes.number,
     price: PropTypes.number,
     onAddToCart: PropTypes.func,

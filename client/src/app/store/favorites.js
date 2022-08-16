@@ -40,7 +40,7 @@ const favoriteSlice = createSlice({
     }
 });
 
-const { reducer: favoriteReducer, actions } = favoriteSlice;
+const { reducer: favoritesReducer, actions } = favoriteSlice;
 const {
     favoritesRequested,
     favoritesReceived,
@@ -104,4 +104,4 @@ export const getIsFavorite = (id) => (state) => {
     }
 };
 
-export default favoriteReducer;
+export default favoritesReducer;

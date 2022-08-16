@@ -3,14 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDataStatus, loadProductsList } from "../../../store/products";
 import PropTypes from "prop-types";
 import Loader from "../../common/loader";
+import { useParams } from "react-router-dom";
+import { getCategoryByName } from "../../../store/categories";
 
 const ProductsLoader = ({ children }) => {
     const dispatch = useDispatch();
+    const params = useParams();
+    const { category } = params;
+    const categoryItem = useSelector(getCategoryByName(category));
+    const isCategory = !!useSelector(getCategoryByName(category));
     const dataStatus = useSelector(getDataStatus());
     useEffect(() => {
-        // dispatch(loadCommentsList());
         if (!dataStatus) {
-            dispatch(loadProductsList());
+            if (isCategory) {
+                dispatch(loadProductsList({ category: categoryItem._id }));
+            } else {
+                dispatch(loadProductsList());
+            }
         }
     }, []);
     if (!dataStatus) {

@@ -33,12 +33,20 @@ const NavBar = ({ onSearchQuery }) => {
                     <SearchQuerry onSearchQuery={onSearchQuery} />
                     <div className="d-flex align-self-center gap-3">
                         {isLoggedIn && isAdmin && (
-                            <Link
-                                className="nav-link"
-                                to="/dashboard"
-                            >
-                                <i className="bi bi-gear fs-3"></i>
-                            </Link>
+                            <>
+                                <Link
+                                    className="nav-link"
+                                    to="/dashboard"
+                                >
+                                    <i className="bi bi-gear fs-3"></i>
+                                </Link>
+                                <Link
+                                    className="nav-link"
+                                    to="/orders"
+                                >
+                                    <i className="bi bi-file-spreadsheet fs-3"></i>
+                                </Link>
+                            </>
                         )}
                         {isLoggedIn ? (
                             <div className="d-flex gap-3">
@@ -48,7 +56,6 @@ const NavBar = ({ onSearchQuery }) => {
                                 >
                                     <NavItemWithCount
                                         quantity={favoritesQuantity}
-                                        title="Избранное"
                                         iconClasses="bi bi-heart + fs-3"
                                     />
                                 </Link>
@@ -58,7 +65,6 @@ const NavBar = ({ onSearchQuery }) => {
                                 >
                                     <NavItemWithCount
                                         quantity={cartQuantity}
-                                        title="Корзина"
                                         iconClasses="bi bi-cart3 + fs-3"
                                     />
                                 </Link>

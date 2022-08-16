@@ -15,7 +15,6 @@ const UserCabinet = () => {
     const [selectedRoute, setSelectedRoute] = useState("personal");
     const handleChangeRoute = (route) => {
         setSelectedRoute(route);
-        // history.push(`/cabinet/${route}`);
     };
     const isExistingRoute = routes.some((route) => route.path === type);
     useEffect(() => {

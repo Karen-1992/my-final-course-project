@@ -29,9 +29,6 @@ const ProductsList = ({ items }) => {
                                 onToggleFavorite={() =>
                                     handleToggleFavorite(product._id)
                                 }
-                                // onOpenProductPage={() =>
-                                //     handleOpenProductPage(product._id, product.category)
-                                // }
                                 onOpenProductPage={handleOpenProductPage}
                             />
                         </div>

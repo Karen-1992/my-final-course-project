@@ -17,10 +17,11 @@ import productService from "../../../services/product.service";
 import { getPriceWithDiscount } from "../../../utils/getPriceWithDiscount";
 import Loader from "../../common/loader";
 import history from "../../../utils/history";
+import { createOrder } from "../../../store/order";
+import localStorageService from "../../../services/localStorage.service";
 
 const CartPage = () => {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const cartListIds = useSelector(getCartList());
     const userData = useSelector(getCurrentUserData());
     const [cartList, setCartList] = useState();
@@ -31,10 +32,14 @@ const CartPage = () => {
     async function getProducts(ids) {
         const result = [];
         if (cartListIds) {
-            for (const id of ids) {
-                const { productId } = id;
+            for (const item of ids) {
+                const { productId } = item;
                 const { content } = await productService.getOneProduct(productId);
-                result.push({ ...content, quantity: id.quantity });
+                if (content) {
+                    result.push({ ...content, quantity: item.quantity });
+                } else {
+                    dispatch(removeProductFromCart(productId));
+                }
             }
         }
         return result;
@@ -75,8 +80,15 @@ const CartPage = () => {
         if (userData.cash > totalPrice) {
             const currentCash = userData.cash;
             const cash = currentCash - totalPrice;
-            toast.success("Поздравляем с покупкой");
-            dispatch(updateUser({ cash }));
+            toast.success("Обрабатывается");
+            dispatch(updateUser({
+                cash,
+                userId: localStorageService.getUserId()
+            }));
+            dispatch(createOrder({
+                products: cartListIds,
+                totalPrice
+            }));
             dispatch(clearCart());
         } else {
             toast.error("Недостаточно средств, пополните денежные средства");
@@ -85,7 +97,7 @@ const CartPage = () => {
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
     };
-    const handleOpenProductPage = (productId, category) => {
+    const handleOpenProductPage = (productId) => {
         history.push(`/products/${productId}`);
     };
     return (

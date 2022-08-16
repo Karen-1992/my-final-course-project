@@ -1,6 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import productService from "../services/product.service";
-// import { getPriceWithDiscount } from "../utils/getPriceWithDiscount";
 
 const initialState = {
     entities: null,

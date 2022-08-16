@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-// import productService from "../../../services/product.service";
 import ImageComponent from "../../common/imageComponent";
 import ProductButtons from "../../common/productButtons";
 import { addProductToCart, getCartProductById } from "../../../store/cart";

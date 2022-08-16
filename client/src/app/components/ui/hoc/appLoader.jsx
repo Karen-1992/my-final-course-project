@@ -6,21 +6,26 @@ import { getFavoriteLoadingStatus, loadFavoritetList } from "../../../store/favo
 import { getCartLoadingStatus, loadCartList } from "../../../store/cart";
 import Loader from "../../common/loader";
 import { loadCategoriesList } from "../../../store/categories";
+import { getOrdersLoadingStatus, loadOrdersList } from "../../../store/order";
+import localStorageService from "../../../services/localStorage.service";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(getIsLoggedIn());
+    const userId = localStorageService.getUserId();
     const categoriesLoadingStatus = useSelector(getCartLoadingStatus());
     const userLoadingStatus = useSelector(getUserLoadingStatus());
     const favoritesLoadingStatus = useSelector(getFavoriteLoadingStatus());
     const cartLoadingStatus = useSelector(getCartLoadingStatus());
-    const loadingStatus = userLoadingStatus && cartLoadingStatus && favoritesLoadingStatus && categoriesLoadingStatus;
+    const ordersLoadingStatus = useSelector(getOrdersLoadingStatus());
+    const loadingStatus = userLoadingStatus && cartLoadingStatus && favoritesLoadingStatus && categoriesLoadingStatus && ordersLoadingStatus;
     useEffect(() => {
         dispatch(loadCategoriesList());
         if (isLoggedIn) {
             dispatch(loadUserData());
             dispatch(loadCartList());
             dispatch(loadFavoritetList());
+            dispatch(loadOrdersList({ userId }));
         }
     }, [isLoggedIn]);
     if (loadingStatus) {

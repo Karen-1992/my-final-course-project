@@ -19,10 +19,14 @@ const FavoritesPage = () => {
     async function getProducts(ids) {
         const result = [];
         if (ids) {
-            for (const id of ids) {
-                const { productId } = id;
+            for (const item of ids) {
+                const { productId } = item;
                 const { content } = await productService.getOneProduct(productId);
-                result.push(content);
+                if (content) {
+                    result.push(content);
+                } else {
+                    dispatch(toggleFavorite(productId));
+                }
             }
         }
         return result;
@@ -41,9 +45,9 @@ const FavoritesPage = () => {
     };
     return (
         <div className="d-flex flex-column px-3">
-            {favoritesIds.length > 0 ? (
+            {favoritesList ? (
                 <>
-                    {favoritesList ? (
+                    {favoritesList.length > 0 ? (
                         <>
                             <div className="d-flex justify-content-end mb-2">
                                 <ClearButton
@@ -66,15 +70,15 @@ const FavoritesPage = () => {
                             </div>
                         </>
                     ) : (
-                        <Loader />
+                        <div>
+                            <p>У нас столько замечательных товаров,
+                            а в Избранном у Вас – пусто</p>
+                            <Link to="/products">Перейти в каталог</Link>
+                        </div>
                     )}
                 </>
             ) : (
-                <div>
-                    <p>У нас столько замечательных товаров,
-                    а в Избранном у Вас – пусто</p>
-                    <Link to="/products">Перейти в каталог</Link>
-                </div>
+                <Loader />
             )}
         </div>
     );
