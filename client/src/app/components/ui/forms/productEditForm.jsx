@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import TextField from "../common/form/textField";
+import TextField from "../../common/form/textField";
 import PropTypes from "prop-types";
-import SelectField from "../common/form/selectField";
-import { getCategories, getCategoriesLoadingStatus } from "../../store/categories";
+import SelectField from "../../common/form/selectField";
+import {
+    getCategories,
+    getCategoriesLoadingStatus
+} from "../../../store/categories";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, getProductById, updateProduct } from "../../store/products";
-import { validator } from "../../utils/validator";
-import TextAreaField from "../common/form/textAreaField";
+import {
+    createProduct,
+    getProductById,
+    updateProduct
+} from "../../../store/products";
+import { validator } from "../../../utils/validator";
+import TextAreaField from "../../common/form/textAreaField";
 
-const ProductChangeForm = ({
-    productId,
-    clearForm
-}) => {
+const ProductEditForm = ({ productId, clearForm }) => {
     const initialData = {
         title: "",
         brand: "",
@@ -181,7 +185,7 @@ const ProductChangeForm = ({
             />
             <div className="d-flex gap-2">
                 <TextField
-                    label="Цена"
+                    label="Цена, $"
                     type="number"
                     name="price"
                     value={data.price}
@@ -189,7 +193,7 @@ const ProductChangeForm = ({
                     error={errors.price}
                 />
                 <TextField
-                    label="Скидка"
+                    label="Скидка, %"
                     type="number"
                     name="discountPercentage"
                     value={data.discountPercentage}
@@ -198,7 +202,7 @@ const ProductChangeForm = ({
                 />
             </div>
             <TextField
-                label="Количество"
+                label="Количество, шт."
                 type="number"
                 name="stock"
                 value={data.stock}
@@ -207,18 +211,18 @@ const ProductChangeForm = ({
             />
             <TextField
                 label="Изображение"
-                placeholder="Вставьте ссылку изображение"
+                placeholder="Вставьте ссылку на изображение"
                 name="thumbnail"
                 value={data.thumbnail}
                 onChange={handleChange}
                 error={errors.thumbnail}
             />
-            {!isValid &&
+            {!isValid && (
                 <p>
                     <span className="text-danger">*</span>
                     Поле обязательно для заполнения
                 </p>
-            }
+            )}
             <div className="d-flex flex-wrap gap-2">
                 <button
                     type="submit"
@@ -239,9 +243,9 @@ const ProductChangeForm = ({
     );
 };
 
-ProductChangeForm.propTypes = {
+ProductEditForm.propTypes = {
     clearForm: PropTypes.func,
     productId: PropTypes.string
 };
 
-export default ProductChangeForm;
+export default ProductEditForm;

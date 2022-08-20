@@ -1,24 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ProductButtons = ({ onAddToCart, isInCart, onToggleFavorite, isFavorite }) => {
+const ProductButtons = ({
+    onAddToCart,
+    isInCart,
+    onToggleFavorite,
+    isFavorite
+}) => {
     return (
         <>
             <button
                 onClick={onAddToCart}
                 type="button"
                 className={
-                    "w-75 btn btn-" +
-                    (isInCart ? "outline-danger" : "danger")
+                    "w-75 btn btn-" + (isInCart ? "outline-danger" : "danger")
                 }
             >
                 {!isInCart ? "В корзину" : "В корзине"}
             </button>
             <h3 onClick={onToggleFavorite}>
                 <i
-                    className={
-                        "bi bi-heart" + (isFavorite ? "-fill" : "")
-                    }
+                    className={"bi bi-heart" + (isFavorite ? "-fill" : "")}
                     role="button"
                 ></i>
             </h3>

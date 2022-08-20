@@ -2,9 +2,9 @@ import React from "react";
 import { getOrderStatus } from "../../utils/getOrderStatus";
 import PropTypes from "prop-types";
 
-const Status = ({ status }) => {
+const OrderStatus = ({ status }) => {
     function getClasees(status) {
-        let classes = "p-1 rounded text-light bg-";
+        let classes = "p-1 rounded text-light text-nowrap bg-";
         if (status === "pending") classes += "secondary";
         if (status === "completed") classes += "success";
         if (status === "canceled") classes += "danger";
@@ -17,8 +17,8 @@ const Status = ({ status }) => {
     );
 };
 
-Status.propTypes = {
+OrderStatus.propTypes = {
     status: PropTypes.string.isRequired
 };
 
-export default Status;
+export default OrderStatus;

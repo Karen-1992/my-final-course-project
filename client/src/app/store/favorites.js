@@ -27,9 +27,13 @@ const favoriteSlice = createSlice({
             state.isLoading = false;
         },
         favoriteToggled: (state, action) => {
-            const item = state.entities.find(f => f.productId === action.payload.productId);
+            const item = state.entities.find(
+                (f) => f.productId === action.payload.productId
+            );
             if (item) {
-                state.entities = state.entities.filter(f => f.productId !== action.payload.productId);
+                state.entities = state.entities.filter(
+                    (f) => f.productId !== action.payload.productId
+                );
             } else {
                 state.entities.push(action.payload);
             }
@@ -49,7 +53,9 @@ const {
     favoritesCleared
 } = actions;
 
-const toggleFavoriteRequested = createAction("favorite/toggleFavoriteRequested");
+const toggleFavoriteRequested = createAction(
+    "favorite/toggleFavoriteRequested"
+);
 const toggleFavoriteFailed = createAction("favorite/toggleFavoriteFailed");
 const clearFavoriteRequested = createAction("favorite/clearfavoriteRequested");
 const clearFavoriteFailed = createAction("favorite/clearFavoriteFailed");
@@ -64,21 +70,19 @@ export const loadFavoritetList = () => async (dispatch) => {
     }
 };
 
-export const toggleFavorite =
-    (productId) =>
-        async (dispatch) => {
-            const userId = localStorageService.getUserId();
-            if (userId === null) {
-                return history.push("/login");
-            }
-            dispatch(toggleFavoriteRequested());
-            try {
-                await favoriteService.toggle({ productId });
-                dispatch(favoriteToggled({ productId }));
-            } catch (error) {
-                dispatch(toggleFavoriteFailed(error.message));
-            }
-        };
+export const toggleFavorite = (productId) => async (dispatch) => {
+    const userId = localStorageService.getUserId();
+    if (userId === null) {
+        return history.push("/login");
+    }
+    dispatch(toggleFavoriteRequested());
+    try {
+        await favoriteService.toggle({ productId });
+        dispatch(favoriteToggled({ productId }));
+    } catch (error) {
+        dispatch(toggleFavoriteFailed(error.message));
+    }
+};
 
 export const clearFavorite = () => async (dispatch) => {
     dispatch(clearFavoriteRequested());

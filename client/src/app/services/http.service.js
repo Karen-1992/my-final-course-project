@@ -18,7 +18,7 @@ http.interceptors.request.use(
         if (configFile.isFireBase) {
             const containSlash = /\/$/gi.test(config.url);
             config.url =
-            (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
+                (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
             if (isExpired) {
                 const data = await authService.refresh();
 
@@ -71,9 +71,9 @@ http.interceptors.response.use(
     },
     function (error) {
         const expectedErrors =
-      error.response &&
-      error.response.status >= 400 &&
-      error.response.status < 500;
+            error.response &&
+            error.response.status >= 400 &&
+            error.response.status < 500;
 
         if (!expectedErrors) {
             console.log(error);

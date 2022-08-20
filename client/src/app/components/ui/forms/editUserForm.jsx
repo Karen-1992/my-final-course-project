@@ -8,7 +8,7 @@ import Loader from "../../common/loader";
 import history from "../../../utils/history";
 import localStorageService from "../../../services/localStorage.service";
 
-const EditUserPage = () => {
+const EditUserForm = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState();
     const currentUser = useSelector(getCurrentUserData());
@@ -19,10 +19,12 @@ const EditUserPage = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        dispatch(updateUser({
-            ...data,
-            userId: localStorageService.getUserId()
-        }));
+        dispatch(
+            updateUser({
+                ...data,
+                userId: localStorageService.getUserId()
+            })
+        );
         history.push("/cabinet/personal");
     };
     useEffect(() => {
@@ -48,15 +50,6 @@ const EditUserPage = () => {
                 value: 2
             }
         },
-        // address: {
-        //     isRequired: {
-        //         message: "isRequired"
-        //     },
-        //     min: {
-        //         message: "Адресс должен состоять минимум из 10 символов",
-        //         value: 10
-        //     }
-        // },
         phone: {
             isRequired: {
                 message: "isRequired"
@@ -74,6 +67,26 @@ const EditUserPage = () => {
             minValue: {
                 message: "Не может быть меньше 0",
                 value: 0
+            }
+        },
+        locality: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        street: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        homeNumber: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        flatNumber: {
+            isRequired: {
+                message: "isRequired"
             }
         }
     };
@@ -93,7 +106,7 @@ const EditUserPage = () => {
     };
     const isValid = Object.keys(errors).length === 0;
     return (
-        <div className="w-75">
+        <div className=" p-3 w-75 shadow rounded mx-auto">
             {!isLoading && currentUser ? (
                 <form onSubmit={handleSubmit}>
                     <TextField
@@ -112,22 +125,14 @@ const EditUserPage = () => {
                     />
                     <RadioField
                         options={[
-                            { name: "Male", value: "male" },
-                            { name: "Female", value: "female" },
-                            { name: "Other", value: "other" }
+                            { name: "мужской", value: "мужской" },
+                            { name: "женский", value: "женский" }
                         ]}
                         value={data.sex}
                         name="sex"
                         onChange={handleChange}
                         label="Выберите ваш пол"
                     />
-                    {/* <TextField
-                        label="Адресс"
-                        name="address"
-                        value={data.address}
-                        onChange={handleChange}
-                        error={errors.address}
-                    /> */}
                     <TextField
                         label="Телефон"
                         name="phone"
@@ -136,19 +141,51 @@ const EditUserPage = () => {
                         error={errors.phone}
                     />
                     <TextField
-                        label="Денежные средства"
+                        label="Денежные средства, $"
                         type="number"
                         name="cash"
                         value={data.cash}
                         onChange={handleChange}
                         error={errors.cash}
                     />
-                    {!isValid &&
+                    <div className="d-flex justify-content-evenly flex-wrap">
+                        <TextField
+                            label="Населенный пункт"
+                            name="locality"
+                            value={data.locality}
+                            onChange={handleChange}
+                            error={errors.locality}
+                        />
+                        <TextField
+                            label="Улица"
+                            name="street"
+                            value={data.street}
+                            onChange={handleChange}
+                            error={errors.street}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-evenly flex-wrap">
+                        <TextField
+                            label="Дом"
+                            name="homeNumber"
+                            value={data.homeNumber}
+                            onChange={handleChange}
+                            error={errors.homeNumber}
+                        />
+                        <TextField
+                            label="Квартира"
+                            name="flatNumber"
+                            value={data.flatNumber}
+                            onChange={handleChange}
+                            error={errors.flatNumber}
+                        />
+                    </div>
+                    {!isValid && (
                         <p>
                             <span className="text-danger">*</span>
                             Поле обязательно для заполнения
                         </p>
-                    }
+                    )}
                     <button
                         type="submit"
                         disabled={!isValid}
@@ -158,10 +195,10 @@ const EditUserPage = () => {
                     </button>
                 </form>
             ) : (
-                <Loader/>
+                <Loader />
             )}
         </div>
     );
 };
 
-export default EditUserPage;
+export default EditUserForm;

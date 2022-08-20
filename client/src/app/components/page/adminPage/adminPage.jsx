@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ProductChangeForm from "../../ui/productChangeForm";
-import { getCurrentPage, getProductsList, getProductsListLength, loadProductsList, removeProduct } from "../../../store/products";
+import ProductEditForm from "../../ui/forms/productEditForm";
+import {
+    getCurrentPage,
+    getProductsList,
+    getProductsListLength,
+    loadProductsList,
+    removeProduct
+} from "../../../store/products";
 import ProductsTable from "../../ui/productsTable";
 import _ from "lodash";
 import Pagination from "../../common/pagination";
@@ -16,10 +22,12 @@ const AdminPage = () => {
     const dispatch = useDispatch();
     const productsList = useSelector(getProductsList());
     const handlePageChange = (pageIndex) => {
-        dispatch(loadProductsList({
-            page: pageIndex,
-            limit: pageLimit
-        }));
+        dispatch(
+            loadProductsList({
+                page: pageIndex,
+                limit: pageLimit
+            })
+        );
     };
     const handleEdit = (id) => {
         setEditedProductId(id);
@@ -48,7 +56,7 @@ const AdminPage = () => {
         <div className="container pb-5">
             <div className="row">
                 <div className="col-md-3">
-                    <ProductChangeForm
+                    <ProductEditForm
                         productId={editedProductId}
                         clearForm={clearForm}
                     />

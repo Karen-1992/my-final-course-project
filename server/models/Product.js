@@ -24,11 +24,6 @@ const  schema = new Schema({
         type: Number,
         required: true
     },
-    rating: {
-        type: Number,
-        ref: "Category",
-        default: 0
-    },
     stock: {
         type: Number,
         required: true

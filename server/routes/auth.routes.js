@@ -7,21 +7,19 @@ const { generateUserData } = require("../utils/helpers");
 const router = express.Router({ mergeParams: true });
 
 router.post("/signUp", [
-    check('email', 'Некорректный email').isEmail(),
-    check('password', 'Минимальная длина пароля 8 символов').isLength({min: 8}),
+    check("email", "Некорректный email").isEmail(),
+    check("password", "Минимальная длина пароля 8 символов").isLength({min: 8}),
     async (req, res) => {
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     error: {
-                        message: 'INVALID_DATA',
-                        code: 400,
-                        // errors: errors.array()
+                        message: "INVALID_DATA",
+                        code: 400
                     }
                 })
             }
-
             const { email, password, role } = req.body;
             const existingUser = await User.findOne({ email });
             if (existingUser) {
@@ -32,14 +30,12 @@ router.post("/signUp", [
                     }
                 });
             }
-
             const hashedPassword = await bcrypt.hash(password, 12);
             const newUser = await User.create({
                 ...generateUserData(),
                 ...req.body,
                 password: hashedPassword
             });
-
             const tokens = tokenService.generate({ _id: newUser._id, role });
             await tokenService.save(newUser._id, tokens.refreshToken);
             res.status(201).send({
@@ -55,15 +51,15 @@ router.post("/signUp", [
     }]);
 
 router.post("/signInWithPassword", [
-    check('email', 'Email некорректный').normalizeEmail().isEmail(),
-    check('password', 'Пароль не может быть пустым').exists(),
+    check("email", "Email некорректный").normalizeEmail().isEmail(),
+    check("password", "Пароль не может быть пустым").exists(),
     async (req, res) => {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     error: {
-                        message: 'INVALID_DATA',
+                        message: "INVALID_DATA",
                         code: 400
                     }
                 });
@@ -73,17 +69,16 @@ router.post("/signInWithPassword", [
             if (!existingUser) {
                 return res.status(400).send({
                     error: {
-                        message: 'EMAIL_NOT_FOUND',
-                        code: 400,
+                        message: "EMAIL_NOT_FOUND",
+                        code: 400
                     }
                 });
             }
-
             const isPasswordEqual = await bcrypt.compare(password, existingUser.password);
             if (!isPasswordEqual) {
                 return res.status(400).send({
                     error: {
-                        message: 'INVALID_PASSWORD',
+                        message: "INVALID_PASSWORD",
                         code: 400
                     }
                 });
@@ -93,7 +88,7 @@ router.post("/signInWithPassword", [
             res.status(200).send({ ...tokens, userId: existingUser._id, role: existingUser.role });
         } catch (e) {
             res.status(500).json({
-                message: 'На сервере произошла ошибка. Попробуйте позже'
+                message: "На сервере произошла ошибка. Попробуйте позже"
             });
         }
     }]);
@@ -109,19 +104,17 @@ router.post("/token", async (req, res) => {
         const dbToken = await tokenService.findToken(refreshToken);
 
         if (isTokenInvalid(data, dbToken)) {
-            return res.status(401).json({message: 'Unauthorized'});
+            return res.status(401).json({message: "Unauthorized"});
         }
-
         const tokens = tokenService.generate({
             _id: data._id,
             role: data.role
         });
         await tokenService.save(data._id, tokens.refreshToken);
-
         res.status(200).send({ ...tokens, role: data.role, userId: data._id});
     } catch (e) {
         res.status(500).json({
-            message: 'На сервере произошла ошибка. Попробуйте позже'
+            message: "На сервере произошла ошибка. Попробуйте позже"
         });
     }
 });

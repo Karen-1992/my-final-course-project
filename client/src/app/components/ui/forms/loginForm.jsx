@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/validator";
-import TextField from "../common/form/textField";
-import CheckBoxField from "../common/form/checkBoxField";
+import { validator } from "../../../utils/validator";
+import TextField from "../../common/form/textField";
+import CheckBoxField from "../../common/form/checkBoxField";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthErrors, login } from "../../store/users";
-import localStorageService from "../../services/localStorage.service";
+import { getAuthErrors, login } from "../../../store/users";
+import localStorageService from "../../../services/localStorage.service";
 
 const LoginForm = () => {
     const userData = localStorageService.getUserData();
-    const initialData = userData ? {
-        email: userData.email,
-        password: userData.password,
-        stayOn: userData.stayOn
-    } : {
-        email: "",
-        password: "",
-        stayOn: false
-    };
+    const initialData = userData
+        ? {
+            email: userData.email,
+            password: userData.password,
+            stayOn: userData.stayOn
+        }
+        : {
+            email: "",
+            password: "",
+            stayOn: false
+        };
     const [data, setData] = useState(initialData);
     const loginError = useSelector(getAuthErrors());
     const history = useHistory();
@@ -91,18 +93,18 @@ const LoginForm = () => {
                 Оставаться в системе
             </CheckBoxField>
             {loginError && <p className="text-danger">{loginError}</p>}
-            {!isValid &&
+            {!isValid && (
                 <p>
                     <span className="text-danger">*</span>
                     Поле обязательно для заполнения
                 </p>
-            }
+            )}
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"
                 disabled={!isValid}
             >
-                Submit
+                Войти
             </button>
         </form>
     );

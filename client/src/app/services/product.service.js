@@ -10,15 +10,11 @@ const productService = {
         return data;
     },
     getOneProduct: async (productId) => {
-        const { data } = await httpService.get(productEndpoint +
-            productId);
+        const { data } = await httpService.get(productEndpoint + productId);
         return data;
     },
     create: async (payload) => {
-        const { data } = await httpService.put(
-            productEndpoint,
-            payload
-        );
+        const { data } = await httpService.put(productEndpoint, payload);
         return data;
     },
     remove: async (payload) => {

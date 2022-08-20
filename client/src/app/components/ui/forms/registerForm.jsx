@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/validator";
-import TextField from "../common/form/textField";
-import RadioField from "../common/form/radioField";
-import CheckBoxField from "../common/form/checkBoxField";
-import { useDispatch } from "react-redux";
-import { signUp } from "../../store/users";
+import { validator } from "../../../utils/validator";
+import TextField from "../../common/form/textField";
+import RadioField from "../../common/form/radioField";
+import CheckBoxField from "../../common/form/checkBoxField";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthErrors, signUp } from "../../../store/users";
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
@@ -13,15 +13,16 @@ const RegisterForm = () => {
         lastName: "",
         email: "",
         password: "",
-        sex: "male",
-        // locality: "",
-        // street: "",
-        // homeNumber: "",
-        // flatNumber: "",
+        sex: "мужской",
+        locality: "",
+        street: "",
+        homeNumber: "",
+        flatNumber: "",
         phone: "",
         licence: false
     });
     const [errors, setErrors] = useState({});
+    const registerError = useSelector(getAuthErrors());
     const handleChange = (target) => {
         setData((prevState) => ({
             ...prevState,
@@ -38,15 +39,6 @@ const RegisterForm = () => {
                 value: 2
             }
         },
-        // address: {
-        //     isRequired: {
-        //         message: "isRequired"
-        //     },
-        //     min: {
-        //         message: "Адресс должен состоять минимум из 10 символов",
-        //         value: 10
-        //     }
-        // },
         email: {
             isRequired: {
                 message: "isRequired"
@@ -58,10 +50,26 @@ const RegisterForm = () => {
         phone: {
             isRequired: {
                 message: "isRequired"
-            },
-            min: {
-                message: "Телефон должен состоять минимум из 9 символов",
-                value: 9
+            }
+        },
+        locality: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        street: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        homeNumber: {
+            isRequired: {
+                message: "isRequired"
+            }
+        },
+        flatNumber: {
+            isRequired: {
+                message: "isRequired"
             }
         },
         password: {
@@ -142,43 +150,46 @@ const RegisterForm = () => {
             />
             <RadioField
                 options={[
-                    { name: "Male", value: "male" },
-                    { name: "Female", value: "female" },
-                    { name: "Other", value: "other" }
+                    { name: "мужской", value: "мужской" },
+                    { name: "женский", value: "женский" }
                 ]}
                 value={data.sex}
                 name="sex"
                 onChange={handleChange}
                 label="Выберите ваш пол"
             />
-            {/* <TextField
-                label="Населенный пункт"
-                name="locality"
-                value={data.locality}
-                onChange={handleChange}
-                error={errors.locality}
-            />
-            <TextField
-                label="Улица"
-                name="street"
-                value={data.street}
-                onChange={handleChange}
-                error={errors.street}
-            />
-            <TextField
-                label="Дом"
-                name="homeNumber"
-                value={data.homeNumber}
-                onChange={handleChange}
-                error={errors.homeNumber}
-            />
-            <TextField
-                label="Квартира"
-                name="flatNumber"
-                value={data.flatNumber}
-                onChange={handleChange}
-                error={errors.flatNumber}
-            /> */}
+            <div className="d-flex justify-content-evenly gap-5">
+                <TextField
+                    label="Населенный пункт"
+                    name="locality"
+                    value={data.locality}
+                    onChange={handleChange}
+                    error={errors.locality}
+                />
+                <TextField
+                    label="Улица"
+                    name="street"
+                    value={data.street}
+                    onChange={handleChange}
+                    error={errors.street}
+                />
+            </div>
+            <div className="d-flex justify-content-evenly gap-5">
+                <TextField
+                    label="Дом"
+                    name="homeNumber"
+                    value={data.homeNumber}
+                    onChange={handleChange}
+                    error={errors.homeNumber}
+                />
+                <TextField
+                    label="Квартира"
+                    name="flatNumber"
+                    value={data.flatNumber}
+                    onChange={handleChange}
+                    error={errors.flatNumber}
+                />
+            </div>
             <CheckBoxField
                 value={data.licence}
                 onChange={handleChange}
@@ -187,18 +198,19 @@ const RegisterForm = () => {
             >
                 Подтвердить <a>лицензионное соглашение</a>
             </CheckBoxField>
-            {!isValid &&
+            {registerError && <p className="text-danger">{registerError}</p>}
+            {!isValid && (
                 <p>
                     <span className="text-danger">*</span>
                     Поле обязательно для заполнения
                 </p>
-            }
+            )}
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"
                 disabled={!isValid}
             >
-                Submit
+                Зарегистрироваться
             </button>
         </form>
     );

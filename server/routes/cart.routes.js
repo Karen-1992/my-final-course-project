@@ -21,7 +21,6 @@ router.post("/:userId", auth, async (req, res) => {
     try {
         const { productId } = req.body;
         const { userId } = req.params;
-
         const userCart = await Cart.findOne({ userId });
         if (userCart) {
             const { products } = userCart;
@@ -85,7 +84,7 @@ router.delete("/:userId/:productId", auth, async (req, res) => {
         res.status(200).send(userCart);
     } catch (e) {
         res.status(500).json({
-            message: 'На сервере произошла ошибка. Попробуйте позже'
+            message: "На сервере произошла ошибка. Попробуйте позже"
         });
     }
 });
@@ -99,7 +98,7 @@ router.delete("/:userId", auth, async (req, res) => {
         res.send(null);
     } catch (e) {
         res.status(500).json({
-            message: 'На сервере произошла ошибка. Попробуйте позже'
+            message: "На сервере произошла ошибка. Попробуйте позже"
         });
     }
 });

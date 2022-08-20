@@ -12,7 +12,9 @@ const cartService = {
     },
     remove: async (payload) => {
         const { data } = await httpService.delete(
-            cartEndpoint + localStorageService.getUserId() + `/${payload.productId}`
+            cartEndpoint +
+                localStorageService.getUserId() +
+                `/${payload.productId}`
         );
         return data;
     },
@@ -24,16 +26,14 @@ const cartService = {
     },
     add: async (payload) => {
         const { data } = await httpService.post(
-            cartEndpoint +
-                localStorageService.getUserId(),
+            cartEndpoint + localStorageService.getUserId(),
             payload
         );
         return data;
     },
     update: async (payload) => {
         const { data } = await httpService.patch(
-            cartEndpoint +
-                localStorageService.getUserId(),
+            cartEndpoint + localStorageService.getUserId(),
             payload
         );
         return data;

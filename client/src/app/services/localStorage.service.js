@@ -3,6 +3,8 @@ const REFRESH_KEY = "jwt-refresh-token";
 const EXPIRES_KEY = "jwt-expires";
 const USERID_KEY = "user-local-id";
 const USER_DATA = "userData";
+const PAGE_TYPE = "pageType";
+const CURRENCY = "currency";
 
 export function setTokens({
     refreshToken,
@@ -44,6 +46,24 @@ export function getUserData() {
 export function removeUserData() {
     localStorage.removeItem(USER_DATA);
 }
+export function setPageFormType(type) {
+    localStorage.setItem(PAGE_TYPE, type);
+}
+export function getPageFormType() {
+    return localStorage.getItem(PAGE_TYPE);
+}
+export function removePageFormType() {
+    localStorage.removeItem(PAGE_TYPE);
+}
+export function setCurrency(currency) {
+    localStorage.setItem(CURRENCY, JSON.stringify(currency));
+}
+export function getCurrency() {
+    return JSON.parse(localStorage.getItem(CURRENCY));
+}
+export function removeCurrency() {
+    localStorage.removeItem(CURRENCY);
+}
 
 const localStorageService = {
     setTokens,
@@ -54,6 +74,12 @@ const localStorageService = {
     removeAuthData,
     setUserData,
     getUserData,
-    removeUserData
+    removeUserData,
+    setPageFormType,
+    getPageFormType,
+    removePageFormType,
+    setCurrency,
+    getCurrency,
+    removeCurrency
 };
 export default localStorageService;

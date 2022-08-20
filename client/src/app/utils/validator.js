@@ -16,6 +16,11 @@ export function validator(data, config) {
             statusValidate = !emailRegExp.test(data);
             break;
         }
+        case "isPhone": {
+            const phoneRegExp = /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/g;
+            statusValidate = !phoneRegExp.test(data);
+            break;
+        }
         case "isCapitalSymbol": {
             const capitalRegExp = /[A-Z]+/g;
             statusValidate = !capitalRegExp.test(data);

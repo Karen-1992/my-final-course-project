@@ -5,6 +5,7 @@ const  schema = new Schema({
         type: String,
         required: true
     },
+    rating: Number,
     pageId: {
         type: Schema.Types.ObjectId,
         ref: "Product",

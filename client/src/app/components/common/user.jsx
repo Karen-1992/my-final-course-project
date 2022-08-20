@@ -6,7 +6,7 @@ import Loader from "./loader";
 const User = ({ userId }) => {
     const [user, setUser] = useState();
     useEffect(() => {
-        userService.getOneUser(userId).then(res => setUser(res.content));
+        userService.getOneUser(userId).then((res) => setUser(res.content));
     }, []);
     return (
         <div>

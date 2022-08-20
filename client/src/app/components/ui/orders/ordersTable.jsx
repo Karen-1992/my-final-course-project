@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Table from "../../common/table";
-import Status from "../../common/status";
+import OrderStatus from "../../common/orderStatus";
 import User from "../../common/user";
 import { getIsAdmin } from "../../../store/users";
 import { useSelector } from "react-redux";
 import OrderButtons from "./orderButtons";
 import { getDate } from "../../../utils/getDate";
 import OrdersList from "./ordersList";
+import Price from "../price";
 
 const OrdersTable = ({
     orders,
@@ -25,24 +26,23 @@ const OrdersTable = ({
         date: {
             path: "created_at",
             name: "Время заказа",
-            component: (order) => (
-                <span>{getDate(order.created_at)}</span>
-            )
+            component: (order) => <span>{getDate(order.created_at)}</span>
         },
         status: {
-            name: "Статус зазака",
+            name: "Статус",
             path: "status",
-            component: (order) => <Status status={order.status} />
+            component: (order) => <OrderStatus status={order.status} />
         },
         totalPrice: {
             path: "totalPrice",
-            name: "Стоимость"
+            name: "Стоимость",
+            component: (order) => <Price price={order.totalPrice} />
         },
         user: {
             path: "userId",
             name: isAdmin ? "Покупатель" : "",
             component: (order) => {
-                if (isAdmin) return <User userId={order.userId}/>;
+                if (isAdmin) return <User userId={order.userId} />;
             }
         },
         products: {

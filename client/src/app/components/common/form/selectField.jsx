@@ -46,7 +46,9 @@ const SelectField = ({
                         </option>
                     ))}
             </select>
-            {error && !isRequired && <div className="invalid-feedback">{error}</div>}
+            {error && !isRequired && (
+                <div className="invalid-feedback">{error}</div>
+            )}
         </div>
     );
 };

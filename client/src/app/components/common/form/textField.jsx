@@ -27,7 +27,9 @@ const TextField = ({
     };
     return (
         <div className="mb-4">
-            <label htmlFor={name}>{label}</label>
+            <label className="text-nowrap" htmlFor={name}>
+                {label}
+            </label>
             {isRequired && <span className="text-danger">*</span>}
             <div className="input-group has-validation">
                 <input
@@ -52,7 +54,9 @@ const TextField = ({
                         ></i>
                     </button>
                 )}
-                {error && !isRequired && <div className="invalid-feedback">{error}</div>}
+                {error && !isRequired && (
+                    <div className="invalid-feedback">{error}</div>
+                )}
             </div>
         </div>
     );

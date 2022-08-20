@@ -3,29 +3,39 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import productService from "../../../services/product.service";
 import { addProductToCart } from "../../../store/cart";
-import { clearFavorite, getFavoriteList, toggleFavorite } from "../../../store/favorites";
+import {
+    clearFavorite,
+    getFavoriteList,
+    toggleFavorite
+} from "../../../store/favorites";
 import history from "../../../utils/history";
 import ClearButton from "../../common/clearButton";
 import Loader from "../../common/loader";
 import ProductItem from "../../ui/productItem";
+import noImage from "../../../assets/images/no_icon.png";
 
 const FavoritesPage = () => {
     const dispatch = useDispatch();
     const favoritesIds = useSelector(getFavoriteList());
     const [favoritesList, setFavoritesList] = useState();
     useEffect(() => {
-        getProducts(favoritesIds).then(res => setFavoritesList(res));
+        getProducts(favoritesIds).then((res) => setFavoritesList(res));
     }, [favoritesIds]);
     async function getProducts(ids) {
         const result = [];
         if (ids) {
             for (const item of ids) {
                 const { productId } = item;
-                const { content } = await productService.getOneProduct(productId);
+                const { content } = await productService.getOneProduct(
+                    productId
+                );
                 if (content) {
                     result.push(content);
                 } else {
-                    dispatch(toggleFavorite(productId));
+                    result.push({
+                        _id: productId,
+                        thumbnail: noImage
+                    });
                 }
             }
         }
@@ -56,14 +66,24 @@ const FavoritesPage = () => {
                                     label="Очистить"
                                 />
                             </div>
-                            <div className="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-lg-4">
+                            <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
                                 {favoritesList.map((favProduct) => (
                                     <div key={favProduct._id}>
                                         <ProductItem
                                             {...favProduct}
-                                            onAddToCart={() => handleAddToCart(favProduct)}
-                                            onToggleFavorite={() => handleToggleFavorite(favProduct._id)}
-                                            onOpenProductPage={handleOpenProductPage}
+                                            onAddToCart={() =>
+                                                handleAddToCart(favProduct)
+                                            }
+                                            onToggleFavorite={() =>
+                                                handleToggleFavorite(
+                                                    favProduct._id
+                                                )
+                                            }
+                                            onOpenProductPage={() =>
+                                                handleOpenProductPage(
+                                                    favProduct._id
+                                                )
+                                            }
                                         />
                                     </div>
                                 ))}
@@ -71,8 +91,10 @@ const FavoritesPage = () => {
                         </>
                     ) : (
                         <div>
-                            <p>У нас столько замечательных товаров,
-                            а в Избранном у Вас – пусто</p>
+                            <p>
+                                У нас столько замечательных товаров, а в
+                                Избранном у Вас – пусто
+                            </p>
                             <Link to="/products">Перейти в каталог</Link>
                         </div>
                     )}

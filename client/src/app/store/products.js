@@ -9,6 +9,7 @@ const initialState = {
     isLoading: true,
     sort: null,
     error: null,
+    path: null,
     dataLoaded: false
 };
 const productsSlice = createSlice({
@@ -20,12 +21,14 @@ const productsSlice = createSlice({
             state.dataLoaded = false;
         },
         productsReceived: (state, action) => {
-            const { list, length, page, category, order } = action.payload;
+            const { list, length, page, category, order, path } =
+                action.payload;
             state.entities = list;
             state.length = length;
             state.currentPage = +page;
             state.category = category;
             state.sort = order;
+            state.path = path;
             state.dataLoaded = true;
             state.isLoading = false;
         },
@@ -114,6 +117,7 @@ export const getProductsListLength = () => (state) => state.products.length;
 export const getCurrentPage = () => (state) => state.products.currentPage;
 export const getCurrentCategory = () => (state) => state.products.category;
 export const getCurrentSort = () => (state) => state.products.sort;
+export const getCurrentPath = () => (state) => state.products.path;
 
 export const getProductById = (productId) => (state) => {
     if (state.products.entities) {
@@ -122,6 +126,7 @@ export const getProductById = (productId) => (state) => {
 };
 
 export const getDataStatus = () => (state) => state.products.dataLoaded;
-export const getProductsLoadingStatus = () => (state) => state.products.isLoading;
+export const getProductsLoadingStatus = () => (state) =>
+    state.products.isLoading;
 
 export default ProductsReducer;

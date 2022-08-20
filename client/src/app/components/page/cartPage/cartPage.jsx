@@ -8,52 +8,42 @@ import {
     incrementQuantity,
     removeProductFromCart
 } from "../../../store/cart";
-import { getCurrentUserData, updateUser } from "../../../store/users";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { toggleFavorite } from "../../../store/favorites";
 import ClearButton from "../../common/clearButton";
 import productService from "../../../services/product.service";
-import { getPriceWithDiscount } from "../../../utils/getPriceWithDiscount";
 import Loader from "../../common/loader";
 import history from "../../../utils/history";
-import { createOrder } from "../../../store/order";
-import localStorageService from "../../../services/localStorage.service";
+import OrderForm from "../../ui/forms/orderForm";
+import noImage from "../../../assets/images/no_icon.png";
 
 const CartPage = () => {
     const dispatch = useDispatch();
     const cartListIds = useSelector(getCartList());
-    const userData = useSelector(getCurrentUserData());
     const [cartList, setCartList] = useState();
-    const totalPrice = getTotalPrice(cartList);
     useEffect(() => {
-        getProducts(cartListIds).then(res => setCartList(res));
+        getProducts(cartListIds).then((res) => setCartList(res));
     }, [cartListIds]);
     async function getProducts(ids) {
         const result = [];
         if (cartListIds) {
             for (const item of ids) {
                 const { productId } = item;
-                const { content } = await productService.getOneProduct(productId);
+                const { content } = await productService.getOneProduct(
+                    productId
+                );
                 if (content) {
                     result.push({ ...content, quantity: item.quantity });
                 } else {
-                    dispatch(removeProductFromCart(productId));
+                    result.push({
+                        _id: productId,
+                        thumbnail: noImage
+                    });
                 }
             }
         }
         return result;
     }
-    function getTotalPrice(list) {
-        if (list) {
-            let result = 0;
-            for (const product of cartList) {
-                const { finalPrice } = getPriceWithDiscount(product.discountPercentage, product.price);
-                result += finalPrice * product.quantity;
-            }
-            return result;
-        }
-    };
     const handleRemove = (id) => {
         dispatch(removeProductFromCart(id));
     };
@@ -65,34 +55,6 @@ const CartPage = () => {
     };
     const handleClear = () => {
         dispatch(clearCart());
-    };
-    function getTotalQuantity() {
-        let quantity = 0;
-        if (cartList) {
-            for (const item of cartList) {
-                quantity += item.quantity;
-            }
-        }
-        return quantity;
-    }
-    const totalQuantity = getTotalQuantity();
-    const handleFinishShopping = () => {
-        if (userData.cash > totalPrice) {
-            const currentCash = userData.cash;
-            const cash = currentCash - totalPrice;
-            toast.success("Обрабатывается");
-            dispatch(updateUser({
-                cash,
-                userId: localStorageService.getUserId()
-            }));
-            dispatch(createOrder({
-                products: cartListIds,
-                totalPrice
-            }));
-            dispatch(clearCart());
-        } else {
-            toast.error("Недостаточно средств, пополните денежные средства");
-        }
     };
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
@@ -115,7 +77,9 @@ const CartPage = () => {
                                         onRemove={() => handleRemove(p._id)}
                                         onDecrement={handleDecrement}
                                         onIncrement={handleIncrement}
-                                        onToggleFavorite={() => handleToggleFavorite(p._id)}
+                                        onToggleFavorite={() =>
+                                            handleToggleFavorite(p._id)
+                                        }
                                         onOpen={handleOpenProductPage}
                                     />
                                 ))}
@@ -129,21 +93,10 @@ const CartPage = () => {
                                     />
                                 </div>
                                 <div className="shadow-sm p-3 mb-5 bg-body rounded">
-                                    <h3>Ваш заказ</h3>
-                                    <p>
-                                        Количество товаров:
-                                        <span className="fw-semibold fs-4"> {totalQuantity}</span>
-                                    </p>
-                                    <p>
-                                        Итого к оплате:
-                                        <span className="fw-semibold fs-4"> {totalPrice}$</span>
-                                    </p>
-                                    <button
-                                        onClick={handleFinishShopping}
-                                        className="w-100 btn btn-success"
-                                    >
-                                        Купить
-                                    </button>
+                                    <OrderForm
+                                        cartList={cartList}
+                                        cartListIds={cartListIds}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -152,7 +105,10 @@ const CartPage = () => {
                             <h2>В корзине еще нет товаров</h2>
                             <div>
                                 Выберите нужный Вам товар из
-                                <Link to="/products"> каталога интернет-магазина</Link>
+                                <Link to="/products">
+                                    {" "}
+                                    каталога интернет-магазина
+                                </Link>
                             </div>
                         </>
                     )}

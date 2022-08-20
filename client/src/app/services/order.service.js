@@ -25,10 +25,7 @@ const orderService = {
         return data;
     },
     add: async (payload) => {
-        const { data } = await httpService.post(
-            orderEndpoint,
-            payload
-        );
+        const { data } = await httpService.post(orderEndpoint, payload);
         return data;
     }
 };

@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextAreaField = ({ label, name, value, onChange, error, placeholder }) => {
+const TextAreaField = ({
+    label,
+    name,
+    value,
+    onChange,
+    error,
+    placeholder
+}) => {
     const isRequired = error === "isRequired";
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
@@ -23,7 +30,9 @@ const TextAreaField = ({ label, name, value, onChange, error, placeholder }) => 
                     onChange={handleChange}
                     className={getInputClasses()}
                 />
-                {error && !isRequired && <div className="invalid-feedback">{error}</div>}
+                {error && !isRequired && (
+                    <div className="invalid-feedback">{error}</div>
+                )}
             </div>
         </div>
     );

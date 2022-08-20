@@ -7,9 +7,7 @@ const Category = ({ id }) => {
     const category = useSelector(getCategoryById(id));
     return (
         <div className="align-middle">
-            <span>
-                {category?.name}
-            </span>
+            <span>{category?.name}</span>
         </div>
     );
 };

@@ -1,47 +1,62 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ProductItemLine from "./productItemLine";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart } from "../../store/cart";
 import { toggleFavorite } from "../../store/favorites";
 import history from "../../utils/history";
+import { getIsLoggedIn } from "../../store/users";
+import SearchStatus from "./searchStatus";
 
-const SearchOverlay = ({ items, isSearching, clearSearchQuery }) => {
+const SearchOverlay = ({
+    items,
+    isSearching,
+    clearSearchQuery,
+    searchQuery
+}) => {
+    const isLoggedIn = useSelector(getIsLoggedIn());
     const dispatch = useDispatch();
     const handleAddToCart = (data) => {
         dispatch(addProductToCart(data));
+        if (!isLoggedIn) {
+            return clearSearchQuery();
+        }
     };
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
+        if (!isLoggedIn) {
+            return clearSearchQuery();
+        }
     };
     const handleOpenProductPage = (productId) => {
-        clearSearchQuery();
         history.push(`products/${productId}`);
+        clearSearchQuery();
     };
     return (
-        <div
-            className="w-75 d-flex flex-column mx-auto shadow px-2 pt-2 gap-3"
-        >
+        <div className="d-flex flex-column shadow gap-2 px-5 pb-3">
             {isSearching ? (
                 <>
-                    {items ? items.map(item => (
-                        <ProductItemLine
-                            key={item._id}
-                            {...item}
-                            onAddToCart={() => handleAddToCart(item)}
-                            onToggleFavorite={() =>
-                                handleToggleFavorite(item._id)
-                            }
-                            onOpenProductPage={() =>
-                                handleOpenProductPage(item._id)
-                            }
-                        />
-                    )) : (
-                        <p>Ничего не найдено</p>
-                    )}
+                    <SearchStatus
+                        length={items.length}
+                        searchQuery={searchQuery}
+                    />
+                    {items &&
+                        items.map((item) => (
+                            <ProductItemLine
+                                key={item._id}
+                                {...item}
+                                onAddToCart={() => handleAddToCart(item)}
+                                onToggleFavorite={() =>
+                                    handleToggleFavorite(item._id)
+                                }
+                                onOpenProductPage={() =>
+                                    handleOpenProductPage(item._id)
+                                }
+                            />
+                        ))}
                 </>
             ) : (
-                "Loading..."
+                <p className="text-light">Поиск...</p>
             )}
         </div>
     );
@@ -50,6 +65,7 @@ const SearchOverlay = ({ items, isSearching, clearSearchQuery }) => {
 SearchOverlay.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
     isSearching: PropTypes.bool,
+    searchQuery: PropTypes.string,
     clearSearchQuery: PropTypes.func
 };
 

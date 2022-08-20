@@ -7,10 +7,14 @@ import { getIsFavorite } from "../../store/favorites";
 import { getPriceWithDiscount } from "../../utils/getPriceWithDiscount";
 import ProductButtons from "../common/productButtons";
 import getArtFromId from "../../utils/getArtFromId";
+import Badge from "../common/badge";
+import { getIsNewProduct } from "../../utils/getIsNewProduct";
+import Price from "./price";
+import InStockStatus from "../common/inStockStatus";
+import { dateNewProduct } from "../../constants/dateNewProduct";
 
 const ProductItemLine = ({
     thumbnail,
-    rating,
     _id,
     title,
     price,
@@ -18,25 +22,34 @@ const ProductItemLine = ({
     discountPercentage,
     onAddToCart,
     onOpenProductPage,
-    onToggleFavorite
+    onToggleFavorite,
+    createdAt
 }) => {
     const isInCart = !!useSelector(getCartProductById(_id));
     const isFavorite = useSelector(getIsFavorite(_id));
-    const { discountValue, finalPrice } = getPriceWithDiscount(discountPercentage, price);
+    const isNewProduct = getIsNewProduct(createdAt, dateNewProduct);
+    const { discountValue, finalPrice } = getPriceWithDiscount(
+        discountPercentage,
+        price
+    );
     return (
-        <div key={_id} className="row border-bottom">
+        <div key={_id} className="hover row bg-body shadow p-2 rounded">
             <div role="button" onClick={onOpenProductPage} className="col">
-                <ImageComponent
-                    src={thumbnail}
-                    height="75px"
-                />
+                <ImageComponent src={thumbnail} height="100px" />
             </div>
             <div className="col">
-                {discountPercentage > 0 && (
-                    <span className="bg bg-danger text-white px-2 rounded">
-                        {`-${discountPercentage}%`}
-                    </span>
-                )}
+                <div className="d-flex gap-2 p-1">
+                    {discountPercentage > 0 && (
+                        <Badge
+                            color="danger"
+                            title={`-${discountPercentage}%`}
+                        />
+                    )}
+                    {discountPercentage >= 20 && (
+                        <Badge color="warning" title="Суперцена" />
+                    )}
+                    {isNewProduct && <Badge color="success" title="Новинка" />}
+                </div>
                 <p
                     className="fw-semibold pt-2"
                     onClick={onOpenProductPage}
@@ -44,35 +57,22 @@ const ProductItemLine = ({
                 >
                     {title}
                 </p>
-                <div className="d-flex">
-                    <div
-                        style={{
-                            height: "10px",
-                            width: "10px"
-                        }}
-                        className={"bg rounded-5 d-block my-auto mx-1 bg-" + (stock > 0 ? "success" : "danger")}
-                    >
-                    </div>
-                    <span>{stock > 0 ? "В наличии" : "Нет в наличии"}</span>
+                <div className="d-flex justify-content-start">
+                    <InStockStatus quantity={stock} />
                 </div>
             </div>
             <div className="col">
-                <div className="d-flex justify-content-between">
-                    <div>
-                        <i className="bi bi-star"></i>
-                        <span className="fw-light"> {rating}</span>
-                    </div>
-                    <span className="fw-light">Код: {getArtFromId(_id)}</span>
+                <div className="text-end">
+                    <span className="fw-light ">Код: {getArtFromId(_id)}</span>
                 </div>
-                {discountPercentage > 0 ? (
-                    <div className="d-flex gap-2 justify-content-center">
-                        <span className="fw-semibold">{`${finalPrice}$`}</span>
-                        <span className="text-decoration-line-through">{`${price}$`}</span>
-                        <span className="fw-semibold text-danger">{`-${discountValue}$`}</span>
-                    </div>
-                ) : (
-                    <span className="fw-bold">{`${price}$`}</span>
-                )}
+                <div className="d-flex justify-content-end py-1">
+                    <Price
+                        discount={discountPercentage}
+                        discountValue={discountValue}
+                        finalPrice={finalPrice}
+                        price={price}
+                    />
+                </div>
                 <div className="d-flex justify-content-between py-2">
                     <ProductButtons
                         isInCart={isInCart}
@@ -88,7 +88,7 @@ const ProductItemLine = ({
 
 ProductItemLine.propTypes = {
     thumbnail: PropTypes.string,
-    rating: PropTypes.number,
+    createdAt: PropTypes.string,
     _id: PropTypes.string,
     title: PropTypes.string,
     stock: PropTypes.number,

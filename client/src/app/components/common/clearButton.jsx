@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 
 const ClearButton = ({ label, onClick, classes }) => {
     return (
-        <span
-            className={classes}
-            onClick={onClick}
-            role="button"
-        >
+        <span className={classes} onClick={onClick} role="button">
             {label}
             <i className="bi bi-trash-fill px-1"></i>
         </span>

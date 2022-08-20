@@ -1,53 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import ImageComponent from "../components/common/imageComponent";
-import Loader from "../components/common/loader";
-import { getCategories } from "../store/categories";
-import history from "../utils/history";
-import mainImage from "../assets/images/main-3.jpg";
+import CategoriesList from "../components/ui/categoriesList";
+import MainProductsGroup from "../components/ui/mainProductsGroup";
 
 const Main = () => {
-    const handleRedirect = () => {
-        history.push("/products");
-    };
-    const categoriesList = useSelector(getCategories());
-    const handleClick = (category) => {
-        history.push(`/products/catalog/${category}`);
-    };
     return (
         <div className="container pb-5">
-            <div className="card bg-dark text-white overflow-hidden" style={{
-                height: "400px"
-            }}>
-                <ImageComponent
-                    height="700px"
-                    classes="card-img"
-                    src={mainImage}
-                />
-                <div className="card-img-overlay">
-                    <h5 className="card-title">Интернет-магазин</h5>
-                    <p className="card-text">Здесь вы можете найти все что угодно.</p>
-                    <button className="btn btn-light mb-3" onClick={handleRedirect}>Перейти к покупкам</button>
+            <MainProductsGroup
+                params={{ limit: 4, order: "desc", path: "createdAt" }}
+                title="Новинки"
+            />
+            <MainProductsGroup
+                params={{ limit: 4, order: "desc", path: "discountPercentage" }}
+                title="Суперцена"
+            />
+            <div className="my-5 px-3">
+                <h2>Категории</h2>
+                <div className="row row-cols-2 row-cols-lg-5 row-cols-sm-4 g-3 g-lg-4">
+                    <CategoriesList />
                 </div>
-            </div>
-            <h1 className="my-5">Категории</h1>
-            <div className="row row-cols-2 row-cols-lg-5 row-cols-sm-4 g-3 g-lg-5">
-                {categoriesList ? categoriesList.map(c => (
-                    <div className="col" key={c._id} role="button" onClick={() => handleClick(c.name)}>
-                        <div className="h-100 shadow rounded-3">
-                            <p className="fw-light fs-5 text-center">{c.name}</p>
-                            <div className="">
-                                <ImageComponent
-                                    classes="card-img"
-                                    src={c.thumbnail}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                )) : (
-                    <Loader />
-                )}
-
             </div>
         </div>
     );

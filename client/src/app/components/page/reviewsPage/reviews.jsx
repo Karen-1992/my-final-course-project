@@ -3,7 +3,12 @@ import Loader from "../../common/loader";
 import { orderBy } from "lodash";
 import CommentsList from "../../common/comments";
 import { useDispatch, useSelector } from "react-redux";
-import { getComments, getCommentsLoadingStatus, loadCommentsList, removeComment } from "../../../store/comments";
+import {
+    getComments,
+    getCommentsLoadingStatus,
+    loadCommentsList,
+    removeComment
+} from "../../../store/comments";
 import localStorageService from "../../../services/localStorage.service";
 
 const Reviews = () => {
@@ -22,7 +27,7 @@ const Reviews = () => {
         <>
             <div className="card mb-3">
                 <div className="card-body ">
-                    <h2>Мои комментарии</h2>
+                    <h4>Мои отзывы и оценки</h4>
                     <hr />
                     {!isLoading ? (
                         <>

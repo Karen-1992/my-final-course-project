@@ -11,7 +11,7 @@ const ImageComponent = ({ src, onClick, height, width, classes }) => {
             className={classes}
         >
             <img
-                className={`d-block h-100 w-100 + ${classes}`}
+                className={"d-block h-100 w-100 " + (classes || "")}
                 style={{
                     objectFit: "contain"
                 }}
@@ -35,7 +35,6 @@ ImageComponent.propTypes = {
     classes: PropTypes.string,
     height: PropTypes.string,
     width: PropTypes.string
-
 };
 
 export default ImageComponent;

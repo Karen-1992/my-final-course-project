@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import productService from "../../../services/product.service";
-import Loader from "../../common/loader";
 import ImageComponent from "../../common/imageComponent";
 import { useSelector } from "react-redux";
 import { getIsAdmin } from "../../../store/users";
+import productService from "../../../services/product.service";
 
 const OrderItem = ({ quantity, productId, onClick }) => {
-    const [product, setProduct] = useState();
     const isAdmin = useSelector(getIsAdmin());
+    const [product, setProduct] = useState();
     useEffect(() => {
-        productService.getOneProduct(productId).then(res => setProduct(res?.content || {}));
-    }, [productId]);
+        productService
+            .getOneProduct(productId)
+            .then((res) => setProduct(res.content));
+    }, []);
     return (
-        <div className="d-flex gap-2 border p-1">
+        <div className="d-flex border p-1">
             {product ? (
-                <>
-                    <div>
-                        <p className="fw-semibold">{product.title}</p>
-                        <div className="d-flex gap-3">
-                            <p>{`Количество: ${quantity} шт.`}</p>
+                <div className="d-flex flex-column">
+                    <span className="fw-semibold">{product.title}</span>
+                    <div className="d-flex">
+                        <ImageComponent
+                            src={product.thumbnail}
+                            width="100px"
+                            onClick={() => onClick(product._id)}
+                        />
+                        <div className="d-flex flex-column px-2">
+                            <span className="text-nowrap">{`Количество: ${quantity} шт.`}</span>
                             {isAdmin && (
-                                <p>{`В наличии: ${product.stock} шт.`}</p>
+                                <span className="text-nowrap">{`В наличии: ${product.stock} шт.`}</span>
                             )}
                         </div>
                     </div>
-                    <div className="mx-auto">
-                        <ImageComponent src={product.thumbnail} width="100px" onClick={() => onClick(product._id)} />
-                    </div>
-                </>
+                </div>
             ) : (
-                <Loader />
+                <span>Товар не найден</span>
             )}
         </div>
     );

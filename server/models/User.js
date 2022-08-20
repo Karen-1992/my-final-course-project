@@ -15,16 +15,14 @@ const  schema = new Schema({
         type: String,
         required: true
     },
-    // address: {
-    //     locality: String,
-    //     street: String,
-    //     homeNumber: String,
-    //     flatNumber: String
-    // },
+    locality: String,
+    street: String,
+    homeNumber: String,
+    flatNumber: String,
     cash: Number,
     sex: {
         type: String,
-        enum: ["male", "female", "other"]
+        enum: ["мужской", "женский"]
     },
     role: {
         type: String,

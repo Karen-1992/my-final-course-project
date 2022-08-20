@@ -1,6 +1,5 @@
 const express = require("express");
 const Product = require("../models/Product");
-const { generateProductData } = require("../utils/helpers");
 const router = express.Router({ mergeParams: true });
 const checkRole = require("../middleware/admin.middleware");
 
@@ -9,7 +8,6 @@ router.get("/", async (req, res) => {
     try {
         let { limit, page, category, order, path, query } = req.query;
         path = path || "title";
-        order = order === "asc" ? "desc" : "asc";
         page = page || 1;
         limit = limit || 20;
         let skip = page * limit - limit;
@@ -76,13 +74,12 @@ router.put("/", checkRole("admin"), async (req, res) => {
         if (existingProduct) {
             return res.status(400).send({
                 error: {
-                    message: 'PRODUCT_IN_DATABASE',
+                    message: "PRODUCT_IN_DATABASE",
                     code: 400,
                 }
             });
         }
         const newProduct = await Product.create({
-            ...generateProductData(),
             ...req.body,
             images: [req.body.thumbnail]
         });
@@ -102,7 +99,7 @@ router.patch("/:productId", checkRole("admin"), async (req, res) => {
         res.send(updatedProduct);
     } catch (e) {
         res.status(500).json({
-            message: 'На сервере произошла ошибка. Попробуйте позже'
+            message: "На сервере произошла ошибка. Попробуйте позже"
         });
     }
 });
@@ -116,7 +113,7 @@ router.delete("/:productId", checkRole("admin"), async (req, res) => {
         res.send(null);
     } catch (e) {
         res.status(500).json({
-            message: 'На сервере произошла ошибка. Попробуйте позже'
+            message: "На сервере произошла ошибка. Попробуйте позже"
         });
     }
 });

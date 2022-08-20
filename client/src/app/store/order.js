@@ -25,7 +25,9 @@ const ordersSlice = createSlice({
         },
         orderUpdated: (state, action) => {
             state.entities[
-                state.entities.findIndex((order) => order._id === action.payload._id)
+                state.entities.findIndex(
+                    (order) => order._id === action.payload._id
+                )
             ] = action.payload;
         },
         orderRemoved: (state, action) => {
@@ -44,7 +46,6 @@ const {
     orderCreated,
     orderUpdated,
     orderRemoved
-
 } = actions;
 
 const addOrderRequested = createAction("orders/addOrderRequested");
@@ -92,7 +93,14 @@ export const removeOrder = (orderId) => async (dispatch) => {
 };
 
 export const getOrders = () => (state) => state.orders.entities;
-export const getOrdersLoadingStatus = () => (state) =>
-    state.orders.isLoading;
+export const getPendingOrdersQuantity = () => (state) => {
+    if (state.orders.entities) {
+        return state.orders.entities.filter(
+            (order) => order.status === "pending"
+        ).length;
+    }
+    return null;
+};
+export const getOrdersLoadingStatus = () => (state) => state.orders.isLoading;
 
 export default ordersReducer;

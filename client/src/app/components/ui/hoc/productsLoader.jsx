@@ -11,21 +11,12 @@ const ProductsLoader = ({ children }) => {
     const params = useParams();
     const { category } = params;
     const categoryItem = useSelector(getCategoryByName(category));
-    const isCategory = !!useSelector(getCategoryByName(category));
     const dataStatus = useSelector(getDataStatus());
     useEffect(() => {
-        if (!dataStatus) {
-            if (isCategory) {
-                dispatch(loadProductsList({ category: categoryItem._id }));
-            } else {
-                dispatch(loadProductsList());
-            }
-        }
-    }, []);
+        dispatch(loadProductsList({ category: categoryItem?._id }));
+    }, [category]);
     if (!dataStatus) {
-        return (
-            <Loader/>
-        );
+        return <Loader />;
     }
     return children;
 };

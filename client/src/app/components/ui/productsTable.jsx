@@ -35,14 +35,12 @@ const ProductsTable = ({
             path: "price",
             name: "Цена, $"
         },
-        rating: { path: "rating", name: "rating" },
         edit: {
             component: (product) => (
                 <i
                     className="btn btn-secondary btn-sm bi bi-pencil"
                     onClick={() => onEdit(product._id)}
-                >
-                </i>
+                ></i>
             )
         },
         remove: {
@@ -50,8 +48,7 @@ const ProductsTable = ({
                 <i
                     className="btn btn-danger btn-sm bi bi-x-lg"
                     onClick={() => onRemove(product._id)}
-                >
-                </i>
+                ></i>
             )
         }
     };

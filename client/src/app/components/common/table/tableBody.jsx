@@ -16,9 +16,17 @@ const TableBody = ({ data, columns, selectedRow, onSelect }) => {
     return (
         <tbody>
             {data.map((item) => (
-                <tr key={item._id} onClick={() => onSelect(item._id)} className={(selectedRow === item._id ? "table-active " : "") + ""}>
+                <tr
+                    key={item._id}
+                    onClick={() => onSelect(item._id)}
+                    className={
+                        (selectedRow === item._id ? "table-active " : "") + ""
+                    }
+                >
                     {Object.keys(columns).map((column) => (
-                        <td key={column} className="align-middle">{renderContent(item, column)}</td>
+                        <td key={column} className="align-middle">
+                            {renderContent(item, column)}
+                        </td>
                     ))}
                 </tr>
             ))}

@@ -110,12 +110,20 @@ export const signUp = (payload) => async (dispatch) => {
         dispatch(authRequestSuccess({ userId: data.userId }));
         history.push("/");
     } catch (error) {
-        dispatch(authRequestFailed(error.message));
+        const { code, message } = error.response.data.error;
+        if (code === 400) {
+            const errorMessage = generateAuthError(message);
+            dispatch(authRequestFailed(errorMessage));
+        } else {
+            dispatch(authRequestFailed(error.message));
+        }
     }
 };
 export const logOut = () => (dispatch) => {
     localStorageService.removeAuthData();
     localStorageService.removeUserData();
+    localStorageService.removePageFormType();
+    localStorageService.removeCurrency();
     dispatch(userLoggedOut());
     history.push("/");
 };
@@ -153,7 +161,11 @@ export const getIsAdmin = () => (state) => {
 };
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getUserLoadingStatus = () => (state) => state.users.isLoading;
-export const getCurrentUserId = () => (state) => state.users.auth.userId;
+export const getCurrentUserId = () => (state) => {
+    if (state.users.auth) {
+        return state.users.auth.userId;
+    }
+};
 export const getAuthErrors = () => (state) => state.users.error;
 
 export default usersReducer;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import ProfileContentProxy from "../routes/ProfileContentProxy";
+import history from "../utils/history";
 
 const UserCabinet = () => {
     const { type, edit } = useParams();
@@ -15,6 +16,7 @@ const UserCabinet = () => {
     const [selectedRoute, setSelectedRoute] = useState("personal");
     const handleChangeRoute = (route) => {
         setSelectedRoute(route);
+        history.push(`/cabinet/${route}`);
     };
     const isExistingRoute = routes.some((route) => route.path === type);
     useEffect(() => {
@@ -23,33 +25,33 @@ const UserCabinet = () => {
         }
     }, [type]);
     return (
-        <div className="row">
-            <div className="card text-center">
-                <div className="card-header">
-                    <ul className="nav nav-tabs card-header-tabs">
-                        {routes.map((route) => (
-                            <Link
-                                key={route.path}
-                                onClick={() => handleChangeRoute(route.path)}
-                                className={
-                                    "nav-link " +
-                                    (selectedRoute === route.path ? "active" : "")
-                                }
-                                role="button"
-                                to={`/cabinet/${route.path}`}
-                            >
-                                {route.name}
-                            </Link>
-                        ))}
-                    </ul>
-                </div>
-                <div className="card-body">
-                    {!isExistingRoute ? (
-                        <Redirect to={"/cabinet"} />
-                    ) : (
-                        <ProfileContentProxy route={selectedRoute} isEdit={isEdit} />
-                    )}
-                </div>
+        <div className="row px-3">
+            <div className="col-lg-3 col-md-4 col-sm-5">
+                <ul className="list-group">
+                    {routes.map((route) => (
+                        <li
+                            key={route.path}
+                            onClick={() => handleChangeRoute(route.path)}
+                            className={
+                                "list-group-item " +
+                                (selectedRoute === route.path ? "active" : "")
+                            }
+                            role="button"
+                        >
+                            {route.name}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="col bg-body py-5 mb-5">
+                {!isExistingRoute ? (
+                    <Redirect to={"/cabinet"} />
+                ) : (
+                    <ProfileContentProxy
+                        route={selectedRoute}
+                        isEdit={isEdit}
+                    />
+                )}
             </div>
         </div>
     );

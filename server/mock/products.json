@@ -7,7 +7,7 @@
     "description": "An apple mobile which is nothing like apple",
     "discountPercentage": 15,
     "price": 549,
-    "rating": 4.7,
+    "rating": 0,
     "stock": 94,
     "thumbnail": "https://dummyjson.com/image/i/products/1/thumbnail.jpg",
     "images": [
@@ -26,7 +26,7 @@
     "description": "OPPO F19 is officially announced on April 2021.",
     "discountPercentage": 20,
     "price": 280,
-    "rating": 4.3,
+    "rating": 0,
     "stock": 123,
     "thumbnail": "https://dummyjson.com/image/i/products/4/thumbnail.jpg",
     "images": [
@@ -45,7 +45,7 @@
     "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
     "discountPercentage": 15,
     "price": 1249,
-    "rating": 4.09,
+    "rating": 0,
     "stock": 36,
     "thumbnail": "https://dummyjson.com/image/i/products/3/thumbnail.jpg",
     "images": ["https://dummyjson.com/image/i/products/3/1.jpg"]
@@ -58,7 +58,7 @@
     "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
     "discountPercentage": 0,
     "price": 899,
-    "rating": 4.44,
+    "rating": 0,
     "stock": 34,
     "thumbnail": "https://dummyjson.com/image/i/products/2/thumbnail.jpg",
     "images": [
@@ -76,7 +76,7 @@
     "description": "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched",
     "discountPercentage": 5,
     "price": 1499,
-    "rating": 4.25,
+    "rating": 0,
     "stock": 50,
     "thumbnail": "https://dummyjson.com/image/i/products/7/thumbnail.jpg",
     "images": [
@@ -94,7 +94,7 @@
     "description": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen.",
     "discountPercentage": 0,
     "price": 1499,
-    "rating": 4.43,
+    "rating": 0,
     "stock": 68,
     "thumbnail": "https://dummyjson.com/image/i/products/8/thumbnail.jpg",
     "images": [
@@ -113,7 +113,7 @@
     "description": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey – 1 Year Warranty",
     "discountPercentage": 10,
     "price": 1099,
-    "rating": 4.54,
+    "rating": 0,
     "stock": 96,
     "thumbnail": "https://dummyjson.com/image/i/products/9/thumbnail.jpg",
     "images": [
@@ -132,7 +132,7 @@
     "description": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10",
     "discountPercentage": 10,
     "price": 1099,
-    "rating": 4.43,
+    "rating": 0,
     "stock": 89,
     "thumbnail": "https://dummyjson.com/image/i/products/10/thumbnail.jpeg",
     "images": [
@@ -150,7 +150,7 @@
     "description": "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml",
     "discountPercentage": 15,
     "price": 40,
-    "rating": 4,
+    "rating": 0,
     "stock": 52,
     "thumbnail": "https://dummyjson.com/image/i/products/12/thumbnail.jpg",
     "images": [
@@ -169,7 +169,7 @@
     "description": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
     "discountPercentage": 0,
     "price": 13,
-    "rating": 4.26,
+    "rating": 0,
     "stock": 65,
     "thumbnail": "https://dummyjson.com/image/i/products/11/thumbnail.jpg",
     "images": [
@@ -187,7 +187,7 @@
     "description": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men",
     "discountPercentage": 10,
     "price": 13,
-    "rating": 4.59,
+    "rating": 0,
     "stock": 61,
     "thumbnail": "https://dummyjson.com/image/i/products/13/thumbnail.webp",
     "images": [
@@ -206,7 +206,7 @@
     "description": "Original Al Munakh® by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil",
     "discountPercentage": 15,
     "price": 120,
-    "rating": 4.21,
+    "rating": 0,
     "stock": 114,
     "thumbnail": "https://dummyjson.com/image/i/products/14/thumbnail.jpg",
     "images": [
@@ -224,7 +224,7 @@
     "description": "Genuine Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality",
     "discountPercentage": 10,
     "price": 30,
-    "rating": 4.7,
+    "rating": 0,
     "stock": 105,
     "thumbnail": "https://dummyjson.com/image/i/products/15/thumbnail.jpg",
     "images": [
@@ -243,7 +243,7 @@
     "description": "L'OrÃ©al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid",
     "discountPercentage": 0,
     "price": 19,
-    "rating": 4.83,
+    "rating": 0,
     "stock": 110,
     "thumbnail": "https://dummyjson.com/image/i/products/16/thumbnail.jpg",
     "images": [
@@ -262,7 +262,7 @@
     "description": "Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen.",
     "discountPercentage": 15,
     "price": 40,
-    "rating": 4.56,
+    "rating": 0,
     "stock": 88,
     "thumbnail": "https://dummyjson.com/image/i/products/18/thumbnail.jpg",
     "images": [
@@ -281,7 +281,7 @@
     "description": "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,",
     "discountPercentage": 5,
     "price": 12,
-    "rating": 4.52,
+    "rating": 0,
     "stock": 78,
     "thumbnail": "https://dummyjson.com/image/i/products/17/thumbnail.jpg",
     "images": [
@@ -299,7 +299,7 @@
     "description": "Product name: rorec collagen hyaluronic acid white face serum riceNet weight: 15 m",
     "discountPercentage": 10,
     "price": 46,
-    "rating": 4.42,
+    "rating": 0,
     "stock": 54,
     "thumbnail": "https://dummyjson.com/image/i/products/19/thumbnail.jpg",
     "images": [
@@ -317,7 +317,7 @@
     "description": "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects.",
     "discountPercentage": 0,
     "price": 70,
-    "rating": 4.06,
+    "rating": 0,
     "stock": 140,
     "thumbnail": "https://dummyjson.com/image/i/products/20/thumbnail.jpg",
     "images": [
@@ -336,7 +336,7 @@
     "description": "Fine quality Branded Product Keep in a cool and dry place",
     "discountPercentage": 5,
     "price": 20,
-    "rating": 4.44,
+    "rating": 0,
     "stock": 133,
     "thumbnail": "https://dummyjson.com/image/i/products/21/thumbnail.png",
     "images": [
@@ -353,7 +353,7 @@
     "description": "Product details of Bake Parlor Big Elbow Macaroni - 400 gm",
     "discountPercentage": 0,
     "price": 14,
-    "rating": 4.57,
+    "rating": 0,
     "stock": 146,
     "thumbnail": "https://dummyjson.com/image/i/products/22/thumbnail.jpg",
     "images": [
@@ -370,7 +370,7 @@
     "description": "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
     "discountPercentage": 0,
     "price": 499,
-    "rating": 4.09,
+    "rating": 0,
     "stock": 32,
     "thumbnail": "https://dummyjson.com/image/i/products/5/thumbnail.jpg",
     "images": [
@@ -387,7 +387,7 @@
     "description": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji",
     "discountPercentage": 10,
     "price": 46,
-    "rating": 4.94,
+    "rating": 0,
     "stock": 113,
     "thumbnail": "https://dummyjson.com/image/i/products/24/thumbnail.jpg",
     "images": [
@@ -406,7 +406,7 @@
     "description": "MacBook Pro 2021 with mini-LED display may launch between September, November",
     "discountPercentage": 5,
     "price": 1749,
-    "rating": 4.57,
+    "rating": 0,
     "stock": 83,
     "thumbnail": "https://dummyjson.com/image/i/products/6/thumbnail.png",
     "images": [
@@ -424,7 +424,7 @@
     "description": "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf",
     "discountPercentage": 20,
     "price": 41,
-    "rating": 4.08,
+    "rating": 0,
     "stock": 131,
     "thumbnail": "https://dummyjson.com/image/i/products/26/thumbnail.jpg",
     "images": [
@@ -444,7 +444,7 @@
     "description": "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm",
     "discountPercentage": 15,
     "price": 51,
-    "rating": 4.41,
+    "rating": 0,
     "stock": 17,
     "thumbnail": "https://dummyjson.com/image/i/products/27/thumbnail.webp",
     "images": [
@@ -463,7 +463,7 @@
     "description": "3D led lamp sticker Wall sticker 3d wall art light on/off button cell operated (included)",
     "discountPercentage": 10,
     "price": 20,
-    "rating": 4.82,
+    "rating": 0,
     "stock": 54,
     "thumbnail": "https://dummyjson.com/image/i/products/28/thumbnail.jpg",
     "images": [
@@ -482,7 +482,7 @@
     "description": "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality",
     "discountPercentage": 5,
     "price": 30,
-    "rating": 4.92,
+    "rating": 0,
     "stock": 54,
     "thumbnail": "https://dummyjson.com/image/i/products/30/thumbnail.jpg",
     "images": [
@@ -500,7 +500,7 @@
     "description": "Ratttan Outdoor furniture Set Waterproof Rattan Sofa for Coffe Cafe",
     "discountPercentage": 20,
     "price": 50,
-    "rating": 4.74,
+    "rating": 0,
     "stock": 30,
     "thumbnail": "https://dummyjson.com/image/i/products/32/thumbnail.jpg",
     "images": [
@@ -518,7 +518,7 @@
     "description": "Mornadi Velvet Bed Base with Headboard Slats Support Classic Style Bedroom Furniture Bed Set",
     "discountPercentage": 0,
     "price": 40,
-    "rating": 4.16,
+    "rating": 0,
     "stock": 140,
     "thumbnail": "https://dummyjson.com/image/i/products/31/thumbnail.jpg",
     "images": [
@@ -537,7 +537,7 @@
     "description": "3 Tier Corner Shelves | 3 PCs Wall Mount Kitchen Shelf | Floating Bedroom Shelf",
     "discountPercentage": 10,
     "price": 700,
-    "rating": 4.31,
+    "rating": 0,
     "stock": 106,
     "thumbnail": "https://dummyjson.com/image/i/products/33/thumbnail.jpg",
     "images": [
@@ -556,7 +556,7 @@
     "description": "Very good quality plastic table for multi purpose now in reasonable price",
     "discountPercentage": 5,
     "price": 50,
-    "rating": 4.01,
+    "rating": 0,
     "stock": 136,
     "thumbnail": "https://dummyjson.com/image/i/products/34/thumbnail.jpg",
     "images": [
@@ -575,7 +575,7 @@
     "description": "Cotton Solid Color Professional Wear Sleeve Shirt Womens Work Blouses Wholesale Clothing Casual Plain Custom Top OEM Customized",
     "discountPercentage": 10,
     "price": 90,
-    "rating": 4.26,
+    "rating": 0,
     "stock": 39,
     "thumbnail": "https://dummyjson.com/image/i/products/36/thumbnail.jpg",
     "images": [
@@ -594,7 +594,7 @@
     "description": "Material: Stainless Steel and Fabric Item Size: 110 cm x 45 cm x 175 cm Package Contents: 1 Storage Wardrobe",
     "discountPercentage": 10,
     "price": 41,
-    "rating": 4.06,
+    "rating": 0,
     "stock": 68,
     "thumbnail": "https://dummyjson.com/image/i/products/35/thumbnail.jpg",
     "images": [
@@ -613,7 +613,7 @@
     "description": "PACK OF 3 CAMISOLES ,VERY COMFORTABLE SOFT COTTON STUFF, COMFORTABLE IN ALL FOUR SEASONS",
     "discountPercentage": 20,
     "price": 50,
-    "rating": 4.52,
+    "rating": 0,
     "stock": 107,
     "thumbnail": "https://dummyjson.com/image/i/products/37/thumbnail.jpg",
     "images": [
@@ -632,7 +632,7 @@
     "description": "sublimation plain kids tank tops wholesale",
     "discountPercentage": 10,
     "price": 100,
-    "rating": 4.8,
+    "rating": 0,
     "stock": 20,
     "thumbnail": "https://dummyjson.com/image/i/products/38/thumbnail.jpg",
     "images": [
@@ -650,7 +650,7 @@
     "description": "NIGHT SUIT RED MICKY MOUSE.. For Girls. Fantastic Suits.",
     "discountPercentage": 15,
     "price": 55,
-    "rating": 4.65,
+    "rating": 0,
     "stock": 21,
     "thumbnail": "https://dummyjson.com/image/i/products/41/thumbnail.webp",
     "images": [
@@ -669,7 +669,7 @@
     "description": "2021 Custom Winter Fall Zebra Knit Crop Top Women Sweaters Wool Mohair Cos Customize Crew Neck Women' S Crop Top Sweater",
     "discountPercentage": 0,
     "price": 600,
-    "rating": 4.55,
+    "rating": 0,
     "stock": 55,
     "thumbnail": "https://dummyjson.com/image/i/products/39/thumbnail.jpg",
     "images": [
@@ -688,7 +688,7 @@
     "description": "women winter clothes thick fleece hoodie top with sweat pantjogger women sweatsuit set joggers pants two piece pants set",
     "discountPercentage": 10,
     "price": 57,
-    "rating": 4.91,
+    "rating": 0,
     "stock": 84,
     "thumbnail": "https://dummyjson.com/image/i/products/40/thumbnail.jpg",
     "images": [
@@ -704,7 +704,7 @@
     "description": "FABRIC: LILEIN CHEST: 21 LENGHT: 37 TROUSER: (38) :ARABIC LILEIN",
     "discountPercentage": 20,
     "price": 80,
-    "rating": 4.05,
+    "rating": 0,
     "stock": 148,
     "thumbnail": "https://dummyjson.com/image/i/products/42/thumbnail.jpg",
     "images": [
@@ -723,7 +723,7 @@
     "description": "Ghazi fabric long frock gold printed ready to wear stitched collection (G992)",
     "discountPercentage": 0,
     "price": 600,
-    "rating": 4.31,
+    "rating": 0,
     "stock": 150,
     "thumbnail": "https://dummyjson.com/image/i/products/43/thumbnail.jpg",
     "images": [
@@ -741,7 +741,7 @@
     "category": "62f1508b718021ec047e0dc3",
     "description": "This classy shirt for women gives you a gorgeous look on everyday wear and specially for semi-casual wears.",
     "discountPercentage": 15,
-    "rating": 4.03,
+    "rating": 0,
     "stock": 2,
     "thumbnail": "https://dummyjson.com/image/i/products/44/thumbnail.jpg",
     "images": [
@@ -760,7 +760,7 @@
     "description": "Ready to wear, Unique design according to modern standard fashion, Best fitting ,Imported stuff",
     "discountPercentage": 5,
     "price": 50,
-    "rating": 4.67,
+    "rating": 0,
     "stock": 96,
     "thumbnail": "https://dummyjson.com/image/i/products/45/thumbnail.jpg",
     "images": [
@@ -779,7 +779,7 @@
     "description": "Close: Lace, Style with bottom: Increased inside, Sole Material: Rubber",
     "discountPercentage": 20,
     "price": 40,
-    "rating": 4.14,
+    "rating": 0,
     "stock": 72,
     "thumbnail": "https://dummyjson.com/image/i/products/46/thumbnail.jpg",
     "images": [
@@ -798,7 +798,7 @@
     "description": "Synthetic Leather Casual Sneaker shoes for Women/girls Sneakers For Women",
     "discountPercentage": 10,
     "price": 120,
-    "rating": 4.19,
+    "rating": 0,
     "stock": 50,
     "thumbnail": "https://dummyjson.com/image/i/products/47/thumbnail.jpeg",
     "images": [
@@ -816,7 +816,7 @@
     "description": "Womens Chappals & Shoe Ladies Metallic Tong Thong Sandal Flat Summer 2020 Maasai Sandals",
     "discountPercentage": 0,
     "price": 23,
-    "rating": 4.72,
+    "rating": 0,
     "stock": 107,
     "thumbnail": "https://dummyjson.com/image/i/products/49/thumbnail.jpg",
     "images": [
@@ -834,7 +834,7 @@
     "description": "Features: Flip-flops, Mid Heel, Comfortable, Striped Heel, Antiskid, Striped",
     "discountPercentage": 10,
     "price": 40,
-    "rating": 4.02,
+    "rating": 0,
     "stock": 25,
     "thumbnail": "https://dummyjson.com/image/i/products/48/thumbnail.jpg",
     "images": [
@@ -853,7 +853,7 @@
     "description": "2020 New Arrivals Genuine Leather Fashion Trend Platform Summer Women Shoes",
     "discountPercentage": 15,
     "price": 36,
-    "rating": 4.33,
+    "rating": 0,
     "stock": 46,
     "thumbnail": "https://dummyjson.com/image/i/products/50/thumbnail.jpg",
     "images": [
@@ -870,7 +870,7 @@
     "description": "Specifications of Orange Essence Food Flavour For Cakes and Baking Food Item",
     "discountPercentage": 10,
     "price": 14,
-    "rating": 4.85,
+    "rating": 0,
     "stock": 26,
     "thumbnail": "https://dummyjson.com/image/i/products/23/thumbnail.jpg",
     "images": [
@@ -889,7 +889,7 @@
     "description": "quality and professional print - It doesn't just look high quality, it is high quality.",
     "discountPercentage": 15,
     "price": 10,
-    "rating": 4.52,
+    "rating": 0,
     "stock": 128,
     "thumbnail": "https://dummyjson.com/image/i/products/52/thumbnail.jpg",
     "images": [
@@ -908,7 +908,7 @@
     "description": "Product Description Features: 100% Ultra soft Polyester Jersey. Vibrant & colorful printing on front. Feels soft as cotton without ever cracking",
     "discountPercentage": 20,
     "price": 46,
-    "rating": 4.62,
+    "rating": 0,
     "stock": 136,
     "thumbnail": "https://dummyjson.com/image/i/products/54/thumbnail.jpg",
     "images": [
@@ -927,7 +927,7 @@
     "description": "Brand: vintage Apparel ,Export quality",
     "discountPercentage": 10,
     "price": 35,
-    "rating": 4.89,
+    "rating": 0,
     "stock": 6,
     "thumbnail": "https://dummyjson.com/image/i/products/53/thumbnail.jpg",
     "images": [
@@ -946,7 +946,7 @@
     "description": "Gender: Men , Colors: Same as DisplayedCondition: 100% Brand New",
     "discountPercentage": 15,
     "price": 40,
-    "rating": 4.38,
+    "rating": 0,
     "stock": 6,
     "thumbnail": "https://dummyjson.com/image/i/products/56/thumbnail.jpg",
     "images": [
@@ -966,7 +966,7 @@
     "description": "Fabric Jercy, Size: M & L Wear Stylish Dual Stiched",
     "discountPercentage": 15,
     "price": 66,
-    "rating": 4.9,
+    "rating": 0,
     "stock": 122,
     "thumbnail": "https://dummyjson.com/image/i/products/55/thumbnail.jpg",
     "images": [
@@ -985,7 +985,7 @@
     "description": "Men Shoes - Loafers for men - Rubber Shoes - Nylon Shoes - Shoes for men - Moccassion - Pure Nylon (Rubber) Expot Quality.",
     "discountPercentage": 10,
     "price": 47,
-    "rating": 4.91,
+    "rating": 0,
     "stock": 20,
     "thumbnail": "https://dummyjson.com/image/i/products/57/thumbnail.jpg",
     "images": [
@@ -1004,7 +1004,7 @@
     "description": "Dry Rose Flower Powder Gulab Powder 50 Gram • Treats Wounds",
     "discountPercentage": 10,
     "price": 70,
-    "rating": 4.87,
+    "rating": 0,
     "stock": 47,
     "thumbnail": "https://dummyjson.com/image/i/products/25/thumbnail.jpg",
     "images": [
@@ -1023,7 +1023,7 @@
     "description": "Comfortable stretch cloth, lightweight body; ,rubber sole, anti-skid wear;",
     "discountPercentage": 0,
     "price": 20,
-    "rating": 4.33,
+    "rating": 0,
     "stock": 137,
     "thumbnail": "https://dummyjson.com/image/i/products/59/thumbnail.jpg",
     "images": [
@@ -1042,7 +1042,7 @@
     "description": "High Quality ,Stylish design ,Comfortable wear ,FAshion ,Durable",
     "discountPercentage": 10,
     "price": 58,
-    "rating": 4.55,
+    "rating": 0,
     "stock": 129,
     "thumbnail": "https://dummyjson.com/image/i/products/60/thumbnail.jpg",
     "images": [
@@ -1060,7 +1060,7 @@
     "description": "Style:Sport ,Clasp:Buckles ,Water Resistance Depth:3Bar",
     "discountPercentage": 5,
     "price": 120,
-    "rating": 4.63,
+    "rating": 0,
     "stock": 91,
     "thumbnail": "https://dummyjson.com/image/i/products/61/thumbnail.jpg",
     "images": [
@@ -1077,7 +1077,7 @@
     "description": "Watch Crown With Environmental IPS Bronze Electroplating; Display system of 12 hours",
     "discountPercentage": 0,
     "price": 46,
-    "rating": 4.05,
+    "rating": 0,
     "stock": 95,
     "thumbnail": "https://dummyjson.com/image/i/products/62/thumbnail.jpg",
     "images": [
@@ -1093,7 +1093,7 @@
     "description": "Men Silver Chain Royal Blue Premium Watch Latest Analog Watch",
     "discountPercentage": 0,
     "price": 50,
-    "rating": 4.89,
+    "rating": 0,
     "stock": 142,
     "thumbnail": "https://dummyjson.com/image/i/products/63/thumbnail.webp",
     "images": [
@@ -1111,7 +1111,7 @@
     "description": "Leather Strap Skeleton Watch for Men - Stylish and Latest Design",
     "discountPercentage": 10,
     "price": 46,
-    "rating": 4.98,
+    "rating": 0,
     "stock": 61,
     "thumbnail": "https://dummyjson.com/image/i/products/64/thumbnail.jpg",
     "images": [
@@ -1129,7 +1129,7 @@
     "description": "Stylish Watch For Man (Luxury) Classy Men's Stainless Steel Wrist Watch - Box Packed",
     "discountPercentage": 20,
     "price": 47,
-    "rating": 4.79,
+    "rating": 0,
     "stock": 94,
     "thumbnail": "https://dummyjson.com/image/i/products/65/thumbnail.webp",
     "images": [
@@ -1148,7 +1148,7 @@
     "description": "Elegant design, Stylish ,Unique & Trendy,Comfortable wear",
     "discountPercentage": 15,
     "price": 35,
-    "rating": 4.79,
+    "rating": 0,
     "stock": 24,
     "thumbnail": "https://dummyjson.com/image/i/products/66/thumbnail.jpg",
     "images": [
@@ -1167,7 +1167,7 @@
     "description": "Buy this awesome The product is originally manufactured by the company and it's a top selling product with a very reasonable",
     "discountPercentage": 0,
     "price": 60,
-    "rating": 4.03,
+    "rating": 0,
     "stock": 46,
     "thumbnail": "https://dummyjson.com/image/i/products/67/thumbnail.jpg",
     "images": [
@@ -1186,7 +1186,7 @@
     "description": "Stylish Luxury Digital Watch For Girls / Women - Led Smart Ladies Watches For Girls",
     "discountPercentage": 0,
     "price": 57,
-    "rating": 4.55,
+    "rating": 0,
     "stock": 77,
     "thumbnail": "https://dummyjson.com/image/i/products/68/thumbnail.webp",
     "images": [
@@ -1202,7 +1202,7 @@
     "description": "Product details of Golden Watch Pearls Bracelet Watch For Girls - Golden Chain Ladies Bracelate Watch for Women",
     "discountPercentage": 10,
     "price": 47,
-    "rating": 4.77,
+    "rating": 0,
     "stock": 89,
     "thumbnail": "https://dummyjson.com/image/i/products/69/thumbnail.jpg",
     "images": [
@@ -1221,7 +1221,7 @@
     "description": "Fashion Skmei 1830 Shell Dial Stainless Steel Women Wrist Watch Lady Bracelet Watch Quartz Watches Ladies",
     "discountPercentage": 10,
     "price": 35,
-    "rating": 4.08,
+    "rating": 0,
     "stock": 111,
     "thumbnail": "https://dummyjson.com/image/i/products/70/thumbnail.jpg",
     "images": [
@@ -1238,7 +1238,7 @@
     "description": "LouisWill Women Shoulder Bags Long Clutches Cross Body Bags Phone Bags PU Leather Hand Bags Large Capacity Card Holders Zipper Coin Purses Fashion Crossbody Bags for Girls Ladies",
     "discountPercentage": 15,
     "price": 46,
-    "rating": 4.71,
+    "rating": 0,
     "stock": 17,
     "thumbnail": "https://dummyjson.com/image/i/products/71/thumbnail.jpg",
     "images": [
@@ -1256,7 +1256,7 @@
     "description": "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather.",
     "discountPercentage": 20,
     "price": 23,
-    "rating": 4.91,
+    "rating": 0,
     "stock": 27,
     "thumbnail": "https://dummyjson.com/image/i/products/72/thumbnail.webp",
     "images": [
@@ -1275,7 +1275,7 @@
     "description": "It features an attractive design that makes it a must have accessory in your collection. We sell different kind of bags for boys, kids, women, girls and also for unisex.",
     "discountPercentage": 10,
     "price": 57,
-    "rating": 4.01,
+    "rating": 0,
     "stock": 43,
     "thumbnail": "https://dummyjson.com/image/i/products/74/thumbnail.jpg",
     "images": [
@@ -1294,7 +1294,7 @@
     "description": "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather.",
     "discountPercentage": 10,
     "price": 44,
-    "rating": 4.18,
+    "rating": 0,
     "stock": 101,
     "thumbnail": "https://dummyjson.com/image/i/products/73/thumbnail.jpg",
     "images": [
@@ -1312,7 +1312,7 @@
     "description": "Seven Pocket Women Bag Handbags Lady Shoulder Crossbody Bag Female Purse Seven Pocket Bag",
     "discountPercentage": 15,
     "price": 68,
-    "rating": 4.93,
+    "rating": 0,
     "stock": 13,
     "thumbnail": "https://dummyjson.com/image/i/products/75/thumbnail.jpg",
     "images": [
@@ -1330,7 +1330,7 @@
     "description": "Jewelry Type:RingsCertificate Type:NonePlating:Silver PlatedShapeattern:noneStyle:CLASSICReligious",
     "discountPercentage": 0,
     "price": 70,
-    "rating": 4.61,
+    "rating": 0,
     "stock": 51,
     "thumbnail": "https://dummyjson.com/image/i/products/76/thumbnail.jpg",
     "images": [
@@ -1347,7 +1347,7 @@
     "description": "Brand: The Greetings Flower Colour: RedRing Colour: GoldenSize: Adjustable",
     "discountPercentage": 0,
     "price": 100,
-    "rating": 4.21,
+    "rating": 0,
     "stock": 149,
     "thumbnail": "https://dummyjson.com/image/i/products/77/thumbnail.jpg",
     "images": [
@@ -1365,7 +1365,7 @@
     "description": "Elegant Female Pearl Earrings Set Zircon Pearl Earings Women Party Accessories 9 Pairs/Set",
     "discountPercentage": 10,
     "price": 30,
-    "rating": 4.74,
+    "rating": 0,
     "stock": 16,
     "thumbnail": "https://dummyjson.com/image/i/products/79/thumbnail.jpg",
     "images": ["https://dummyjson.com/image/i/products/79/1.jpg"]
@@ -1378,7 +1378,7 @@
     "description": "Fashion Jewellery 3Pcs Adjustable Pearl Rhinestone Korean Style Open Rings For Women",
     "discountPercentage": 10,
     "price": 30,
-    "rating": 4.69,
+    "rating": 0,
     "stock": 9,
     "thumbnail": "https://dummyjson.com/image/i/products/78/thumbnail.jpg",
     "images": ["https://dummyjson.com/image/i/products/78/thumbnail.jpg"]
@@ -1391,7 +1391,7 @@
     "description": "Pair Of Ear Cuff Butterfly Long Chain Pin Tassel Earrings - Silver ( Long Life Quality Product)",
     "discountPercentage": 20,
     "price": 45,
-    "rating": 4.59,
+    "rating": 0,
     "stock": 9,
     "thumbnail": "https://dummyjson.com/image/i/products/80/thumbnail.jpg",
     "images": [
@@ -1410,7 +1410,7 @@
     "description": "A pair of sunglasses can protect your eyes from being hurt. For car driving, vacation travel, outdoor activities, social gatherings,",
     "discountPercentage": 10,
     "price": 19,
-    "rating": 4.94,
+    "rating": 0,
     "stock": 78,
     "thumbnail": "https://dummyjson.com/image/i/products/81/thumbnail.jpg",
     "images": [
@@ -1429,7 +1429,7 @@
     "description": "Orignal Metal Kabir Singh design 2020 Sunglasses Men Brand Designer Sun Glasses Kabir Singh Square Sunglass",
     "discountPercentage": 20,
     "price": 50,
-    "rating": 4.62,
+    "rating": 0,
     "stock": 78,
     "thumbnail": "https://dummyjson.com/image/i/products/82/thumbnail.jpg",
     "images": [
@@ -1448,7 +1448,7 @@
     "description": "Wiley X Night Vision Yellow Glasses for Riders - Night Vision Anti Fog Driving Glasses - Free Night Glass Cover - Shield Eyes From Dust and Virus- For Night Sport Matches",
     "discountPercentage": 0,
     "price": 30,
-    "rating": 4.97,
+    "rating": 0,
     "stock": 115,
     "thumbnail": "https://dummyjson.com/image/i/products/83/thumbnail.jpg",
     "images": [
@@ -1467,7 +1467,7 @@
     "description": "Fashion Oversized Square Sunglasses Retro Gradient Big Frame Sunglasses For Women One Piece Gafas Shade Mirror Clear Lens 17059",
     "discountPercentage": 15,
     "price": 28,
-    "rating": 4.64,
+    "rating": 0,
     "stock": 64,
     "thumbnail": "https://dummyjson.com/image/i/products/84/thumbnail.jpg",
     "images": [
@@ -1484,7 +1484,7 @@
     "description": "LouisWill Men Sunglasses Polarized Sunglasses UV400 Sunglasses Day Night Dual Use Safety Driving Night Vision Eyewear AL-MG Frame Sun Glasses with Free Box for Drivers",
     "discountPercentage": 20,
     "price": 50,
-    "rating": 4.98,
+    "rating": 0,
     "stock": 92,
     "thumbnail": "https://dummyjson.com/image/i/products/85/thumbnail.jpg",
     "images": [
@@ -1501,7 +1501,7 @@
     "description": "Bluetooth Aux Bluetooth Car Aux Car Bluetooth Transmitter Aux Audio Receiver Handfree Car Bluetooth Music Receiver Universal 3.5mm Streaming A2DP Wireless Auto AUX Audio Adapter With Mic For Phone MP3",
     "discountPercentage": 10,
     "price": 25,
-    "rating": 4.57,
+    "rating": 0,
     "stock": 22,
     "thumbnail": "https://dummyjson.com/image/i/products/86/thumbnail.jpg",
     "images": [
@@ -1520,7 +1520,7 @@
     "description": "Both Heat and Cool Purpose, Temperature control range; -50 to +110, Temperature measurement accuracy; 0.1, Control accuracy; 0.1",
     "discountPercentage": 10,
     "price": 40,
-    "rating": 4.54,
+    "rating": 0,
     "stock": 37,
     "thumbnail": "https://dummyjson.com/image/i/products/87/thumbnail.jpg",
     "images": [
@@ -1539,7 +1539,7 @@
     "description": "best Quality CHarger , Highly Recommended to all best Quality CHarger , Highly Recommended to all",
     "discountPercentage": 20,
     "price": 40,
-    "rating": 4.2,
+    "rating": 0,
     "stock": 79,
     "thumbnail": "https://dummyjson.com/image/i/products/89/thumbnail.jpg",
     "images": [
@@ -1558,7 +1558,7 @@
     "description": "TC Reusable Silicone Magic Washing Gloves with Scrubber, Cleaning Brush Scrubber Gloves Heat Resistant Pair for Cleaning of Kitchen, Dishes, Vegetables and Fruits, Bathroom, Car Wash, Pet Care and Multipurpose",
     "discountPercentage": 0,
     "price": 29,
-    "rating": 4.98,
+    "rating": 0,
     "stock": 42,
     "thumbnail": "https://dummyjson.com/image/i/products/88/thumbnail.jpg",
     "images": [
@@ -1577,7 +1577,7 @@
     "description": "Universal fitment and easy to install no special wires, can be easily installed and removed. Fits most standard tyre air stem valves of road, mountain bicycles, motocycles and cars.Bright led will turn on w",
     "discountPercentage": 10,
     "price": 35,
-    "rating": 4.1,
+    "rating": 0,
     "stock": 63,
     "thumbnail": "https://dummyjson.com/image/i/products/90/thumbnail.jpg",
     "images": [
@@ -1596,7 +1596,7 @@
     "description": "Engine Type:Wet sump, Single Cylinder, Four Stroke, Two Valves, Air Cooled with SOHC (Single Over Head Cam) Chain Drive Bore & Stroke:47.0 x 49.5 MM",
     "discountPercentage": 15,
     "price": 569,
-    "rating": 4.04,
+    "rating": 0,
     "stock": 115,
     "thumbnail": "https://dummyjson.com/image/i/products/91/thumbnail.jpg",
     "images": [
@@ -1615,7 +1615,7 @@
     "description": "HOT SALE IN EUROPE electric racing motorcycle electric motorcycle for sale adult electric motorcycles",
     "discountPercentage": 15,
     "price": 920,
-    "rating": 4.19,
+    "rating": 0,
     "stock": 22,
     "thumbnail": "https://dummyjson.com/image/i/products/92/thumbnail.jpg",
     "images": [
@@ -1633,7 +1633,7 @@
     "description": "150cc 4-Stroke Motorcycle Automatic Motor Gas Motorcycles Scooter motorcycles 150cc scooter",
     "discountPercentage": 0,
     "price": 1050,
-    "rating": 4.84,
+    "rating": 0,
     "stock": 127,
     "thumbnail": "https://dummyjson.com/image/i/products/93/thumbnail.jpg",
     "images": [
@@ -1652,7 +1652,7 @@
     "description": "Many store is creating new designs and trend every month and every year. Daraz.pk have a beautiful range of men fashion brands",
     "discountPercentage": 15,
     "price": 23,
-    "rating": 4.26,
+    "rating": 0,
     "stock": 132,
     "thumbnail": "https://dummyjson.com/image/i/products/51/thumbnail.jpg",
     "images": [
@@ -1670,7 +1670,7 @@
     "description": "Wholesale cargo lashing Belt Tie Down end Ratchet strap customized strap 25mm motorcycle 1500kgs with rubber handle",
     "discountPercentage": 20,
     "price": 930,
-    "rating": 4.21,
+    "rating": 0,
     "stock": 144,
     "thumbnail": "https://dummyjson.com/image/i/products/95/thumbnail.jpg",
     "images": [
@@ -1689,7 +1689,7 @@
     "description": "Wholesale slim hanging decorative kid room lighting ceiling kitchen chandeliers pendant light modern",
     "discountPercentage": 15,
     "price": 30,
-    "rating": 4.83,
+    "rating": 0,
     "stock": 96,
     "thumbnail": "https://dummyjson.com/image/i/products/96/thumbnail.jpg",
     "images": [
@@ -1708,7 +1708,7 @@
     "description": "Metal Ceramic Flower Chandelier Home Lighting American Vintage Hanging Lighting Pendant Lamp",
     "discountPercentage": 10,
     "price": 35,
-    "rating": 4.93,
+    "rating": 0,
     "stock": 146,
     "thumbnail": "https://dummyjson.com/image/i/products/97/thumbnail.jpg",
     "images": [
@@ -1727,7 +1727,7 @@
     "description": "3 lights lndenpant kitchen islang dining room pendant rice paper chandelier contemporary led pendant light modern chandelier",
     "discountPercentage": 0,
     "price": 34,
-    "rating": 4.99,
+    "rating": 0,
     "stock": 44,
     "thumbnail": "https://dummyjson.com/image/i/products/98/thumbnail.jpg",
     "images": [
@@ -1746,7 +1746,7 @@
     "description": "American Vintage Wood Pendant Light Farmhouse Antique Hanging Lamp Lampara Colgante",
     "discountPercentage": 10,
     "price": 46,
-    "rating": 4.32,
+    "rating": 0,
     "stock": 138,
     "thumbnail": "https://dummyjson.com/image/i/products/99/thumbnail.jpg",
     "images": [
@@ -1765,7 +1765,7 @@
     "description": "Pattern Type: Solid, Material: PU, Toe Shape: Pointed Toe ,Outsole Material: Rubber",
     "discountPercentage": 15,
     "price": 57,
-    "rating": 4.41,
+    "rating": 0,
     "stock": 68,
     "thumbnail": "https://dummyjson.com/image/i/products/58/thumbnail.jpg",
     "images": [
@@ -1784,7 +1784,7 @@
     "description": "new arrivals Fashion motocross goggles motorcycle motocross racing motorcycle",
     "discountPercentage": 10,
     "price": 900,
-    "rating": 4.06,
+    "rating": 0,
     "stock": 109,
     "thumbnail": "https://dummyjson.com/image/i/products/94/thumbnail.webp",
     "images": [
@@ -1802,7 +1802,7 @@
     "description": "Crystal chandelier maria theresa for 12 light",
     "discountPercentage": 0,
     "price": 47,
-    "rating": 4.74,
+    "rating": 0,
     "stock": 133,
     "thumbnail": "https://dummyjson.com/image/i/products/100/thumbnail.jpg",
     "images": [

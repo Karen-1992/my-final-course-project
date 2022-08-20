@@ -4,11 +4,10 @@ import PropTypes from "prop-types";
 const Loader = () => {
     return (
         <div
-            className="spinner-border position-absolute top-50 start-50" role="status"
+            className="spinner-border position-absolute top-50 start-50"
+            role="status"
         >
-            <span
-                className="visually-hidden">
-            </span>
+            <span className="visually-hidden"></span>
         </div>
     );
 };
